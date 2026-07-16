@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Details - The Guild</title>
+<script>window.tailwind=window.tailwind||{};</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#c0cab4",
+                        "tertiary-container": "#151e10",
+                        "surface-bright": "#fbf9f3",
+                        "surface-variant": "#e4e2dd",
+                        "on-tertiary-fixed": "#151e10",
+                        "surface-container": "#f0eee8",
+                        "on-surface": "#1b1c19",
+                        "on-secondary-container": "#786044",
+                        "on-secondary-fixed-variant": "#584329",
+                        "on-tertiary-fixed-variant": "#404a39",
+                        "on-background": "#1b1c19",
+                        "secondary-fixed-dim": "#e0c29f",
+                        "tertiary": "#000000",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#eae8e2",
+                        "surface-container-highest": "#e4e2dd",
+                        "secondary": "#715a3e",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#fdddb9",
+                        "background": "#fbf9f3",
+                        "outline": "#747878",
+                        "primary-fixed": "#e5e2e1",
+                        "inverse-on-surface": "#f2f1eb",
+                        "primary": "#000000",
+                        "on-secondary-fixed": "#281803",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#1c1b1b",
+                        "outline-variant": "#c4c7c7",
+                        "inverse-surface": "#30312d",
+                        "primary-container": "#1c1b1b",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-primary-container": "#858383",
+                        "inverse-primary": "#c8c6c5",
+                        "surface": "#fbf9f3",
+                        "tertiary-fixed": "#dce6d0",
+                        "surface-container-low": "#f5f3ee",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "secondary-container": "#fdddb9",
+                        "surface-tint": "#5f5e5e",
+                        "surface-dim": "#dcdad4",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#444748",
+                        "on-tertiary-container": "#7d8774"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "margin-desktop": "64px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Hanken Grotesk"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-sm": ["Playfair Display"],
+                        "display-lg-mobile": ["Playfair Display"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "headline-md": ["Playfair Display"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "1.4", "letterSpacing": "0.03em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Custom timeline styles to match brand */
+        .timeline-line {
+            width: 1px;
+            background-color: theme('colors.outline-variant');
+            opacity: 0.2;
+        }
+        .timeline-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: theme('colors.surface-bright');
+            border: 1px solid theme('colors.outline');
+        }
+        .timeline-dot.completed {
+            background-color: theme('colors.on-tertiary-container'); /* Sage accent */
+            border-color: theme('colors.on-tertiary-container');
+        }
+        .timeline-dot.current {
+            background-color: theme('colors.secondary'); /* Bronze accent */
+            border-color: theme('colors.secondary');
+        }
+    </style>
+<link rel="stylesheet" href="../assets/css/demo-navigation.css" />
+<link rel="icon" href="../assets/images/demo-favicon.svg" type="image/svg+xml">
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="bg-surface dark:bg-background text-primary dark:text-on-background font-hanken-grotesk text-body-md w-full sticky top-0 z-50 border-b border-outline-variant/10 dark:border-outline/10 flat no shadows">
+<div class="flex justify-between items-center w-full px-margin-desktop py-unit max-w-container-max mx-auto">
+<div class="font-playfair-display text-headline-md font-semibold text-primary dark:text-on-background cursor-pointer transition-opacity active:opacity-70">
+                The Guild
+            </div>
+<div class="hidden md:flex items-center gap-gutter">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer transition-opacity active:opacity-70" href="#">Marketplace</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer transition-opacity active:opacity-70" href="#">Designers</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer transition-opacity active:opacity-70" href="#">Journal</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors duration-200" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors duration-200" data-icon="shopping_bag">shopping_bag</span>
+<img alt="User account profile" class="w-8 h-8 rounded-full border border-outline-variant/20 object-cover ml-2 cursor-pointer transition-opacity active:opacity-70" data-alt="A sophisticated black and white portrait of a person in a minimalist setting, representing a high-end user profile. Soft studio lighting, clean background, conveying trust and elegance." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+</div>
+</nav>
+<div class="flex-grow flex w-full max-w-container-max mx-auto">
+<!-- SideNavBar -->
+<aside class="hidden md:flex bg-surface-container dark:bg-surface-container text-primary dark:text-on-background font-hanken-grotesk text-label-md w-64 pt-24 border-r border-outline-variant/10 flat no shadows flex-col gap-2 h-[calc(100vh-80px)] sticky top-[80px]">
+<div class="px-6 mb-8">
+<h2 class="font-playfair-display text-headline-sm text-primary">Julian Voss</h2>
+<p class="text-label-sm text-on-surface-variant mt-1">Premium Member since 2023</p>
+</div>
+<a class="flex items-center gap-4 px-6 py-4 cursor-pointer text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Overview
+            </a>
+<a class="flex items-center gap-4 px-6 py-4 cursor-pointer text-primary font-bold bg-surface-container-highest rounded-r-full hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined icon-fill" data-icon="package_2">package_2</span>
+                Orders
+            </a>
+<a class="flex items-center gap-4 px-6 py-4 cursor-pointer text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+                Saved Items
+            </a>
+<a class="flex items-center gap-4 px-6 py-4 cursor-pointer text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+                Addresses
+            </a>
+<a class="flex items-center gap-4 px-6 py-4 cursor-pointer text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+                Profile
+            </a>
+<a class="flex items-center gap-4 px-6 py-4 cursor-pointer text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="help_center">help_center</span>
+                Support
+            </a>
+<div class="mt-auto p-6">
+<button class="w-full py-3 px-4 border border-outline-variant/30 rounded text-label-md text-primary hover:bg-surface-container-high transition-colors text-center">
+                    Contact Concierge
+                </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-grow px-margin-mobile md:px-margin-desktop py-12 md:py-24 max-w-4xl">
+<!-- Header -->
+<div class="mb-12">
+<a class="inline-flex items-center gap-2 text-label-sm text-on-surface-variant hover:text-primary mb-6 transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_back">arrow_back</span>
+                    Back to Orders
+                </a>
+<h1 class="font-headline-md font-headline-md text-primary mb-2">Order #GLD-8924</h1>
+<p class="text-body-md text-on-surface-variant">Placed on October 12, 2023</p>
+</div>
+<!-- Layout Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column (Item & Shipping) -->
+<div class="lg:col-span-7 flex flex-col gap-8">
+<!-- Item Card -->
+<div class="border border-outline-variant/10 rounded-DEFAULT bg-surface-bright p-6">
+<div class="flex gap-6">
+<img alt="Mid-Century Teak Sideboard" class="w-32 h-32 object-cover rounded-DEFAULT border border-outline-variant/10" data-alt="A beautifully restored mid-century modern teak sideboard, captured in a bright, minimalist high-end gallery setting with soft natural light highlighting the wood grain. Clean white walls and a subtle shadow underneath." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div class="flex flex-col justify-between">
+<div>
+<h3 class="font-label-md text-primary text-label-md uppercase tracking-wider mb-1">Established Lines</h3>
+<h2 class="font-headline-sm text-headline-sm text-primary mb-2">Mid-Century Teak Sideboard</h2>
+<p class="text-body-md text-on-surface-variant">Authentic 1960s Danish design. Fully restored.</p>
+</div>
+<div class="text-label-md text-primary mt-4">
+                                    $4,200.00
+                                </div>
+</div>
+</div>
+</div>
+<!-- Details Bento -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Shipping -->
+<div class="border border-outline-variant/10 rounded-DEFAULT bg-surface-bright p-6">
+<h3 class="font-label-md text-label-md uppercase text-on-surface-variant mb-4 border-b border-outline-variant/10 pb-2">Delivery Address</h3>
+<p class="text-body-md text-primary font-medium">Julian Voss</p>
+<p class="text-body-md text-on-surface-variant mt-1">
+                                142 West 57th Street<br/>
+                                Penthouse B<br/>
+                                New York, NY 10019
+                            </p>
+<h3 class="font-label-md text-label-md uppercase text-on-surface-variant mt-6 mb-2 border-b border-outline-variant/10 pb-2">Access Details</h3>
+<div class="flex items-center gap-2 text-body-md text-primary">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant" data-icon="elevator">elevator</span>
+                                3rd Floor, Elevator Access
+                            </div>
+</div>
+<!-- Payment -->
+<div class="border border-outline-variant/10 rounded-DEFAULT bg-surface-bright p-6 flex flex-col">
+<h3 class="font-label-md text-label-md uppercase text-on-surface-variant mb-4 border-b border-outline-variant/10 pb-2">Payment Summary</h3>
+<div class="space-y-3 flex-grow">
+<div class="flex justify-between text-body-md">
+<span class="text-on-surface-variant">Item Subtotal</span>
+<span class="text-primary">$4,200.00</span>
+</div>
+<div class="flex justify-between text-body-md">
+<span class="text-on-surface-variant">White-Glove Delivery</span>
+<span class="text-primary">$350.00</span>
+</div>
+<div class="flex justify-between text-body-md">
+<span class="text-on-surface-variant">Tax (NY 8.875%)</span>
+<span class="text-primary">$403.81</span>
+</div>
+</div>
+<div class="flex justify-between text-body-lg font-medium text-primary mt-6 pt-4 border-t border-outline-variant/10">
+<span>Total</span>
+<span>$4,953.81</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (Timeline & Status) -->
+<div class="lg:col-span-5 flex flex-col gap-8">
+<!-- Tracking Card -->
+<div class="border border-outline-variant/10 rounded-DEFAULT bg-surface-bright p-6">
+<div class="flex items-center justify-between mb-6 border-b border-outline-variant/10 pb-4">
+<h3 class="font-label-md text-label-md uppercase text-primary">Shipment Status</h3>
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1 rounded-full border border-outline-variant/20">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-primary">In Transit</span>
+</div>
+</div>
+<p class="text-body-md text-on-surface-variant mb-8 bg-surface-container-low p-4 rounded-DEFAULT border border-outline-variant/10">
+                            Currently arriving at our regional hub in New York. White-glove delivery scheduling will begin once inspected.
+                        </p>
+<!-- High-Fidelity Timeline -->
+<div class="relative pl-4 space-y-8 py-2">
+<!-- Line -->
+<div class="absolute left-[19px] top-4 bottom-4 w-px bg-outline-variant/20"></div>
+<!-- Step 1 -->
+<div class="relative flex items-start gap-6">
+<div class="absolute left-[-4px] top-1.5 w-[11px] h-[11px] rounded-full bg-on-tertiary-container border-2 border-surface-bright shadow-[0_0_0_1px_theme('colors.outline-variant/20')] z-10 flex items-center justify-center"></div>
+<div>
+<h4 class="font-label-md text-label-md text-primary">Order Placed</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Oct 12, 2023</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative flex items-start gap-6">
+<div class="absolute left-[-4px] top-1.5 w-[11px] h-[11px] rounded-full bg-on-tertiary-container border-2 border-surface-bright shadow-[0_0_0_1px_theme('colors.outline-variant/20')] z-10 flex items-center justify-center"></div>
+<div>
+<h4 class="font-label-md text-label-md text-primary">Seller Confirmed</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Oct 13, 2023</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative flex items-start gap-6">
+<div class="absolute left-[-4px] top-1.5 w-[11px] h-[11px] rounded-full bg-on-tertiary-container border-2 border-surface-bright shadow-[0_0_0_1px_theme('colors.outline-variant/20')] z-10 flex items-center justify-center"></div>
+<div>
+<h4 class="font-label-md text-label-md text-primary">Pickup Scheduled</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Oct 15, 2023</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="relative flex items-start gap-6">
+<div class="absolute left-[-4px] top-1.5 w-[11px] h-[11px] rounded-full bg-on-tertiary-container border-2 border-surface-bright shadow-[0_0_0_1px_theme('colors.outline-variant/20')] z-10 flex items-center justify-center"></div>
+<div>
+<h4 class="font-label-md text-label-md text-primary">Picked Up</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Oct 18, 2023</p>
+</div>
+</div>
+<!-- Step 5 (Current) -->
+<div class="relative flex items-start gap-6">
+<div class="absolute left-[-6px] top-1 w-[15px] h-[15px] rounded-full bg-secondary border-4 border-surface-bright shadow-[0_0_0_1px_theme('colors.secondary')] z-10"></div>
+<div>
+<h4 class="font-label-md text-label-md text-secondary font-bold">In Transit</h4>
+<p class="font-label-sm text-label-sm text-secondary/80 mt-1">Expected at Hub: Oct 22</p>
+</div>
+</div>
+<!-- Step 6 -->
+<div class="relative flex items-start gap-6 opacity-50">
+<div class="absolute left-[-4px] top-1.5 w-[11px] h-[11px] rounded-full bg-surface border-2 border-outline-variant/40 z-10"></div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface-variant">Delivery Scheduled</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Pending</p>
+</div>
+</div>
+<!-- Step 7 -->
+<div class="relative flex items-start gap-6 opacity-50">
+<div class="absolute left-[-4px] top-1.5 w-[11px] h-[11px] rounded-full bg-surface border-2 border-outline-variant/40 z-10"></div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface-variant">Delivered</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Pending</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Documents & Support -->
+<div class="border border-outline-variant/10 rounded-DEFAULT bg-surface-bright p-6">
+<h3 class="font-label-md text-label-md uppercase text-on-surface-variant mb-4 border-b border-outline-variant/10 pb-2">Documents</h3>
+<div class="flex flex-col gap-3 mb-8">
+<a class="flex items-center justify-between text-body-md text-primary hover:text-secondary transition-colors group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-secondary" data-icon="receipt_long">receipt_long</span>
+<span>Commercial Invoice</span>
+</div>
+<span class="material-symbols-outlined text-[16px]" data-icon="download">download</span>
+</a>
+<a class="flex items-center justify-between text-body-md text-primary hover:text-secondary transition-colors group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-secondary" data-icon="verified">verified</span>
+<span>Authenticity Certificate</span>
+</div>
+<span class="material-symbols-outlined text-[16px]" data-icon="download">download</span>
+</a>
+</div>
+<div class="border-t border-outline-variant/10 pt-6">
+<button class="w-full py-3 px-4 bg-transparent border border-outline-variant/50 rounded-DEFAULT text-label-md text-primary hover:bg-surface-container-low transition-colors mb-3">
+                                Need Help?
+                            </button>
+<button class="w-full py-3 px-4 bg-transparent rounded-DEFAULT text-label-md text-on-surface-variant hover:text-primary transition-colors underline decoration-outline-variant/30 underline-offset-4">
+                                Report an Issue
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-background text-on-surface-variant dark:text-on-background font-hanken-grotesk text-label-sm w-full py-12 border-t border-outline-variant/10 flat no shadows mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop max-w-container-max mx-auto gap-6 md:gap-0">
+<div class="font-playfair-display text-headline-sm text-primary">
+                The Guild
+            </div>
+<div class="text-center md:text-left">
+                © 2024 The Guild Furniture Marketplace
+            </div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Shipping &amp; Returns</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Accessibility</a>
+</div>
+</div>
+</footer>
+<script src="../assets/js/demo-navigation.js"></script>
+<script src="../assets/js/demo-interactions.js"></script>
+</body></html>

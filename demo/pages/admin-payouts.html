@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Guild Admin - Payouts Ledger</title>
+<script>window.tailwind=window.tailwind||{};</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d8dadc",
+                        "secondary": "#505f76",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#000000",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-surface": "#2d3133",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#565e74",
+                        "surface-container": "#eceef0",
+                        "tertiary-fixed-dim": "#dec29a",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary-container": "#271901",
+                        "on-tertiary-fixed": "#271901",
+                        "surface": "#f7f9fb",
+                        "outline": "#76777d",
+                        "outline-variant": "#c6c6cd",
+                        "inverse-primary": "#bec6e0",
+                        "on-tertiary-fixed-variant": "#574425",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary-container": "#d0e1fb",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-secondary-container": "#54647a",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-primary-fixed": "#131b2e",
+                        "primary": "#000000",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#98805d",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#131b2e",
+                        "surface-variant": "#e0e3e5",
+                        "on-background": "#191c1e",
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d3e4fe",
+                        "tertiary-fixed": "#fcdeb5",
+                        "background": "#f7f9fb",
+                        "surface-container-high": "#e6e8ea",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-primary-container": "#7c839b",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#dae2fd",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-surface-variant": "#45464d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "unit": "4px",
+                        "container-padding": "32px",
+                        "gutter": "16px",
+                        "stack-lg": "32px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "title-lg": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "headline-md": ["Playfair Display"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Playfair Display"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Playfair Display"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "title-lg": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "data-mono": ["13px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; color: #191c1e; }
+        .data-table-row:nth-child(even) { background-color: #F1F5F9; }
+        .data-table-row:hover { background-color: #f2f4f6; }
+        .modal-overlay { background-color: rgba(25, 28, 30, 0.4); backdrop-filter: blur(2px); }
+    </style>
+<link rel="stylesheet" href="../assets/css/demo-navigation.css" />
+<link rel="icon" href="../assets/images/demo-favicon.svg" type="image/svg+xml">
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row font-body-md text-body-md">
+<!-- TopNavBar (Mobile Only) -->
+<header class="md:hidden bg-surface-container-lowest text-primary font-body-md text-body-md flex justify-between items-center w-full px-container-padding h-16 fixed top-0 z-50 border-b border-outline-variant">
+<div class="font-title-lg text-title-lg tracking-tighter text-primary">THE GUILD ADMIN</div>
+<div class="flex gap-gutter">
+<button class="text-on-surface-variant hover:bg-surface-container transition-colors duration-150 ease-in-out p-unit rounded"><span class="material-symbols-outlined">health_metrics</span></button>
+<button class="text-on-surface-variant hover:bg-surface-container transition-colors duration-150 ease-in-out p-unit rounded"><span class="material-symbols-outlined">notifications</span></button>
+<img alt="Administrator Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A small circular avatar placeholder image showing a generic user silhouette in a professional light mode setting, clean and minimalist." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+</header>
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex flex-col h-full fixed left-0 top-0 pt-16 z-40 bg-surface text-primary font-label-md text-label-md w-64 border-r border-outline-variant">
+<div class="px-container-padding pb-stack-md border-b border-outline-variant mb-stack-sm flex items-center gap-gutter">
+<img alt="The Guild Logo" class="w-10 h-10 rounded border border-outline-variant object-cover" data-alt="A clean, minimalist logo for 'The Guild' depicting stylized geometric architectural elements in crisp black and white, professional aesthetic." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div>
+<div class="font-headline-sm text-headline-sm uppercase tracking-widest text-primary">The Guild</div>
+<div class="text-secondary text-label-sm font-label-sm">Ops Control</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-unit">
+<a class="flex items-center gap-stack-sm px-container-padding py-stack-sm text-secondary hover:text-primary hover:bg-surface-container-high transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">dashboard</span>Overview
+            </a>
+<a class="flex items-center gap-stack-sm px-container-padding py-stack-sm text-secondary hover:text-primary hover:bg-surface-container-high transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">storefront</span>Sellers
+            </a>
+<a class="flex items-center gap-stack-sm px-container-padding py-stack-sm text-secondary hover:text-primary hover:bg-surface-container-high transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>Products
+            </a>
+<a class="flex items-center gap-stack-sm px-container-padding py-stack-sm text-secondary hover:text-primary hover:bg-surface-container-high transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>Orders
+            </a>
+<a class="flex items-center gap-stack-sm px-container-padding py-stack-sm text-secondary hover:text-primary hover:bg-surface-container-high transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">payments</span>Payments
+            </a>
+<a class="flex items-center gap-stack-sm px-container-padding py-stack-sm bg-secondary-container text-on-secondary-container font-bold border-r-4 border-primary transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>Payouts
+            </a>
+<a class="flex items-center gap-stack-sm px-container-padding py-stack-sm text-secondary hover:text-primary hover:bg-surface-container-high transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">local_shipping</span>Logistics
+            </a>
+<a class="flex items-center gap-stack-sm px-container-padding py-stack-sm text-secondary hover:text-primary hover:bg-surface-container-high transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">report_problem</span>Incidents
+            </a>
+<a class="flex items-center gap-stack-sm px-container-padding py-stack-sm text-secondary hover:text-primary hover:bg-surface-container-high transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">group</span>Users
+            </a>
+<a class="flex items-center gap-stack-sm px-container-padding py-stack-sm text-secondary hover:text-primary hover:bg-surface-container-high transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">domain</span>Domains
+            </a>
+<a class="flex items-center gap-stack-sm px-container-padding py-stack-sm text-secondary hover:text-primary hover:bg-surface-container-high transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">history</span>Audit Log
+            </a>
+<a class="flex items-center gap-stack-sm px-container-padding py-stack-sm text-secondary hover:text-primary hover:bg-surface-container-high transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>Settings
+            </a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 pt-16 md:pt-0 p-container-padding min-h-screen">
+<!-- Header -->
+<div class="flex justify-between items-end mb-stack-lg border-b border-outline-variant pb-stack-sm">
+<div>
+<h1 class="font-headline-md text-headline-md text-primary m-0">Payouts Ledger</h1>
+<p class="text-secondary font-body-sm text-body-sm mt-unit">Manage and release platform protected funds to sellers.</p>
+</div>
+<div class="flex gap-stack-sm">
+<button class="px-gutter py-unit border border-outline text-primary font-label-md text-label-md rounded hover:bg-surface-container transition-colors flex items-center gap-unit">
+<span class="material-symbols-outlined text-[16px]">filter_list</span> Filter
+                </button>
+<button class="px-gutter py-unit bg-primary text-on-primary font-label-md text-label-md rounded hover:bg-surface-tint transition-colors flex items-center gap-unit">
+<span class="material-symbols-outlined text-[16px]">download</span> Export
+                </button>
+</div>
+</div>
+<!-- Metrics Overview (Bento style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-stack-lg">
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-gutter flex flex-col justify-between">
+<span class="text-secondary font-label-md text-label-md uppercase tracking-wider">Total Platform Protected Funds</span>
+<div class="font-display-lg text-display-lg text-primary mt-stack-sm">$2.4M</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-gutter flex flex-col justify-between">
+<span class="text-secondary font-label-md text-label-md uppercase tracking-wider">Pending Releases (Ready)</span>
+<div class="font-display-lg text-display-lg text-primary mt-stack-sm">$145K</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-gutter flex flex-col justify-between bg-error-container/20">
+<span class="text-error font-label-md text-label-md uppercase tracking-wider">Action Required</span>
+<div class="flex items-center gap-stack-sm mt-stack-sm">
+<span class="font-display-lg text-display-lg text-error">12</span>
+<span class="text-secondary font-body-sm text-body-sm">Items</span>
+</div>
+</div>
+</div>
+<!-- Ledger Data Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-low font-label-sm text-label-sm uppercase text-secondary tracking-wider">
+<th class="p-stack-sm font-semibold w-32">Order ID</th>
+<th class="p-stack-sm font-semibold w-48">Seller</th>
+<th class="p-stack-sm font-semibold text-right w-32">Buyer Payment</th>
+<th class="p-stack-sm font-semibold text-right w-24">Refund</th>
+<th class="p-stack-sm font-semibold text-right w-32">Seller Payable</th>
+<th class="p-stack-sm font-semibold w-32">Status</th>
+<th class="p-stack-sm font-semibold text-right w-32">Action</th>
+</tr>
+</thead>
+<tbody class="font-data-mono text-data-mono">
+<!-- Row 1: Ready for Release (Action Required) -->
+<tr class="border-b border-outline-variant data-table-row bg-error-container/10">
+<td class="p-stack-sm text-primary">ORD-9821-A</td>
+<td class="p-stack-sm">Acme Heavy Industries</td>
+<td class="p-stack-sm text-right">$14,500.00</td>
+<td class="p-stack-sm text-right text-secondary">$0.00</td>
+<td class="p-stack-sm text-right font-semibold text-primary">$12,325.00</td>
+<td class="p-stack-sm">
+<div class="flex items-center gap-unit">
+<div class="w-1.5 h-1.5 bg-tertiary-fixed-dim"></div>
+<span class="bg-tertiary-container/10 text-on-tertiary-fixed-variant px-2 py-0.5 rounded text-[11px] font-semibold uppercase tracking-wider border border-tertiary-fixed-dim/30">Ready</span>
+</div>
+</td>
+<td class="p-stack-sm text-right">
+<button class="px-3 py-1 bg-primary text-on-primary font-label-sm text-label-sm rounded hover:bg-surface-tint transition-colors uppercase tracking-wider" onclick="document.getElementById('release-modal').classList.remove('hidden')">Release</button>
+</td>
+</tr>
+<!-- Row 2: On Hold -->
+<tr class="border-b border-outline-variant data-table-row">
+<td class="p-stack-sm text-primary">ORD-9822-B</td>
+<td class="p-stack-sm">Global Tech Suppliers</td>
+<td class="p-stack-sm text-right">$8,200.00</td>
+<td class="p-stack-sm text-right text-secondary">$0.00</td>
+<td class="p-stack-sm text-right font-semibold text-primary">$6,970.00</td>
+<td class="p-stack-sm">
+<div class="flex items-center gap-unit">
+<div class="w-1.5 h-1.5 bg-outline"></div>
+<span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[11px] font-semibold uppercase tracking-wider border border-outline-variant">On Hold</span>
+</div>
+</td>
+<td class="p-stack-sm text-right">
+<button class="px-3 py-1 border border-outline-variant text-secondary font-label-sm text-label-sm rounded opacity-50 cursor-not-allowed uppercase tracking-wider">Review</button>
+</td>
+</tr>
+<!-- Row 3: Released -->
+<tr class="border-b border-outline-variant data-table-row">
+<td class="p-stack-sm text-primary">ORD-9819-X</td>
+<td class="p-stack-sm">Apex Manufacturing</td>
+<td class="p-stack-sm text-right">$22,000.00</td>
+<td class="p-stack-sm text-right text-secondary">$0.00</td>
+<td class="p-stack-sm text-right font-semibold text-primary">$18,700.00</td>
+<td class="p-stack-sm">
+<div class="flex items-center gap-unit">
+<div class="w-1.5 h-1.5 bg-secondary"></div>
+<span class="bg-secondary-container/30 text-on-secondary-container px-2 py-0.5 rounded text-[11px] font-semibold uppercase tracking-wider border border-secondary-fixed-dim/50">Released</span>
+</div>
+</td>
+<td class="p-stack-sm text-right">
+<button class="px-3 py-1 border border-outline-variant text-secondary font-label-sm text-label-sm rounded hover:bg-surface-container transition-colors uppercase tracking-wider">Details</button>
+</td>
+</tr>
+<!-- Row 4: Partial Refund -->
+<tr class="border-b border-outline-variant data-table-row">
+<td class="p-stack-sm text-primary">ORD-9810-C</td>
+<td class="p-stack-sm">Beta Logistics</td>
+<td class="p-stack-sm text-right">$5,000.00</td>
+<td class="p-stack-sm text-right text-error">-$1,000.00</td>
+<td class="p-stack-sm text-right font-semibold text-primary">$3,400.00</td>
+<td class="p-stack-sm">
+<div class="flex items-center gap-unit">
+<div class="w-1.5 h-1.5 bg-outline"></div>
+<span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[11px] font-semibold uppercase tracking-wider border border-outline-variant">On Hold</span>
+</div>
+</td>
+<td class="p-stack-sm text-right">
+<button class="px-3 py-1 border border-outline-variant text-secondary font-label-sm text-label-sm rounded opacity-50 cursor-not-allowed uppercase tracking-wider">Review</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</main>
+<!-- Release Confirmation Modal -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center modal-overlay p-gutter" id="release-modal">
+<div class="bg-surface-container-lowest border border-outline-variant rounded shadow-lg w-full max-w-md flex flex-col">
+<div class="p-gutter border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h2 class="font-title-lg text-title-lg text-primary m-0">Confirm Payout Release</h2>
+<button class="text-secondary hover:text-primary transition-colors" onclick="document.getElementById('release-modal').classList.add('hidden')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-gutter">
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md">
+                    Are you sure you want to release this payout from Platform Protected Funds? 
+                </p>
+<div class="bg-surface-container p-stack-sm rounded border border-outline-variant mb-stack-md font-data-mono text-data-mono text-primary flex justify-between">
+<span>Seller Payable:</span>
+<span class="font-semibold">$12,325.00</span>
+</div>
+<label class="block font-label-md text-label-md text-primary mb-unit" for="release-reason">Release Reason (Required)</label>
+<textarea class="w-full border border-outline-variant rounded p-stack-sm font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none" id="release-reason" placeholder="Enter reason for manual release..." rows="3"></textarea>
+</div>
+<div class="p-gutter border-t border-outline-variant flex justify-end gap-stack-sm bg-surface-container-low">
+<button class="px-gutter py-2 border border-outline text-primary font-label-md text-label-md rounded hover:bg-surface-container transition-colors uppercase tracking-wider" onclick="document.getElementById('release-modal').classList.add('hidden')">Cancel</button>
+<button class="px-gutter py-2 bg-primary text-on-primary font-label-md text-label-md rounded hover:bg-surface-tint transition-colors uppercase tracking-wider">Confirm Release</button>
+</div>
+</div>
+</div>
+<script src="../assets/js/demo-navigation.js"></script>
+<script src="../assets/js/demo-interactions.js"></script>
+</body></html>

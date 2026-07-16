@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>THE GUILD | Curated Furniture Marketplace</title>
+<script>window.tailwind=window.tailwind||{};</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary": "#ffffff",
+                      "inverse-on-surface": "#f2f0f0",
+                      "secondary": "#6f5a4a",
+                      "tertiary-fixed": "#e3e2e0",
+                      "error": "#ba1a1a",
+                      "secondary-fixed": "#faddc8",
+                      "on-tertiary-fixed": "#1a1c1b",
+                      "on-error-container": "#93000a",
+                      "surface-bright": "#fbf9f9",
+                      "on-surface": "#1b1c1c",
+                      "on-primary-fixed-variant": "#474746",
+                      "surface-container-high": "#e9e8e7",
+                      "tertiary-container": "#1a1c1b",
+                      "surface-variant": "#e3e2e2",
+                      "surface-container-highest": "#e3e2e2",
+                      "on-primary-fixed": "#1c1b1b",
+                      "inverse-primary": "#c8c6c5",
+                      "tertiary-fixed-dim": "#c7c6c5",
+                      "outline-variant": "#c4c7c7",
+                      "surface-container-low": "#f5f3f3",
+                      "on-secondary-fixed-variant": "#564334",
+                      "primary-container": "#1c1b1b",
+                      "background": "#fbf9f9",
+                      "surface-tint": "#5f5e5e",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "on-primary-container": "#858383",
+                      "secondary-container": "#faddc8",
+                      "tertiary": "#000000",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#756050",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#ffffff",
+                      "inverse-surface": "#303031",
+                      "surface-container": "#efeded",
+                      "surface": "#fbf9f9",
+                      "on-secondary-fixed": "#27180c",
+                      "outline": "#747878",
+                      "on-tertiary-container": "#838482",
+                      "primary": "#000000",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed-dim": "#dcc2ad",
+                      "on-primary": "#ffffff",
+                      "on-background": "#1b1c1c",
+                      "primary-fixed": "#e5e2e1",
+                      "on-tertiary-fixed-variant": "#464746",
+                      "on-surface-variant": "#444748",
+                      "surface-dim": "#dbdad9"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "stack-lg": "80px",
+                      "stack-sm": "24px",
+                      "margin-mobile": "20px",
+                      "stack-xl": "120px",
+                      "container-max": "1440px",
+                      "margin-desktop": "64px",
+                      "unit": "4px",
+                      "stack-md": "40px"
+              },
+              "fontFamily": {
+                      "label-md": [
+                              "Public Sans"
+                      ],
+                      "headline-lg": [
+                              "Playfair Display"
+                      ],
+                      "body-sm": [
+                              "Public Sans"
+                      ],
+                      "label-caps": [
+                              "Public Sans"
+                      ],
+                      "display-lg": [
+                              "Playfair Display"
+                      ],
+                      "headline-md": [
+                              "Playfair Display"
+                      ],
+                      "display-md": [
+                              "Playfair Display"
+                      ],
+                      "body-md": [
+                              "Public Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "Playfair Display"
+                      ],
+                      "body-lg": [
+                              "Public Sans"
+                      ]
+              },
+              "fontSize": {
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-md": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        /* Minimalist Reset & Globals */
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Architectural Lines */
+        .hairline-top { border-top: 1px solid theme('colors.outline-variant'); }
+        .hairline-bottom { border-bottom: 1px solid theme('colors.outline-variant'); }
+        .hairline-left { border-left: 1px solid theme('colors.outline-variant'); }
+        .hairline-right { border-right: 1px solid theme('colors.outline-variant'); }
+    </style>
+<link rel="stylesheet" href="../assets/css/demo-navigation.css" />
+<link rel="icon" href="../assets/images/demo-favicon.svg" type="image/svg+xml">
+</head>
+<body class="font-body-md text-body-md">
+<!-- TopNavBar (Shared Component Blueprint) -->
+<header class="sticky top-0 z-50 bg-background border-b border-outline-variant w-full px-margin-desktop py-4 hidden md:flex justify-between items-center max-w-container-max mx-auto">
+<!-- Search (Left) -->
+<div class="flex-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 font-label-caps text-label-caps text-on-surface-variant placeholder:text-outline w-full max-w-[200px]" placeholder="Search" type="text"/>
+</div>
+<!-- Logo (Center) -->
+<div class="flex-none text-center">
+<h1 class="font-display-md text-display-md tracking-tighter text-primary">THE GUILD</h1>
+</div>
+<!-- Navigation & Actions (Right) -->
+<div class="flex-1 flex justify-end items-center gap-8">
+<nav class="flex gap-6">
+<!-- Intent: Homepage, so no single active nav item, but we'll leave as inactive style based on JSON -->
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Gallery</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Designers</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Journal</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Bespoke</a>
+</nav>
+<div class="flex gap-4">
+<button class="hover:text-primary transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+</button>
+<button class="hover:text-primary transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Mobile Nav Header -->
+<header class="sticky top-0 z-50 bg-background border-b border-outline-variant w-full px-margin-mobile py-4 flex md:hidden justify-between items-center">
+<button class="text-on-surface-variant"><span class="material-symbols-outlined">menu</span></button>
+<h1 class="font-display-md text-[32px] tracking-tighter text-primary">THE GUILD</h1>
+<button class="text-on-surface-variant"><span class="material-symbols-outlined">shopping_bag</span></button>
+</header>
+<main class="w-full">
+<!-- Hero Section -->
+<section class="w-full relative h-[819px] min-h-[600px] bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center w-full h-full opacity-90 mix-blend-multiply" data-alt="A striking, expansive modernist interior showcasing a high-end vintage furniture collection. The room features stark white architectural walls, a deep polished walnut floor, and massive floor-to-ceiling windows flooding the space with high-key natural light. The aesthetic is extremely minimalist and editorial, focusing on the structural elegance of a solitary mid-century lounge chair. The palette relies on stark whites, deep wood tones, and subtle charcoal accents, creating a calm, authoritative atmosphere." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')"></div>
+<div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center flex flex-col items-center">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary max-w-4xl mx-auto mb-6">Exceptional design, collected across generations.</h2>
+<p class="font-body-lg text-body-lg text-on-surface max-w-2xl mx-auto mb-12">A curated marketplace for distinctive vintage furniture and collectible design.</p>
+<div class="flex flex-col sm:flex-row gap-6">
+<button class="bg-primary text-on-primary font-label-caps text-label-caps py-4 px-8 tracking-widest hover:bg-on-surface-variant transition-colors">SHOP NEW ARRIVALS</button>
+<button class="border border-primary text-primary font-label-caps text-label-caps py-4 px-8 tracking-widest hover:bg-surface-container-low transition-colors">EXPLORE COLLECTIONS</button>
+</div>
+</div>
+</section>
+<!-- Curated Categories (Bento/Asymmetric) -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-unit">
+<a class="md:col-span-8 group relative block h-[600px] overflow-hidden bg-surface-container-low" href="#">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700" data-alt="A close-up editorial shot of a pristine, rare vintage Finn Juhl chair in a bright, minimalist gallery setting. The lighting is soft and directional, highlighting the smooth curves of the teak wood and the rich texture of the deep black leather upholstery. The background is a seamless expanse of soft stone and gallery white, emphasizing the architectural integrity of the furniture piece. High contrast, sharp focus." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<span class="font-label-caps text-label-caps text-on-primary mb-2 block">Category</span>
+<h3 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-primary">Vintage Furniture</h3>
+</div>
+</a>
+<a class="md:col-span-4 group relative block h-[600px] overflow-hidden bg-surface-container-highest" href="#">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700" data-alt="A sleek, modern sculptural lighting fixture suspended in a minimalist, gallery-white space. The lamp is a masterpiece of contemporary design, featuring sharp geometric lines in brushed brass and frosted glass. It casts a precise, architectural shadow against the pristine wall. The overall mood is authoritative and clean, strictly adhering to a high-end editorial aesthetic." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<span class="font-label-caps text-label-caps text-on-primary mb-2 block">Category</span>
+<h3 class="font-headline-md text-headline-md text-on-primary">Contemporary</h3>
+</div>
+</a>
+<a class="md:col-span-4 group relative block h-[400px] overflow-hidden bg-surface-variant" href="#">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700" data-alt="An abstract, large-scale contemporary painting leaning against a gallery white wall, resting on a polished concrete floor. The artwork utilizes a bold, minimalist palette of stark white, deep architectural charcoal, and a single precise line of vibrant red. The lighting is high-key and diffused, creating a serene, museum-quality atmosphere without any harsh shadows." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6">
+<h3 class="font-headline-md text-headline-md text-on-primary">Art</h3>
+</div>
+</a>
+<a class="md:col-span-8 group relative block h-[400px] overflow-hidden bg-surface-container" href="#">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700" data-alt="A curated arrangement of highly structural decorative objects resting on a monolithic marble plinth. The items include a brutalist ceramic vase and a perfectly spherical brass paperweight. The setting is impeccably clean, employing a strict minimalist aesthetic with gallery white walls and sharp, directional lighting that enhances the raw textures of the objects." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6">
+<h3 class="font-headline-md text-headline-md text-on-primary">Decorative Objects</h3>
+</div>
+</a>
+</div>
+</section>
+<!-- New Arrivals (Grid) -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg border-t border-outline-variant">
+<div class="flex justify-between items-end mb-12">
+<h2 class="font-display-md text-[36px] md:text-display-md text-primary">New Arrivals</h2>
+<a class="font-label-caps text-label-caps text-primary border-b border-primary pb-1 hover:text-on-surface-variant transition-colors" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+<!-- Product Card 1 -->
+<div class="group cursor-pointer">
+<div class="w-full aspect-[4/5] bg-surface-container-low mb-6 overflow-hidden relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A flawlessly restored Finn Juhl Chieftain Chair from 1949, presented in a stark, minimalist studio environment. The rich, warm tones of the walnut frame contrast sharply against a pure white background. The lighting is highly controlled and editorial, emphasizing the sculptural, organic lines of the chair and the premium quality of the black leather seating without casting heavy shadows." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')"></div>
+</div>
+<h4 class="font-headline-md text-[20px] text-primary mb-1">Finn Juhl Chieftain Chair</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">1949</p>
+<div class="flex justify-between items-center pt-3 border-t border-outline-variant">
+<span class="font-label-md text-label-md text-primary">$18,500</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">Established Lines</span>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group cursor-pointer">
+<div class="w-full aspect-[4/5] bg-surface-container-low mb-6 overflow-hidden relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A vintage Pierre Jeanneret Office Cane Chair from Chandigarh, isolated against a bright gallery-white backdrop. The raw, beautifully aged teak wood and intricate cane weaving are captured in high-resolution detail under soft, uniform lighting. The image embodies a sophisticated, architectural minimalism, framing the chair as a serious collector's piece." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')"></div>
+</div>
+<h4 class="font-headline-md text-[20px] text-primary mb-1">Pierre Jeanneret Office Chair</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">c. 1955</p>
+<div class="flex justify-between items-center pt-3 border-t border-outline-variant">
+<span class="font-label-md text-label-md text-primary">$12,000</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">Galerie Modern</span>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group cursor-pointer">
+<div class="w-full aspect-[4/5] bg-surface-container-low mb-6 overflow-hidden relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A minimalist, brutalist Paul Evans sculpted bronze cabinet standing proudly in a vast, empty gallery space. The metallic textures of the cabinet reflect ambient, high-key light, contrasting with the soft stone flooring. The aesthetic is severely architectural and highly curated, focusing entirely on the imposing structural presence of the furniture piece." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')"></div>
+</div>
+<h4 class="font-headline-md text-[20px] text-primary mb-1">Paul Evans Bronze Cabinet</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">1970</p>
+<div class="flex justify-between items-center pt-3 border-t border-outline-variant">
+<span class="font-label-md text-label-md text-primary">$45,000</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">The Guild NYC</span>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group cursor-pointer">
+<div class="w-full aspect-[4/5] bg-surface-container-low mb-6 overflow-hidden relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A pristine Charlotte Perriand Les Arcs wall sconce, presented in isolation on a flawless white wall. The matte black metal finish is stark and graphic against the background. The lighting setup is meticulous, ensuring no gradient shadows obscure the sharp, architectural lines of the design, perfectly aligning with a high-end, editorial visual standard." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')"></div>
+</div>
+<h4 class="font-headline-md text-[20px] text-primary mb-1">Charlotte Perriand Sconce</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">1968</p>
+<div class="flex justify-between items-center pt-3 border-t border-outline-variant">
+<span class="font-label-md text-label-md text-primary">$4,200</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">Lumina Archives</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component Blueprint) -->
+<footer class="w-full mt-stack-xl border-t border-outline-variant bg-background w-full px-margin-desktop py-stack-lg max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+<div class="md:col-span-4">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6">THE GUILD</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-xs">Curated marketplace for distinctive vintage furniture and collectible design.</p>
+</div>
+<div class="md:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+<div>
+<h4 class="font-label-caps text-label-caps text-primary mb-6">Navigation</h4>
+<ul class="space-y-4">
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">The Gallery</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Designers</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Journal</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-caps text-label-caps text-primary mb-6">Support</h4>
+<ul class="space-y-4">
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Help Center</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Shipping &amp; Returns</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-caps text-label-caps text-primary mb-6">Legal</h4>
+<ul class="space-y-4">
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-caps text-label-caps text-primary mb-6">Social</h4>
+<ul class="space-y-4">
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Instagram</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Pinterest</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-label-caps text-[10px] text-on-surface-variant tracking-widest uppercase">© 2024 THE GUILD. ARCHITECTURAL INTEGRITY IN EVERY PIECE.</p>
+</div>
+</footer>
+<script src="../assets/js/demo-navigation.js"></script>
+<script src="../assets/js/demo-interactions.js"></script>
+</body></html>

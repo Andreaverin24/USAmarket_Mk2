@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About - Established Lines</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&amp;family=Hanken+Grotesk:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e4e2e2",
+                        "tertiary-fixed": "#e4e2dd",
+                        "on-tertiary-container": "#84847f",
+                        "on-secondary-fixed": "#301400",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e9e8e7",
+                        "secondary-fixed-dim": "#f5ba92",
+                        "outline": "#747878",
+                        "primary-fixed": "#e5e2e1",
+                        "surface": "#fbf9f8",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#f2f0f0",
+                        "on-surface": "#1b1c1c",
+                        "on-secondary-container": "#794e2d",
+                        "background": "#fbf9f8",
+                        "tertiary-container": "#1b1c19",
+                        "on-tertiary-fixed": "#1b1c19",
+                        "tertiary": "#000000",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "surface-dim": "#dbdad9",
+                        "outline-variant": "#c4c7c7",
+                        "primary": "#000000",
+                        "inverse-surface": "#303031",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#fec299",
+                        "surface-tint": "#5f5e5e",
+                        "secondary": "#815433",
+                        "on-surface-variant": "#444748",
+                        "tertiary-fixed-dim": "#c8c6c1",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-primary-container": "#858383",
+                        "secondary-fixed": "#ffdcc5",
+                        "on-secondary-fixed-variant": "#653d1e",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "on-background": "#1b1c1c",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#474743",
+                        "surface-container-low": "#f5f3f3",
+                        "surface-bright": "#fbf9f8",
+                        "inverse-primary": "#c8c6c5",
+                        "surface-container-highest": "#e4e2e2",
+                        "surface-container": "#efeded",
+                        "primary-container": "#1c1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "unit": "4px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Playfair Display"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-xl": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "utility-sm": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "utility-sm": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased selection:bg-primary-fixed selection:text-primary-fixed-variant">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 bg-background border-b border-outline-variant transition-all ease-in-out duration-200 flat no shadows">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-6 max-w-container-max mx-auto">
+<!-- Navigation Links (Web) -->
+<nav class="hidden md:flex items-center gap-[40px]">
+<a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary hover:opacity-70 transition-opacity duration-300" href="#">New Arrivals</a>
+<a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary hover:opacity-70 transition-opacity duration-300" href="#">Vintage</a>
+<a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary hover:opacity-70 transition-opacity duration-300" href="#">Contemporary</a>
+<a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary hover:opacity-70 transition-opacity duration-300" href="#">Originals</a>
+<a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary hover:opacity-70 transition-opacity duration-300" href="#">Lighting</a>
+<a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary hover:opacity-70 transition-opacity duration-300" href="#">Decor</a>
+</nav>
+<!-- Brand Logo -->
+<div class="text-headline-lg font-headline-lg tracking-tighter text-primary">
+                Established Lines
+            </div>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-[24px]">
+<button aria-label="search" class="text-primary hover:opacity-70 transition-opacity duration-300">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button aria-label="person" class="text-primary hover:opacity-70 transition-opacity duration-300">
+<span class="material-symbols-outlined">person</span>
+</button>
+<button aria-label="shopping_bag" class="text-primary hover:opacity-70 transition-opacity duration-300">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+</div>
+</div>
+</header>
+<main class="w-full">
+<!-- 1. Hero Section -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-[64px] md:py-[96px]">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="md:col-span-10 md:col-start-2">
+<div class="aspect-[16/9] w-full border border-outline/20 bg-surface-container-low mb-12">
+<img class="w-full h-full object-cover grayscale-[20%]" data-alt="A highly detailed portrait photograph of an architectural woodworking space or heritage design founder standing in a sunlit, minimalist studio. The room is styled with quiet authority, featuring raw wood textures, pristine white walls, and carefully curated vintage tools. High-key natural lighting emphasizes craftsmanship and editorial elegance. The mood is professional, serene, and bespoke, adhering strictly to a light mode aesthetic." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface text-center md:text-left max-w-4xl mx-auto md:mx-0">
+                        A Philosophy of Collecting
+                    </h1>
+</div>
+</div>
+</section>
+<!-- 2. Narrative Section -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-[64px] border-t border-outline-variant/50">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="md:col-span-12 mb-12">
+<h2 class="font-headline-md text-headline-md text-on-surface">Our Story</h2>
+</div>
+<div class="md:col-span-4 flex flex-col gap-6">
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                        Founded on the principles of architectural rigor and material honesty, Established Lines began as a quiet endeavor to source pieces that possess an inherent structural integrity. Our early days were spent in dusty archives and remote workshops, seeking objects that transcend transient trends.
+                    </p>
+</div>
+<div class="md:col-span-4 flex flex-col gap-6">
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                        The sourcing process is an exercise in restraint and curation. We look for provenance, sure, but more importantly, we look for the hand of the maker and the logic of the construction. Every joint, every patinated surface tells a story of utility and enduring design.
+                    </p>
+</div>
+<div class="md:col-span-4 flex flex-col gap-6">
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                        Our design approach is minimalist but never austere. We believe in generous whitespace, both in physical environments and digital presence. The pieces we collect are meant to anchor a room, to provide a quiet authority that allows life to unfold elegantly around them.
+                    </p>
+</div>
+</div>
+</section>
+<!-- 3. Milestones Timeline -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-[96px] bg-surface-container-low border-y border-outline-variant/50">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="md:col-span-4 md:col-start-2">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-12">Decades of Practice</h2>
+</div>
+<div class="md:col-span-6 relative border-l border-outline/20 pl-8 pb-8">
+<!-- Timeline Items -->
+<div class="relative mb-16">
+<span class="absolute -left-[37px] top-2 w-3 h-3 bg-surface border border-outline rounded-full"></span>
+<span class="font-label-md text-label-md text-primary mb-2 block tracking-widest">1994</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">The First Archive</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Opening our initial space in a repurposed industrial loft, focusing purely on mid-century functionalism.</p>
+</div>
+<div class="relative mb-16">
+<span class="absolute -left-[37px] top-2 w-3 h-3 bg-surface border border-outline rounded-full"></span>
+<span class="font-label-md text-label-md text-primary mb-2 block tracking-widest">2008</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">European Expansion</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Establishing relationships with heritage workshops across Scandinavia and Northern Italy to source directly.</p>
+</div>
+<div class="relative">
+<span class="absolute -left-[37px] top-2 w-3 h-3 bg-surface border border-outline rounded-full"></span>
+<span class="font-label-md text-label-md text-primary mb-2 block tracking-widest">2024</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">The Modern Marketplace</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Launching our curated digital platform, bringing physical editorial aesthetics into the online collecting experience.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. The Collection (Images) -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-[96px]">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-12 text-center">The Space</h2>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="md:col-span-8 aspect-[4/3] border border-outline/20">
+<img class="w-full h-full object-cover" data-alt="A wide architectural shot of a minimalist gallery warehouse space. Natural light streams through large steel-framed windows onto polished concrete floors. Arranged with generous whitespace are several iconic vintage chairs and a solid oak table. The color palette is muted, featuring ivory, warm wood tones, and charcoal accents. The atmosphere is serene, high-end, and expertly curated for an editorial look." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<div class="aspect-square border border-outline/20">
+<img class="w-full h-full object-cover" data-alt="A close-up macro photograph of a vintage furniture joint, highlighting the craftsmanship of mortise and tenon construction in rich walnut wood. The lighting is soft and directional, emphasizing the texture and patina of age. The background is a clean, out-of-focus bright surface, maintaining the minimalist, light mode aesthetic of the brand." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+<div class="aspect-square border border-outline/20 bg-surface-variant flex items-center justify-center p-8">
+<p class="font-body-md text-body-md text-on-surface-variant text-center italic">
+                             "Every surface must earn its place."
+                         </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Philosophy Quote -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-[120px] bg-background">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="md:col-span-8 md:col-start-3 text-center">
+<span class="material-symbols-outlined text-outline-variant mb-6" style="font-size: 48px;">format_quote</span>
+<blockquote class="font-headline-lg text-headline-lg text-on-surface leading-tight mb-8">
+                        "We do not decorate spaces. We structure them with objects that possess absolute architectural integrity. True design is the quiet authority of form meeting necessity."
+                    </blockquote>
+<cite class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant not-italic">
+                        — The Founders
+                    </cite>
+</div>
+</div>
+</section>
+<!-- 6. Contact CTA -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-[96px] border-t border-outline-variant/50 text-center">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8">Seek a Specific Piece?</h2>
+<button class="bg-primary text-on-primary font-label-md text-label-md uppercase tracking-widest px-8 py-4 rounded-lg hover:bg-inverse-surface transition-colors duration-300">
+                Inquire with our Curators
+            </button>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface border-t border-outline-variant w-full flat no shadows">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-[48px] max-w-container-max mx-auto">
+<!-- Brand & Copyright -->
+<div class="md:col-span-2 flex flex-col justify-between">
+<div class="text-headline-md font-headline-md text-primary mb-6">
+                    Established Lines
+                </div>
+<p class="font-utility-sm text-utility-sm text-on-surface-variant mt-auto">
+                    © 2024 Established Lines. All rights reserved. Powered by Marketplace.
+                </p>
+</div>
+<!-- Links Column 1 -->
+<div class="flex flex-col gap-4">
+<a class="font-utility-sm text-utility-sm text-on-surface-variant hover:underline underline-offset-4 transition-colors duration-200" href="#">Shipping Info</a>
+<a class="font-utility-sm text-utility-sm text-primary font-bold hover:underline underline-offset-4 transition-colors duration-200" href="#">About</a>
+<a class="font-utility-sm text-utility-sm text-on-surface-variant hover:underline underline-offset-4 transition-colors duration-200" href="#">Contact</a>
+</div>
+<!-- Links Column 2 -->
+<div class="flex flex-col gap-4">
+<a class="font-utility-sm text-utility-sm text-on-surface-variant hover:underline underline-offset-4 transition-colors duration-200" href="#">Newsletter</a>
+<a class="font-utility-sm text-utility-sm text-on-surface-variant hover:underline underline-offset-4 transition-colors duration-200" href="#">Privacy Policy</a>
+</div>
+</div>
+</footer>
+</body></html>

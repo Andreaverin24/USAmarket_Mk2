@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bulk Import - Validation &amp; Preview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#1a1c1c",
+                    "on-primary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e2e2e2",
+                    "surface": "#f9f9f9",
+                    "outline-variant": "#c4c7c7",
+                    "on-surface-variant": "#444748",
+                    "error-container": "#ffdad6",
+                    "primary": "#000000",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "on-surface": "#1a1c1c",
+                    "tertiary": "#000000",
+                    "secondary-fixed": "#e4e2e2",
+                    "surface-container-high": "#e8e8e8",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#e1dfdf",
+                    "inverse-on-surface": "#f1f1f1",
+                    "surface-dim": "#dadada",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#c7c6c6",
+                    "tertiary-fixed": "#e2e2e2",
+                    "primary-fixed": "#e5e2e1",
+                    "on-primary-fixed-variant": "#474746",
+                    "on-primary-fixed": "#1c1b1b",
+                    "primary-container": "#1c1b1b",
+                    "surface-variant": "#e2e2e2",
+                    "surface-tint": "#5f5e5e",
+                    "secondary": "#5e5e5e",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-container": "#626262",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "surface-bright": "#f9f9f9",
+                    "primary-fixed-dim": "#c8c6c5",
+                    "surface-container-low": "#f4f3f3",
+                    "on-error-container": "#93000a",
+                    "outline": "#747878",
+                    "inverse-surface": "#2f3131",
+                    "on-tertiary-container": "#838484",
+                    "on-secondary-fixed-variant": "#464747",
+                    "on-primary-container": "#858383",
+                    "tertiary-container": "#1a1c1c",
+                    "surface-container": "#eeeeee",
+                    "on-secondary-fixed": "#1b1c1c",
+                    "inverse-primary": "#c8c6c5",
+                    "background": "#f9f9f9",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "stack-xs": "4px",
+                    "margin-mobile": "16px",
+                    "stack-sm": "8px",
+                    "container-max": "1440px",
+                    "unit": "4px",
+                    "margin-desktop": "40px",
+                    "stack-lg": "32px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "label-bold": ["Inter"],
+                    "display-lg": ["Playfair Display"],
+                    "headline-sm": ["Playfair Display"],
+                    "headline-md": ["Playfair Display"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "data-mono": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "data-mono": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom toggle switch styling to match minimalist flat design */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #000000;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen">
+<!-- SideNavBar -->
+<nav class="hidden md:flex fixed left-0 top-0 h-full w-[280px] flex-col py-stack-lg px-gutter bg-surface border-r border-outline-variant z-40">
+<div class="mb-stack-lg flex items-center gap-3">
+<img class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="A minimalist, monochromatic geometric profile avatar representing an administrative user in a high-end corporate system. Crisp lines, subtle gray tones, professional and authoritative aesthetic." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div>
+<h2 class="font-display-lg text-headline-sm uppercase tracking-widest text-primary">Guild Admin</h2>
+<p class="font-body-sm text-body-sm text-secondary">Furniture OS</p>
+</div>
+</div>
+<ul class="flex flex-col gap-unit">
+<li class="flex items-center gap-3 px-3 py-2 rounded cursor-pointer text-secondary hover:bg-surface-container transition-colors duration-150 active:opacity-80">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-bold text-label-bold">Overview</span>
+</li>
+<!-- Active State: Products -->
+<li class="flex items-center gap-3 px-3 py-2 cursor-pointer transition-colors duration-150 active:opacity-80 text-primary font-bold border-l-2 border-primary bg-surface-container-low">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label-bold text-label-bold">Products</span>
+</li>
+<li class="flex items-center gap-3 px-3 py-2 rounded cursor-pointer text-secondary hover:bg-surface-container transition-colors duration-150 active:opacity-80">
+<span class="material-symbols-outlined">layers</span>
+<span class="font-label-bold text-label-bold">Collections</span>
+</li>
+<li class="flex items-center gap-3 px-3 py-2 rounded cursor-pointer text-secondary hover:bg-surface-container transition-colors duration-150 active:opacity-80">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-bold text-label-bold">Orders</span>
+</li>
+<li class="flex items-center gap-3 px-3 py-2 rounded cursor-pointer text-secondary hover:bg-surface-container transition-colors duration-150 active:opacity-80">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-label-bold text-label-bold">Shipping</span>
+</li>
+<li class="flex items-center gap-3 px-3 py-2 rounded cursor-pointer text-secondary hover:bg-surface-container transition-colors duration-150 active:opacity-80">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-bold text-label-bold">Customers</span>
+</li>
+<li class="flex items-center gap-3 px-3 py-2 rounded cursor-pointer text-secondary hover:bg-surface-container transition-colors duration-150 active:opacity-80">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-bold text-label-bold">Storefront</span>
+</li>
+<li class="flex items-center gap-3 px-3 py-2 rounded cursor-pointer text-secondary hover:bg-surface-container transition-colors duration-150 active:opacity-80">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="font-label-bold text-label-bold">Analytics</span>
+</li>
+<li class="flex items-center gap-3 px-3 py-2 rounded cursor-pointer text-secondary hover:bg-surface-container transition-colors duration-150 active:opacity-80">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-label-bold text-label-bold">Team</span>
+</li>
+<li class="flex items-center gap-3 px-3 py-2 rounded cursor-pointer text-secondary hover:bg-surface-container transition-colors duration-150 active:opacity-80">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-bold text-label-bold">Settings</span>
+</li>
+</ul>
+</nav>
+<!-- TopAppBar -->
+<header class="hidden md:flex ml-[280px] justify-between items-center h-16 px-margin-desktop bg-background border-b border-outline-variant sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary cursor-pointer hover:text-primary transition-colors">search</span>
+<span class="font-display-lg text-headline-sm text-primary">Furniture Curator OS</span>
+</div>
+<div class="flex items-center gap-6">
+<nav class="flex gap-4">
+<a class="font-label-bold text-label-bold text-secondary hover:text-primary transition-colors cursor-pointer active:scale-95 duration-200" href="#">Marketplace</a>
+<a class="font-label-bold text-label-bold text-secondary hover:text-primary transition-colors cursor-pointer active:scale-95 duration-200" href="#">Storefront</a>
+</nav>
+<div class="flex items-center gap-3 border-l border-outline-variant pl-6">
+<span class="material-symbols-outlined text-secondary hover:text-primary cursor-pointer transition-colors active:scale-95 duration-200">notifications</span>
+<span class="material-symbols-outlined text-secondary hover:text-primary cursor-pointer transition-colors active:scale-95 duration-200">help</span>
+<span class="material-symbols-outlined text-secondary hover:text-primary cursor-pointer transition-colors active:scale-95 duration-200">account_circle</span>
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover ml-2" data-alt="A minimalist, monochromatic geometric profile avatar representing an administrative user in a high-end corporate system. Crisp lines, subtle gray tones, professional and authoritative aesthetic." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="md:ml-[280px] p-margin-mobile md:p-margin-desktop max-w-container-max mx-auto">
+<!-- Header & Stepper -->
+<div class="mb-stack-lg border-b border-outline-variant pb-stack-md flex justify-between items-end">
+<div>
+<p class="font-label-bold text-label-bold text-secondary mb-2 uppercase tracking-widest">Step 4 of 5</p>
+<h1 class="font-headline-md text-headline-md text-primary">Validation &amp; Preview</h1>
+</div>
+<div class="hidden sm:flex items-center gap-2 font-label-bold text-label-bold text-secondary">
+<span class="w-6 h-1 bg-primary"></span>
+<span class="w-6 h-1 bg-primary"></span>
+<span class="w-6 h-1 bg-primary"></span>
+<span class="w-6 h-1 bg-primary"></span>
+<span class="w-6 h-1 bg-surface-container-high"></span>
+</div>
+</div>
+<!-- Summary Bar -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-stack-lg">
+<!-- Valid -->
+<div class="bg-surface border border-outline-variant p-4 flex flex-col gap-2 rounded">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span class="font-label-bold text-label-bold uppercase">Ready to Import</span>
+</div>
+<div class="font-headline-md text-headline-md text-primary">128</div>
+<div class="font-body-sm text-body-sm text-secondary">Items passed all structural checks.</div>
+</div>
+<!-- Warnings -->
+<div class="bg-surface border border-outline-variant p-4 flex flex-col gap-2 rounded relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-surface-tint opacity-50"></div>
+<div class="flex items-center gap-2 text-surface-tint">
+<span class="material-symbols-outlined text-[18px]">info</span>
+<span class="font-label-bold text-label-bold uppercase">Attention Needed</span>
+</div>
+<div class="font-headline-md text-headline-md text-primary">12</div>
+<div class="font-body-sm text-body-sm text-secondary">Missing dimensions or optional metadata.</div>
+</div>
+<!-- Errors -->
+<div class="bg-error-container border border-error/20 p-4 flex flex-col gap-2 rounded">
+<div class="flex items-center gap-2 text-on-error-container">
+<span class="material-symbols-outlined text-[18px]">error</span>
+<span class="font-label-bold text-label-bold uppercase">Conflicts Detected</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-error-container">2</div>
+<div class="font-body-sm text-body-sm text-on-error-container/80">Duplicate SKU identifiers found.</div>
+</div>
+</div>
+<!-- Preview Table -->
+<div class="bg-surface border border-outline-variant rounded mb-stack-lg overflow-x-auto">
+<div class="px-4 py-3 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h3 class="font-headline-sm text-headline-sm text-primary">Data Preview</h3>
+<span class="font-body-sm text-body-sm text-secondary">Showing 5 of 142 rows</span>
+</div>
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant font-label-bold text-label-bold text-secondary uppercase tracking-wider">
+<th class="p-3 w-16">Image</th>
+<th class="p-3 w-40">SKU</th>
+<th class="p-3">Title &amp; Category</th>
+<th class="p-3 text-right w-32">Base Price</th>
+<th class="p-3 w-48">Import Status</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface">
+<!-- Valid Row -->
+<tr class="border-b border-outline-variant/50 hover:bg-surface-container-lowest transition-colors">
+<td class="p-3">
+<img class="w-10 h-10 object-cover rounded-[2px] border border-outline-variant" data-alt="A pristine, minimalist mid-century modern lounge chair photographed in a highly controlled studio environment. Bright white background, sharp architectural lines, premium leather texture, casting a very subtle, precise shadow. High-end catalog aesthetic." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</td>
+<td class="p-3 font-data-mono text-data-mono text-secondary">FRN-CHR-091</td>
+<td class="p-3">
+<div class="font-medium text-primary">Aalto Lounge Chair</div>
+<div class="font-body-sm text-body-sm text-secondary">Seating &gt; Lounge</div>
+</td>
+<td class="p-3 font-data-mono text-data-mono text-right">$1,240.00</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-1 bg-surface-container-highest text-primary font-label-bold text-[10px] uppercase tracking-wider rounded-[2px]">
+                                Ready
+                            </span>
+</td>
+</tr>
+<!-- Warning Row -->
+<tr class="border-b border-outline-variant/50 hover:bg-surface-container-lowest transition-colors">
+<td class="p-3">
+<img class="w-10 h-10 object-cover rounded-[2px] border border-outline-variant" data-alt="A sleek, minimalist solid oak dining table top view, photographed against a pure white background. The lighting highlights the natural wood grain with clinical precision. High-end B2B furniture catalog imagery, architectural aesthetic." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</td>
+<td class="p-3 font-data-mono text-data-mono text-secondary">FRN-TBL-204</td>
+<td class="p-3">
+<div class="font-medium text-primary">Odeon Dining Table</div>
+<div class="font-body-sm text-body-sm text-secondary">Tables &gt; Dining</div>
+</td>
+<td class="p-3 font-data-mono text-data-mono text-right">$2,850.00</td>
+<td class="p-3">
+<span class="inline-flex items-center gap-1 px-2 py-1 bg-surface-container text-surface-tint font-label-bold text-[10px] uppercase tracking-wider rounded-[2px]">
+<span class="material-symbols-outlined text-[12px]">info</span>
+                                Details needed
+                            </span>
+</td>
+</tr>
+<!-- Error Row -->
+<tr class="border-b border-outline-variant/50 bg-error-container/20 hover:bg-error-container/30 transition-colors">
+<td class="p-3">
+<div class="w-10 h-10 bg-surface-container flex items-center justify-center rounded-[2px] border border-outline-variant text-secondary">
+<span class="material-symbols-outlined text-[20px]">image</span>
+</div>
+</td>
+<td class="p-3 font-data-mono text-data-mono text-on-error-container">FRN-CHR-091</td>
+<td class="p-3">
+<div class="font-medium text-primary">Aalto Lounge Chair (V2)</div>
+<div class="font-body-sm text-body-sm text-secondary">Seating &gt; Lounge</div>
+</td>
+<td class="p-3 font-data-mono text-data-mono text-right">$1,300.00</td>
+<td class="p-3">
+<span class="inline-flex items-center gap-1 px-2 py-1 bg-error-container text-on-error-container font-label-bold text-[10px] uppercase tracking-wider rounded-[2px] border border-error/20">
+<span class="material-symbols-outlined text-[12px]">block</span>
+                                Already exists
+                            </span>
+</td>
+</tr>
+<!-- Valid Row -->
+<tr class="border-b border-outline-variant/50 hover:bg-surface-container-lowest transition-colors">
+<td class="p-3">
+<img class="w-10 h-10 object-cover rounded-[2px] border border-outline-variant" data-alt="An abstract, architectural lighting fixture made of matte black metal, suspended against a stark white background. Minimalist design, stark contrast, professional commercial product photography style." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</td>
+<td class="p-3 font-data-mono text-data-mono text-secondary">LGT-PND-012</td>
+<td class="p-3">
+<div class="font-medium text-primary">Linea Pendant Light</div>
+<div class="font-body-sm text-body-sm text-secondary">Lighting &gt; Ceiling</div>
+</td>
+<td class="p-3 font-data-mono text-data-mono text-right">$450.00</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-1 bg-surface-container-highest text-primary font-label-bold text-[10px] uppercase tracking-wider rounded-[2px]">
+                                Ready
+                            </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-col sm:flex-row justify-between items-center gap-6 py-4 border-t border-outline-variant">
+<!-- Dry Run Toggle -->
+<div class="flex items-center gap-3">
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-outline-variant appearance-none cursor-pointer z-10 transition-transform duration-200 ease-in-out" id="dry-run-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-surface-container-highest cursor-pointer border border-outline-variant" for="dry-run-toggle"></label>
+</div>
+<div>
+<label class="font-label-bold text-label-bold text-primary cursor-pointer uppercase" for="dry-run-toggle">Dry Run Mode</label>
+<p class="font-body-sm text-body-sm text-secondary">Verify payload structurally without writing to database.</p>
+</div>
+</div>
+<!-- Buttons -->
+<div class="flex gap-3 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-6 py-2 bg-surface border border-primary text-primary font-label-bold text-label-bold uppercase rounded-[4px] hover:bg-surface-container transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                    Download Error Report
+                </button>
+<button class="flex-1 sm:flex-none px-6 py-2 bg-primary text-on-primary font-label-bold text-label-bold uppercase rounded-[4px] hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 flex items-center justify-center gap-2">
+                    Proceed to Import
+                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<script>
+        // Simple toggle logic for visual feedback
+        const toggleInput = document.getElementById('dry-run-toggle');
+        const proceedBtn = document.querySelector('button.bg-primary');
+        
+        toggleInput.addEventListener('change', (e) => {
+            if(e.target.checked) {
+                proceedBtn.innerHTML = 'Execute Dry Run <span class="material-symbols-outlined text-[16px]">science</span>';
+            } else {
+                proceedBtn.innerHTML = 'Proceed to Import <span class="material-symbols-outlined text-[16px]">arrow_forward</span>';
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,3 @@
+name: atlas
+include:
+  - infrastructure/docker/docker-compose.yml

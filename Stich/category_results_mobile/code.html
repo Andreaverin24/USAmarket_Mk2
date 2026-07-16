@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vintage Seating - THE GUILD</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#e3e2e0",
+                        "surface-container": "#efeded",
+                        "surface-container-highest": "#e3e2e2",
+                        "surface-container-high": "#e9e8e7",
+                        "surface": "#fbf9f9",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#dbdad9",
+                        "surface-bright": "#fbf9f9",
+                        "primary-fixed": "#e5e2e1",
+                        "inverse-surface": "#303031",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e3e2e2",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#27180c",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#444748",
+                        "on-primary-fixed-variant": "#474746",
+                        "background": "#fbf9f9",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "primary": "#000000",
+                        "outline-variant": "#c4c7c7",
+                        "secondary-fixed": "#faddc8",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-tertiary-fixed": "#1a1c1b",
+                        "on-background": "#1b1c1c",
+                        "tertiary": "#000000",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f5f3f3",
+                        "secondary-container": "#faddc8",
+                        "on-secondary-container": "#756050",
+                        "inverse-primary": "#c8c6c5",
+                        "tertiary-container": "#1a1c1b",
+                        "secondary-fixed-dim": "#dcc2ad",
+                        "on-secondary-fixed-variant": "#564334",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#464746",
+                        "on-tertiary-container": "#838482",
+                        "on-surface": "#1b1c1c",
+                        "primary-container": "#1c1b1b",
+                        "on-primary-container": "#858383",
+                        "outline": "#747878",
+                        "tertiary-fixed-dim": "#c7c6c5",
+                        "surface-tint": "#5f5e5e",
+                        "secondary": "#6f5a4a",
+                        "inverse-on-surface": "#f2f0f0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "stack-md": "40px",
+                        "stack-sm": "24px",
+                        "container-max": "1440px",
+                        "stack-xl": "120px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px",
+                        "stack-lg": "80px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Playfair Display"],
+                        "label-caps": ["Public Sans"],
+                        "display-md": ["Playfair Display"],
+                        "label-md": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "headline-lg": ["Playfair Display"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "body-sm": ["Public Sans"],
+                        "display-lg": ["Playfair Display"],
+                        "body-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "display-md": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen">
+<!-- Header Section (Suppressed TopNav/SideNav due to task-focused/category flow) -->
+<header class="sticky top-0 z-40 bg-background/90 backdrop-blur-md border-b border-outline-variant pt-margin-mobile pb-unit px-margin-mobile">
+<div class="flex items-center justify-between mb-4">
+<button class="flex items-center justify-center p-2 -ml-2 text-primary">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Vintage Seating</h1>
+<div class="w-10"></div> <!-- Spacer for balance -->
+</div>
+<p class="font-label-caps text-label-caps text-on-surface-variant text-center mb-stack-sm uppercase">128 Items</p>
+<!-- Filter & Sort Bar -->
+<div class="flex justify-between items-center border-t border-outline-variant pt-unit pb-2">
+<button class="flex-1 flex items-center justify-center gap-2 py-2 font-label-caps text-label-caps text-primary uppercase" onclick="toggleDrawer()">
+<span class="material-symbols-outlined text-[18px]" data-icon="tune">tune</span>
+                Filter
+            </button>
+<div class="w-[1px] h-4 bg-outline-variant"></div>
+<button class="flex-1 flex items-center justify-center gap-2 py-2 font-label-caps text-label-caps text-primary uppercase">
+<span class="material-symbols-outlined text-[18px]" data-icon="sort">sort</span>
+                Sort
+            </button>
+</div>
+</header>
+<!-- Main Content: Product Grid -->
+<main class="px-margin-mobile py-stack-md">
+<div class="grid grid-cols-2 gap-x-gutter gap-y-stack-sm">
+<!-- Product Card 1 -->
+<article class="flex flex-col group cursor-pointer">
+<div class="relative w-full aspect-[4/5] bg-surface-container-low mb-4 overflow-hidden rounded-DEFAULT group-hover:opacity-90 transition-opacity">
+<img alt="Product Image" class="absolute inset-0 w-full h-full object-cover" data-alt="A mid-century modern lounge chair made of rich walnut wood with black leather upholstery, presented against a stark white gallery background, high-end editorial lighting, minimalist architectural aesthetic." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<button class="absolute top-2 right-2 p-2 text-primary bg-background/50 rounded-full backdrop-blur-sm z-10 flex items-center justify-center hover:bg-background transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="favorite_border">favorite_border</span>
+</button>
+</div>
+<div class="flex flex-col">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-1">Milo Baughman</p>
+<h3 class="font-headline-md text-headline-md text-primary mb-1 truncate">Lounge Chair, 1970s</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">Mid-Century Modern</p>
+<p class="font-label-caps text-label-caps text-primary uppercase mt-auto">$4,200</p>
+</div>
+</article>
+<!-- Product Card 2 -->
+<article class="flex flex-col group cursor-pointer">
+<div class="relative w-full aspect-[4/5] bg-surface-container-low mb-4 overflow-hidden rounded-DEFAULT group-hover:opacity-90 transition-opacity">
+<img alt="Product Image" class="absolute inset-0 w-full h-full object-cover" data-alt="A set of two vintage Pierre Jeanneret Chandigarh office chairs, solid teak wood with cane seating, isolated on a bright minimalist white background, architectural lighting, luxury furniture aesthetic." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<button class="absolute top-2 right-2 p-2 text-primary bg-background/50 rounded-full backdrop-blur-sm z-10 flex items-center justify-center hover:bg-background transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="favorite">favorite</span>
+</button>
+</div>
+<div class="flex flex-col">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-1">Pierre Jeanneret</p>
+<h3 class="font-headline-md text-headline-md text-primary mb-1 truncate">Chandigarh Chairs (Pair)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">1950s</p>
+<p class="font-label-caps text-label-caps text-primary uppercase mt-auto">$12,500</p>
+</div>
+</article>
+<!-- Product Card 3 -->
+<article class="flex flex-col group cursor-pointer">
+<div class="relative w-full aspect-[4/5] bg-surface-container-low mb-4 overflow-hidden rounded-DEFAULT group-hover:opacity-90 transition-opacity">
+<img alt="Product Image" class="absolute inset-0 w-full h-full object-cover" data-alt="An iconic vintage Barcelona Chair by Mies van der Rohe, black leather tufted cushions on a chrome steel frame, shot against a clean white architectural gallery space with soft shadows." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<button class="absolute top-2 right-2 p-2 text-primary bg-background/50 rounded-full backdrop-blur-sm z-10 flex items-center justify-center hover:bg-background transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="favorite_border">favorite_border</span>
+</button>
+</div>
+<div class="flex flex-col">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-1">Mies van der Rohe</p>
+<h3 class="font-headline-md text-headline-md text-primary mb-1 truncate">Barcelona Chair</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">Modernist</p>
+<p class="font-label-caps text-label-caps text-primary uppercase mt-auto">$6,800</p>
+</div>
+</article>
+<!-- Product Card 4 -->
+<article class="flex flex-col group cursor-pointer">
+<div class="relative w-full aspect-[4/5] bg-surface-container-low mb-4 overflow-hidden rounded-DEFAULT group-hover:opacity-90 transition-opacity">
+<img alt="Product Image" class="absolute inset-0 w-full h-full object-cover" data-alt="A vintage Eames Lounge Chair and Ottoman in rosewood and black leather, photographed in a high-end minimalist setting with bright natural light, crisp architectural style." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<button class="absolute top-2 right-2 p-2 text-primary bg-background/50 rounded-full backdrop-blur-sm z-10 flex items-center justify-center hover:bg-background transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="favorite_border">favorite_border</span>
+</button>
+</div>
+<div class="flex flex-col">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-1">Charles &amp; Ray Eames</p>
+<h3 class="font-headline-md text-headline-md text-primary mb-1 truncate">Lounge &amp; Ottoman</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">Mid-Century Modern</p>
+<p class="font-label-caps text-label-caps text-primary uppercase mt-auto">$8,900</p>
+</div>
+</article>
+</div>
+<div class="mt-stack-md flex justify-center">
+<button class="font-label-caps text-label-caps text-primary border-b border-primary pb-1 uppercase hover:text-on-surface-variant hover:border-on-surface-variant transition-colors">Load More</button>
+</div>
+</main>
+<!-- Mobile Filter Drawer Overlay -->
+<div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300" id="filterDrawerOverlay" onclick="toggleDrawer()"></div>
+<!-- Mobile Filter Drawer -->
+<div class="fixed inset-y-0 right-0 w-[85vw] max-w-sm bg-background border-l border-outline-variant z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl" id="filterDrawer">
+<div class="flex items-center justify-between p-margin-mobile border-b border-outline-variant">
+<h2 class="font-headline-md text-headline-md text-primary">Filters</h2>
+<button class="p-2 -mr-2 text-primary" onclick="toggleDrawer()">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar p-margin-mobile flex flex-col gap-stack-sm">
+<!-- Category Section -->
+<section class="border-b border-outline-variant pb-stack-sm">
+<h3 class="font-label-caps text-label-caps text-primary uppercase mb-4">Category</h3>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 bg-surface-container-low text-primary font-label-caps text-label-caps uppercase rounded-DEFAULT border border-transparent">Lounge Chairs</button>
+<button class="px-4 py-2 bg-background text-primary font-label-caps text-label-caps uppercase border border-outline-variant rounded-DEFAULT">Dining Chairs</button>
+<button class="px-4 py-2 bg-background text-primary font-label-caps text-label-caps uppercase border border-outline-variant rounded-DEFAULT">Sofas</button>
+<button class="px-4 py-2 bg-background text-primary font-label-caps text-label-caps uppercase border border-outline-variant rounded-DEFAULT">Stools</button>
+</div>
+</section>
+<!-- Price Range -->
+<section class="border-b border-outline-variant pb-stack-sm">
+<h3 class="font-label-caps text-label-caps text-primary uppercase mb-4">Price</h3>
+<div class="flex gap-4 items-center">
+<div class="flex-1 border-b border-outline-variant">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase block mb-1">Min</span>
+<input class="w-full bg-transparent border-none p-0 pb-2 text-body-md text-primary focus:ring-0 focus:outline-none" placeholder="$0" type="number"/>
+</div>
+<span class="text-on-surface-variant">-</span>
+<div class="flex-1 border-b border-outline-variant">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase block mb-1">Max</span>
+<input class="w-full bg-transparent border-none p-0 pb-2 text-body-md text-primary focus:ring-0 focus:outline-none" placeholder="$Any" type="number"/>
+</div>
+</div>
+</section>
+<!-- Era/Period -->
+<section>
+<h3 class="font-label-caps text-label-caps text-primary uppercase mb-4">Era</h3>
+<div class="flex flex-col gap-3">
+<label class="flex items-center gap-3 cursor-pointer">
+<input class="form-checkbox h-5 w-5 text-primary border-outline-variant rounded-sm focus:ring-primary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="font-body-md text-body-md text-primary">Mid-Century Modern</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer">
+<input class="form-checkbox h-5 w-5 text-primary border-outline-variant rounded-sm focus:ring-primary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="font-body-md text-body-md text-primary">Art Deco</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer">
+<input class="form-checkbox h-5 w-5 text-primary border-outline-variant rounded-sm focus:ring-primary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="font-body-md text-body-md text-primary">Postmodern</span>
+</label>
+</div>
+</section>
+</div>
+<div class="p-margin-mobile border-t border-outline-variant flex gap-4 bg-background">
+<button class="flex-1 py-3 bg-transparent text-primary font-label-caps text-label-caps uppercase border border-primary rounded-DEFAULT hover:bg-surface-container-low transition-colors" onclick="toggleDrawer()">Reset</button>
+<button class="flex-1 py-3 bg-primary text-on-primary font-label-caps text-label-caps uppercase rounded-DEFAULT hover:bg-surface-tint transition-colors" onclick="toggleDrawer()">Apply</button>
+</div>
+</div>
+<script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('filterDrawer');
+            const overlay = document.getElementById('filterDrawerOverlay');
+            
+            if (drawer.classList.contains('translate-x-full')) {
+                // Open
+                overlay.classList.remove('hidden');
+                // Small delay to allow display:block to apply before animating opacity
+                setTimeout(() => {
+                    overlay.classList.remove('opacity-0');
+                    drawer.classList.remove('translate-x-full');
+                }, 10);
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            } else {
+                // Close
+                overlay.classList.add('opacity-0');
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 300); // Match transition duration
+                document.body.style.overflow = '';
+            }
+        }
+    </script>
+</body></html>

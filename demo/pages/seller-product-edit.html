@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Product - Furniture Curator OS</title>
+<script>window.tailwind=window.tailwind||{};</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#000000",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-surface-variant": "#444748",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "on-primary-container": "#858383",
+                        "secondary": "#5e5e5e",
+                        "on-background": "#1a1c1c",
+                        "on-secondary-container": "#626262",
+                        "primary": "#000000",
+                        "background": "#f9f9f9",
+                        "surface-tint": "#5f5e5e",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#474746",
+                        "inverse-primary": "#c8c6c5",
+                        "surface-variant": "#e2e2e2",
+                        "on-secondary-fixed-variant": "#464747",
+                        "outline": "#747878",
+                        "outline-variant": "#c4c7c7",
+                        "primary-fixed": "#e5e2e1",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#e1dfdf",
+                        "surface-dim": "#dadada",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-surface": "#1a1c1c",
+                        "tertiary-container": "#1a1c1c",
+                        "secondary-fixed": "#e4e2e2",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#838484",
+                        "primary-container": "#1c1b1b",
+                        "surface-container-low": "#f4f3f3",
+                        "surface": "#f9f9f9",
+                        "surface-container": "#eeeeee",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "tertiary-fixed": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#f9f9f9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "40px",
+                        "stack-md": "16px",
+                        "container-max": "1440px",
+                        "stack-sm": "8px",
+                        "stack-xs": "4px",
+                        "stack-lg": "32px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "headline-sm": ["Playfair Display"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "data-mono": ["13px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; color: #1a1c1c; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1; }
+        
+        /* Custom Scrollbar for inner elements if needed */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e5e5e5; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c4c7c7; }
+    </style>
+<link rel="stylesheet" href="../assets/css/demo-navigation.css" />
+<link rel="icon" href="../assets/images/demo-favicon.svg" type="image/svg+xml">
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row overflow-hidden">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full py-stack-lg px-gutter fixed left-0 top-0 w-[280px] bg-surface border-r border-outline-variant z-40 overflow-y-auto">
+<div class="mb-stack-lg">
+<h1 class="font-display-lg text-headline-sm uppercase tracking-widest text-primary">Guild Admin</h1>
+<p class="font-body-md text-body-md text-secondary mt-stack-xs">Furniture OS</p>
+</div>
+<div class="flex flex-col gap-stack-sm flex-grow">
+<!-- Inactive -->
+<a class="flex items-center gap-stack-sm p-stack-sm rounded hover:bg-surface-container transition-colors duration-150 cursor-pointer text-secondary" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-bold text-label-bold">Overview</span>
+</a>
+<!-- Active (Products) -->
+<a class="flex items-center gap-stack-sm p-stack-sm text-primary font-bold border-l-2 border-primary bg-surface-container-low cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined filled">inventory_2</span>
+<span class="font-label-bold text-label-bold">Products</span>
+</a>
+<a class="flex items-center gap-stack-sm p-stack-sm rounded hover:bg-surface-container transition-colors duration-150 cursor-pointer text-secondary" href="#">
+<span class="material-symbols-outlined">layers</span>
+<span class="font-label-bold text-label-bold">Collections</span>
+</a>
+<a class="flex items-center gap-stack-sm p-stack-sm rounded hover:bg-surface-container transition-colors duration-150 cursor-pointer text-secondary" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-bold text-label-bold">Orders</span>
+</a>
+<a class="flex items-center gap-stack-sm p-stack-sm rounded hover:bg-surface-container transition-colors duration-150 cursor-pointer text-secondary" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-label-bold text-label-bold">Shipping</span>
+</a>
+<a class="flex items-center gap-stack-sm p-stack-sm rounded hover:bg-surface-container transition-colors duration-150 cursor-pointer text-secondary" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-bold text-label-bold">Customers</span>
+</a>
+<a class="flex items-center gap-stack-sm p-stack-sm rounded hover:bg-surface-container transition-colors duration-150 cursor-pointer text-secondary" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-bold text-label-bold">Storefront</span>
+</a>
+<a class="flex items-center gap-stack-sm p-stack-sm rounded hover:bg-surface-container transition-colors duration-150 cursor-pointer text-secondary" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="font-label-bold text-label-bold">Analytics</span>
+</a>
+<a class="flex items-center gap-stack-sm p-stack-sm rounded hover:bg-surface-container transition-colors duration-150 cursor-pointer text-secondary" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-label-bold text-label-bold">Team</span>
+</a>
+</div>
+<div class="mt-auto pt-stack-lg">
+<a class="flex items-center gap-stack-sm p-stack-sm rounded hover:bg-surface-container transition-colors duration-150 cursor-pointer text-secondary" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-bold text-label-bold">Settings</span>
+</a>
+<!-- Contextual: Curator Profile Mini -->
+<div class="flex items-center gap-stack-sm mt-stack-md pt-stack-md border-t border-outline-variant">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-secondary">person</span>
+</div>
+<div>
+<p class="font-label-bold text-label-bold text-primary">Curator Profile</p>
+<p class="font-body-sm text-body-sm text-secondary">Admin</p>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<div class="flex-1 flex flex-col min-w-0 md:ml-[280px] h-screen overflow-hidden relative">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center h-16 px-margin-desktop bg-background border-b border-outline-variant docked full-width top-0 sticky z-30 shrink-0">
+<div class="flex items-center gap-gutter">
+<h2 class="font-headline-sm text-headline-sm text-primary hidden md:block">Edit Product</h2>
+<!-- Search bar area placeholder if needed per JSON, but context implies we are deep editing. -->
+</div>
+<div class="flex items-center gap-gutter">
+<nav class="hidden lg:flex items-center gap-gutter">
+<!-- Nav links from TopAppBar JSON -->
+<a class="font-label-bold text-label-bold text-secondary hover:text-primary transition-colors cursor-pointer active:scale-95 duration-200" href="#">Marketplace</a>
+<a class="font-label-bold text-label-bold text-secondary hover:text-primary transition-colors cursor-pointer active:scale-95 duration-200" href="#">Storefront</a>
+</nav>
+<div class="flex items-center gap-stack-sm text-secondary">
+<button class="p-stack-xs rounded hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-stack-xs rounded hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined">help</span></button>
+<button class="p-stack-xs rounded hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</div>
+</header>
+<!-- Editor Canvas Layout -->
+<main class="flex-1 overflow-hidden flex flex-col lg:flex-row relative">
+<!-- Central Editing Area (Scrollable) -->
+<div class="flex-1 overflow-y-auto px-margin-mobile md:px-margin-desktop py-stack-lg relative custom-scrollbar">
+<div class="max-w-[800px] mx-auto space-y-stack-lg pb-32">
+<!-- Basic Info -->
+<section class="bg-surface border border-outline-variant rounded p-gutter">
+<div class="border-b border-outline-variant pb-stack-sm mb-stack-md flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary">Basic Information</h3>
+</div>
+<div class="space-y-stack-md">
+<div>
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">Product Title</label>
+<input class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-2 font-body-lg text-body-lg text-primary outline-none transition-colors" type="text" value="Mid-Century Teak Sideboard by Finn Juhl"/>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">Description</label>
+<textarea class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-2 font-body-lg text-body-lg text-primary outline-none transition-colors resize-y" rows="4">An exceptional one-of-a-kind teak sideboard designed by Finn Juhl in 1955. Features intricate joinery and tambour doors that slide seamlessly to reveal adjustable shelving and felt-lined drawers. Originally sourced from a private estate in Copenhagen.</textarea>
+</div>
+</div>
+</section>
+<!-- Images -->
+<section class="bg-surface border border-outline-variant rounded p-gutter">
+<div class="border-b border-outline-variant pb-stack-sm mb-stack-md flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary">Media</h3>
+<button class="font-label-bold text-label-bold text-primary flex items-center gap-unit hover:text-secondary"><span class="material-symbols-outlined text-sm">upload</span> Upload</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-stack-sm">
+<!-- Hero Image -->
+<div class="col-span-2 row-span-2 relative aspect-square border border-outline-variant rounded overflow-hidden group">
+<img class="w-full h-full object-cover" data-alt="A high-resolution photograph of a meticulously restored mid-century modern teak sideboard by Finn Juhl. It sits isolated in a bright, minimalist studio space with white walls and a light concrete floor. Soft, diffused daylight highlights the rich, warm tones of the teak wood grain and the elegant, sculptural details of the handles. The composition is straight-on, emphasizing architectural symmetry and premium craftsmanship." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-stack-sm">
+<button class="w-8 h-8 bg-surface rounded-full flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="w-8 h-8 bg-surface rounded-full flex items-center justify-center text-error"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+<div class="absolute top-2 left-2 bg-primary text-on-primary font-label-bold text-[10px] px-2 py-1 rounded-sm uppercase">Hero</div>
+</div>
+<!-- Gallery Thumbs -->
+<div class="relative aspect-square border border-outline-variant rounded overflow-hidden group">
+<img class="w-full h-full object-cover" data-alt="A detailed close-up shot of the tambour doors and sculpted handle of a mid-century modern teak sideboard. The image focuses on the precise joinery and the smooth, warm texture of the aged wood. The lighting is studio quality, bright and directional to accentuate the depth and shadows of the vertical slats. The background is completely out of focus, maintaining a premium minimalist aesthetic." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-stack-sm">
+<button class="w-8 h-8 bg-surface rounded-full flex items-center justify-center text-error"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+<div class="relative aspect-square border border-outline-variant rounded overflow-hidden group">
+<img class="w-full h-full object-cover" data-alt="An interior view of a mid-century teak sideboard, showing open tambour doors revealing felt-lined drawers and adjustable shelves. The wood interior is illuminated softly, showcasing its pristine condition. The overall shot is clean, bright, and highly professional, fitting a high-end furniture auction catalog. Subtle reflections suggest a carefully controlled studio environment." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-stack-sm">
+<button class="w-8 h-8 bg-surface rounded-full flex items-center justify-center text-error"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+<!-- Upload Placeholder -->
+<div class="relative aspect-square border border-dashed border-outline-variant bg-surface-container-lowest rounded flex flex-col items-center justify-center text-secondary hover:bg-surface-variant transition-colors cursor-pointer">
+<span class="material-symbols-outlined mb-unit">add_photo_alternate</span>
+<span class="font-label-bold text-[10px] uppercase">Add Image</span>
+</div>
+</div>
+</section>
+<!-- Classification & Specs (Bento style grid) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<section class="bg-surface border border-outline-variant rounded p-gutter">
+<h3 class="font-headline-sm text-headline-sm text-primary border-b border-outline-variant pb-stack-sm mb-stack-md">Classification</h3>
+<div class="space-y-stack-sm">
+<div>
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">Designer</label>
+<input class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-1.5 font-body-md text-body-md text-primary outline-none" type="text" value="Finn Juhl"/>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">Manufacturer</label>
+<input class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-1.5 font-body-md text-body-md text-primary outline-none" type="text" value="Bovirke"/>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">Era / Year</label>
+<input class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-1.5 font-body-md text-body-md text-primary outline-none" type="text" value="1950s (c. 1955)"/>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">Category</label>
+<select class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-1.5 font-body-md text-body-md text-primary outline-none appearance-none">
+<option>Storage &gt; Sideboards</option>
+<option>Storage &gt; Credenzas</option>
+</select>
+</div>
+</div>
+</section>
+<section class="bg-surface border border-outline-variant rounded p-gutter flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-primary border-b border-outline-variant pb-stack-sm mb-stack-md">Dimensions &amp; Specs</h3>
+<div class="space-y-stack-sm flex-1">
+<div class="grid grid-cols-3 gap-stack-sm">
+<div>
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">W (cm)</label>
+<input class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-1.5 font-data-mono text-data-mono text-primary outline-none text-right" type="text" value="200"/>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">D (cm)</label>
+<input class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-1.5 font-data-mono text-data-mono text-primary outline-none text-right" type="text" value="46"/>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">H (cm)</label>
+<input class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-1.5 font-data-mono text-data-mono text-primary outline-none text-right" type="text" value="88"/>
+</div>
+</div>
+<div class="pt-stack-sm">
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">Materials</label>
+<input class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-1.5 font-body-md text-body-md text-primary outline-none" type="text" value="Solid Teak, Teak Veneer, Brass, Felt"/>
+</div>
+<div class="pt-stack-sm">
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">Condition Grade</label>
+<select class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-1.5 font-body-md text-body-md text-primary outline-none appearance-none">
+<option>Excellent - Minor wear consistent with age</option>
+<option>Very Good</option>
+<option>Good - Restored</option>
+</select>
+</div>
+</div>
+</section>
+</div>
+<!-- Pricing & Inventory -->
+<section class="bg-surface border border-outline-variant rounded p-gutter">
+<div class="border-b border-outline-variant pb-stack-sm mb-stack-md">
+<h3 class="font-headline-sm text-headline-sm text-primary">Commerce</h3>
+</div>
+<div class="flex flex-col md:flex-row gap-gutter">
+<div class="flex-1 space-y-stack-sm">
+<div>
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">Listing Price (USD)</label>
+<div class="relative">
+<span class="absolute left-stack-sm top-1/2 -translate-y-1/2 text-secondary font-data-mono">$</span>
+<input class="w-full bg-surface border border-outline-variant focus:border-primary rounded pl-8 pr-stack-sm py-2 font-data-mono text-display-lg text-primary outline-none" type="text" value="18,500.00"/>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-stack-sm pt-stack-sm">
+<div>
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">Cost Basis</label>
+<input class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-1.5 font-data-mono text-data-mono text-secondary outline-none" type="text" value="6,200.00"/>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">SKU / Ref</label>
+<input class="w-full bg-surface border border-outline-variant focus:border-primary rounded px-stack-sm py-1.5 font-data-mono text-data-mono text-secondary outline-none" type="text" value="FJ-SB-55-01"/>
+</div>
+</div>
+</div>
+<div class="w-full md:w-1/3 bg-surface-container-low border border-outline-variant p-stack-md rounded flex flex-col justify-center">
+<label class="block font-label-bold text-label-bold uppercase text-secondary mb-unit">Inventory Status</label>
+<div class="flex items-center gap-stack-sm mb-stack-sm">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-body-md font-medium">In Stock (1 of 1)</span>
+</div>
+<p class="text-body-sm text-secondary">This is a unique, one-of-a-kind item. Quantity locked to 1.</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Right Sidebar: Publication Checklist -->
+<aside class="w-full lg:w-[320px] bg-surface-container-lowest border-l border-outline-variant flex flex-col flex-shrink-0 z-20 shadow-[-4px_0_15px_-3px_rgba(0,0,0,0.05)] lg:shadow-none absolute lg:static top-0 right-0 h-full transform translate-x-full lg:translate-x-0 transition-transform duration-300">
+<div class="p-gutter border-b border-outline-variant bg-surface">
+<h3 class="font-headline-sm text-headline-sm text-primary">Publication Status</h3>
+<div class="mt-stack-sm flex items-center gap-2">
+<span class="px-2 py-0.5 bg-[#f5f5f5] text-primary border border-outline-variant text-[10px] uppercase font-bold tracking-wider rounded">Draft</span>
+<span class="text-body-sm text-secondary">Last saved 2m ago</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-gutter space-y-stack-lg">
+<div>
+<h4 class="font-label-bold text-label-bold uppercase text-secondary mb-stack-sm">Checklist</h4>
+<ul class="space-y-stack-sm">
+<li class="flex items-start gap-stack-sm">
+<span class="material-symbols-outlined text-[18px] text-primary mt-0.5">check_circle</span>
+<div>
+<p class="font-body-md text-primary">Basic Information</p>
+</div>
+</li>
+<li class="flex items-start gap-stack-sm">
+<span class="material-symbols-outlined text-[18px] text-primary mt-0.5">check_circle</span>
+<div>
+<p class="font-body-md text-primary">High-Res Images (3+)</p>
+</div>
+</li>
+<li class="flex items-start gap-stack-sm">
+<span class="material-symbols-outlined text-[18px] text-[#ba1a1a] mt-0.5">error</span>
+<div>
+<p class="font-body-md text-primary">Provenance Details</p>
+<p class="font-body-sm text-secondary">Required for pieces &gt;$10k</p>
+</div>
+</li>
+<li class="flex items-start gap-stack-sm">
+<span class="material-symbols-outlined text-[18px] text-primary mt-0.5">check_circle</span>
+<div>
+<p class="font-body-md text-primary">Dimensions &amp; Weight</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="pt-stack-md border-t border-outline-variant">
+<h4 class="font-label-bold text-label-bold uppercase text-secondary mb-stack-sm">Moderation</h4>
+<div class="bg-surface border border-outline-variant p-stack-sm rounded">
+<div class="flex items-center gap-stack-xs text-secondary mb-unit">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span class="font-label-bold text-[10px] uppercase">Review Pending</span>
+</div>
+<p class="font-body-sm text-primary">This item will require manual curator review before appearing on the Marketplace channel due to its valuation.</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Fixed Bottom Action Bar -->
+<div class="absolute bottom-0 left-0 right-0 lg:right-[320px] bg-surface/90 backdrop-blur-sm border-t border-outline-variant p-stack-md flex justify-between items-center z-10">
+<div class="flex gap-gutter items-center">
+<div class="flex items-center gap-stack-sm">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-2 font-label-bold text-label-bold text-primary">Storefront</span>
+</label>
+</div>
+<div class="flex items-center gap-stack-sm">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-2 font-label-bold text-label-bold text-secondary">Marketplace</span>
+</label>
+</div>
+</div>
+<div class="flex gap-stack-sm">
+<button class="px-stack-md py-2 bg-surface text-primary border border-outline-variant font-label-bold text-label-bold rounded hover:bg-surface-variant transition-colors">Save Draft</button>
+<button class="px-stack-md py-2 bg-primary text-on-primary font-label-bold text-label-bold rounded opacity-50 cursor-not-allowed">Publish Item</button>
+</div>
+</div>
+</main>
+</div>
+<script src="../assets/js/demo-navigation.js"></script>
+<script src="../assets/js/demo-interactions.js"></script>
+</body></html>

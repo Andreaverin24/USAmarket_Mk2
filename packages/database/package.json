@@ -1,0 +1,28 @@
+{
+  "name": "@atlas/database",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "prisma generate && tsc -p tsconfig.json",
+    "lint": "eslint src prisma/seed.ts",
+    "typecheck": "prisma generate && tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "db:generate": "prisma generate",
+    "db:migrate:create": "prisma migrate dev --name foundation --create-only",
+    "db:migrate:phase2": "prisma migrate dev --name phase_2_catalog_storefront --create-only",
+    "db:migrate": "node --env-file=../../.env node_modules/prisma/build/index.js migrate deploy",
+    "db:seed": "node --env-file=../../.env node_modules/tsx/dist/cli.mjs prisma/seed.ts"
+  },
+  "dependencies": {
+    "@atlas/auth": "workspace:*",
+    "@prisma/client": "6.19.0"
+  },
+  "devDependencies": {
+    "prisma": "6.19.0",
+    "tsx": "4.20.3",
+    "vitest": "3.2.4"
+  }
+}

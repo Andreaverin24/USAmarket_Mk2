@@ -1,0 +1,35 @@
+{
+  "name": "atlas",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.7.0",
+  "scripts": {
+    "build": "turbo run build --concurrency=1",
+    "dev": "turbo run dev --parallel",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "turbo run lint --concurrency=1 && eslint e2e playwright.config.ts",
+    "typecheck": "turbo run typecheck --concurrency=1 && tsc -p e2e/tsconfig.json",
+    "test": "turbo run test --concurrency=1",
+    "test:integration": "pnpm --filter @atlas/api test:integration",
+    "test:e2e": "pnpm --filter @atlas/api build && pnpm --filter @atlas/web build && playwright test",
+    "phase2:acceptance": "pnpm --filter @atlas/worker build && pnpm --filter @atlas/api phase2:acceptance",
+    "db:generate": "pnpm --filter @atlas/database db:generate",
+    "db:migrate": "pnpm --filter @atlas/database db:migrate",
+    "db:seed": "pnpm --filter @atlas/database db:seed",
+    "openapi:generate": "pnpm --filter @atlas/api openapi:generate"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.54.1",
+    "@eslint/js": "9.31.0",
+    "@types/node": "22.16.4",
+    "eslint": "9.31.0",
+    "eslint-config-prettier": "10.1.8",
+    "globals": "16.3.0",
+    "prettier": "3.6.2",
+    "turbo": "2.5.5",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.37.0",
+    "vitest": "3.2.4"
+  }
+}

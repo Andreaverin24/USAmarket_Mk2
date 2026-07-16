@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard Overview - Furniture Curator OS</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<!-- Tailwind CSS with custom configuration -->
+<script>window.tailwind=window.tailwind||{};</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#000000",
+                      "inverse-on-surface": "#f1f1f1",
+                      "on-surface-variant": "#444748",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "on-secondary": "#ffffff",
+                      "inverse-surface": "#2f3131",
+                      "on-primary-container": "#858383",
+                      "secondary": "#5e5e5e",
+                      "on-background": "#1a1c1c",
+                      "on-secondary-container": "#626262",
+                      "primary": "#000000",
+                      "background": "#f9f9f9",
+                      "surface-tint": "#5f5e5e",
+                      "secondary-fixed-dim": "#c7c6c6",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#474746",
+                      "inverse-primary": "#c8c6c5",
+                      "surface-variant": "#e2e2e2",
+                      "on-secondary-fixed-variant": "#464747",
+                      "outline": "#747878",
+                      "outline-variant": "#c4c7c7",
+                      "primary-fixed": "#e5e2e1",
+                      "on-error-container": "#93000a",
+                      "secondary-container": "#e1dfdf",
+                      "surface-dim": "#dadada",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-highest": "#e2e2e2",
+                      "on-primary-fixed": "#1c1b1b",
+                      "on-secondary-fixed": "#1b1c1c",
+                      "on-surface": "#1a1c1c",
+                      "tertiary-container": "#1a1c1c",
+                      "secondary-fixed": "#e4e2e2",
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "surface-container-high": "#e8e8e8",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "on-primary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "on-tertiary-container": "#838484",
+                      "primary-container": "#1c1b1b",
+                      "surface-container-low": "#f4f3f3",
+                      "surface": "#f9f9f9",
+                      "surface-container": "#eeeeee",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "tertiary-fixed": "#e2e2e2",
+                      "error": "#ba1a1a",
+                      "surface-bright": "#f9f9f9"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "margin-desktop": "40px",
+                      "stack-md": "16px",
+                      "container-max": "1440px",
+                      "stack-sm": "8px",
+                      "stack-xs": "4px",
+                      "stack-lg": "32px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Playfair Display"],
+                      "headline-md": ["Playfair Display"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "label-bold": ["Inter"],
+                      "data-mono": ["Inter"],
+                      "headline-sm": ["Playfair Display"],
+                      "body-sm": ["Inter"]
+              },
+              "fontSize": {
+                      "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "data-mono": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<link rel="stylesheet" href="../assets/css/demo-navigation.css" />
+<link rel="icon" href="../assets/images/demo-favicon.svg" type="image/svg+xml">
+</head>
+<body class="bg-background text-on-background min-h-screen flex antialiased selection:bg-surface-variant selection:text-primary">
+<!-- Shared Component: SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface dark:bg-surface-container border-r border-outline-variant dark:border-outline flex flex-col py-stack-lg px-gutter z-40">
+<!-- Brand/Header -->
+<div class="mb-stack-lg">
+<h1 class="font-display-lg text-headline-sm uppercase tracking-widest text-primary dark:text-on-primary-fixed mb-1">Guild Admin</h1>
+<p class="font-body-md text-body-md text-secondary">Furniture OS</p>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 space-y-unit flex flex-col">
+<!-- Active Item: Overview -->
+<a class="flex items-center px-3 py-2 cursor-pointer active:opacity-80 hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-150 text-primary dark:text-on-primary-fixed font-bold border-l-2 border-primary dark:border-on-primary-fixed bg-surface-container-low dark:bg-surface-container-high" href="#">
+<span aria-hidden="true" class="material-symbols-outlined mr-3 text-[20px]">dashboard</span>
+<span class="font-label-bold text-label-bold uppercase">Overview</span>
+</a>
+<!-- Inactive Items -->
+<a class="flex items-center px-3 py-2 cursor-pointer active:opacity-80 hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-150 text-secondary dark:text-on-surface-variant" href="#">
+<span aria-hidden="true" class="material-symbols-outlined mr-3 text-[20px]">inventory_2</span>
+<span class="font-label-bold text-label-bold uppercase">Products</span>
+</a>
+<a class="flex items-center px-3 py-2 cursor-pointer active:opacity-80 hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-150 text-secondary dark:text-on-surface-variant" href="#">
+<span aria-hidden="true" class="material-symbols-outlined mr-3 text-[20px]">layers</span>
+<span class="font-label-bold text-label-bold uppercase">Collections</span>
+</a>
+<a class="flex items-center px-3 py-2 cursor-pointer active:opacity-80 hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-150 text-secondary dark:text-on-surface-variant" href="#">
+<span aria-hidden="true" class="material-symbols-outlined mr-3 text-[20px]">shopping_cart</span>
+<span class="font-label-bold text-label-bold uppercase">Orders</span>
+</a>
+<a class="flex items-center px-3 py-2 cursor-pointer active:opacity-80 hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-150 text-secondary dark:text-on-surface-variant" href="#">
+<span aria-hidden="true" class="material-symbols-outlined mr-3 text-[20px]">local_shipping</span>
+<span class="font-label-bold text-label-bold uppercase">Shipping</span>
+</a>
+<a class="flex items-center px-3 py-2 cursor-pointer active:opacity-80 hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-150 text-secondary dark:text-on-surface-variant" href="#">
+<span aria-hidden="true" class="material-symbols-outlined mr-3 text-[20px]">groups</span>
+<span class="font-label-bold text-label-bold uppercase">Customers</span>
+</a>
+<a class="flex items-center px-3 py-2 cursor-pointer active:opacity-80 hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-150 text-secondary dark:text-on-surface-variant" href="#">
+<span aria-hidden="true" class="material-symbols-outlined mr-3 text-[20px]">storefront</span>
+<span class="font-label-bold text-label-bold uppercase">Storefront</span>
+</a>
+<a class="flex items-center px-3 py-2 cursor-pointer active:opacity-80 hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-150 text-secondary dark:text-on-surface-variant" href="#">
+<span aria-hidden="true" class="material-symbols-outlined mr-3 text-[20px]">monitoring</span>
+<span class="font-label-bold text-label-bold uppercase">Analytics</span>
+</a>
+<a class="flex items-center px-3 py-2 cursor-pointer active:opacity-80 hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-150 text-secondary dark:text-on-surface-variant" href="#">
+<span aria-hidden="true" class="material-symbols-outlined mr-3 text-[20px]">badge</span>
+<span class="font-label-bold text-label-bold uppercase">Team</span>
+</a>
+</nav>
+<!-- Bottom Setting -->
+<div class="mt-auto">
+<a class="flex items-center px-3 py-2 cursor-pointer active:opacity-80 hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-150 text-secondary dark:text-on-surface-variant" href="#">
+<span aria-hidden="true" class="material-symbols-outlined mr-3 text-[20px]">settings</span>
+<span class="font-label-bold text-label-bold uppercase">Settings</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-[280px] flex flex-col min-h-screen">
+<!-- Shared Component: TopAppBar -->
+<header class="bg-background dark:bg-background docked full-width top-0 sticky z-50 border-b border-outline-variant dark:border-outline flex justify-between items-center h-16 px-margin-desktop">
+<div class="flex items-center gap-stack-lg">
+<span class="font-display-lg text-headline-sm text-primary dark:text-on-primary-fixed">Furniture Curator OS</span>
+<div class="h-6 w-px bg-outline-variant"></div>
+<nav class="flex gap-stack-md hidden md:flex">
+<!-- Nav links derived from JSON -->
+<a class="font-label-bold text-label-bold text-secondary dark:text-on-surface-variant hover:text-primary dark:hover:text-on-primary-fixed transition-colors uppercase tracking-wider py-5 border-b border-transparent" href="#">Marketplace</a>
+<a class="font-label-bold text-label-bold text-secondary dark:text-on-surface-variant hover:text-primary dark:hover:text-on-primary-fixed transition-colors uppercase tracking-wider py-5 border-b border-transparent" href="#">Storefront</a>
+</nav>
+</div>
+<div class="flex items-center gap-stack-sm">
+<!-- Trailing Icons -->
+<button class="p-2 cursor-pointer active:scale-95 duration-200 text-secondary dark:text-on-surface-variant hover:text-primary dark:hover:text-on-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="p-2 cursor-pointer active:scale-95 duration-200 text-secondary dark:text-on-surface-variant hover:text-primary dark:hover:text-on-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+<button class="p-2 cursor-pointer active:scale-95 duration-200 text-secondary dark:text-on-surface-variant hover:text-primary dark:hover:text-on-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[24px]">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<main class="flex-1 p-margin-desktop max-w-container-max mx-auto w-full">
+<div class="mb-stack-lg flex justify-between items-end">
+<h2 class="font-headline-md text-headline-md text-primary">Dashboard Overview</h2>
+<span class="font-body-sm text-body-sm text-secondary">Last updated: Today, 09:41 AM</span>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Action Required (Span 4) -->
+<section class="col-span-12 lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT flex flex-col">
+<div class="p-stack-md border-b border-outline-variant bg-surface-container-low/50">
+<h3 class="font-label-bold text-label-bold uppercase text-primary">Action Required</h3>
+</div>
+<div class="p-stack-md flex-1 flex flex-col gap-unit">
+<!-- Item 1 -->
+<div class="flex items-center justify-between p-stack-sm hover:bg-surface-container-low transition-colors rounded-DEFAULT cursor-pointer group">
+<div class="flex items-center gap-stack-sm">
+<div class="w-8 h-8 rounded-full bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">priority_high</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-primary font-medium">3 New Orders</p>
+<p class="font-body-sm text-body-sm text-secondary">Require fulfillment</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+</div>
+<div class="h-px bg-outline-variant w-full my-1"></div>
+<!-- Item 2 -->
+<div class="flex items-center justify-between p-stack-sm hover:bg-surface-container-low transition-colors rounded-DEFAULT cursor-pointer group">
+<div class="flex items-center gap-stack-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">local_shipping</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-primary font-medium">2 Pickup Requests</p>
+<p class="font-body-sm text-body-sm text-secondary">Scheduled for today</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+</div>
+<div class="h-px bg-outline-variant w-full my-1"></div>
+<!-- Item 3 -->
+<div class="flex items-center justify-between p-stack-sm hover:bg-surface-container-low transition-colors rounded-DEFAULT cursor-pointer group">
+<div class="flex items-center gap-stack-sm">
+<div class="w-8 h-8 rounded-full bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-primary font-medium">1 Delivery Exception</p>
+<p class="font-body-sm text-body-sm text-secondary">Address not found</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Performance Summary (Span 8) -->
+<section class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT flex flex-col overflow-hidden">
+<div class="p-stack-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+<h3 class="font-label-bold text-label-bold uppercase text-primary">Performance Summary</h3>
+<span class="font-label-bold text-label-bold uppercase text-secondary">This Month</span>
+</div>
+<div class="grid grid-cols-2 divide-x divide-outline-variant flex-1">
+<!-- Metric: Sales -->
+<div class="p-stack-lg flex flex-col justify-center">
+<span class="font-label-bold text-label-bold uppercase text-secondary mb-2">Gross Sales</span>
+<div class="font-data-mono text-display-lg text-primary mb-1">$124,500.00</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span class="font-body-sm text-body-sm">+12.4% vs last month</span>
+</div>
+</div>
+<!-- Metric: Inventory -->
+<div class="p-stack-lg flex flex-col justify-center">
+<span class="font-label-bold text-label-bold uppercase text-secondary mb-2">Active Listings</span>
+<div class="font-data-mono text-display-lg text-primary mb-1">842</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">inventory_2</span>
+<span class="font-body-sm text-body-sm">45 items low in stock</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Storefront Status (Span 6) -->
+<section class="col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT flex flex-col">
+<div class="p-stack-md border-b border-outline-variant bg-surface-container-low/50">
+<h3 class="font-label-bold text-label-bold uppercase text-primary">Storefront Status</h3>
+</div>
+<div class="p-stack-md flex flex-col gap-stack-md">
+<!-- Marketplace -->
+<div class="border border-outline-variant p-stack-sm flex justify-between items-center">
+<div class="flex items-center gap-stack-sm">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-body-md text-body-md text-primary font-medium">Curator Marketplace</span>
+</div>
+<span class="font-label-bold text-label-bold uppercase px-2 py-1 bg-surface-container text-primary rounded-sm">Operational</span>
+</div>
+<!-- Independent Storefront -->
+<div class="border border-outline-variant p-stack-sm flex justify-between items-center">
+<div class="flex items-center gap-stack-sm">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-body-md text-body-md text-primary font-medium">Independent Storefront</span>
+</div>
+<span class="font-label-bold text-label-bold uppercase px-2 py-1 bg-surface-container text-primary rounded-sm">Operational</span>
+</div>
+<button class="mt-2 w-full py-2 bg-surface text-primary border border-outline-variant rounded-DEFAULT font-label-bold text-label-bold uppercase hover:bg-surface-container transition-colors">
+                            Manage Channels
+                        </button>
+</div>
+</section>
+<!-- Recent Activity (Span 6) -->
+<section class="col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT flex flex-col">
+<div class="p-stack-md border-b border-outline-variant bg-surface-container-low/50 flex justify-between items-center">
+<h3 class="font-label-bold text-label-bold uppercase text-primary">Recent Activity</h3>
+<button class="font-label-bold text-label-bold text-secondary uppercase hover:text-primary">View All</button>
+</div>
+<div class="flex-1 p-0">
+<!-- Table structure for activity -->
+<div class="w-full">
+<div class="flex w-full px-stack-md py-stack-sm border-b border-outline-variant bg-surface">
+<div class="w-1/4 font-label-bold text-label-bold text-secondary uppercase">Time</div>
+<div class="w-1/2 font-label-bold text-label-bold text-secondary uppercase">Event</div>
+<div class="w-1/4 font-label-bold text-label-bold text-secondary uppercase text-right">Entity</div>
+</div>
+<!-- Row 1 -->
+<div class="flex w-full px-stack-md py-3 border-b border-outline-variant hover:bg-surface-container-lowest transition-colors cursor-pointer">
+<div class="w-1/4 font-data-mono text-data-mono text-secondary self-center">10:42 AM</div>
+<div class="w-1/2 font-body-sm text-body-sm text-primary self-center">Order #4920 Placed</div>
+<div class="w-1/4 font-data-mono text-data-mono text-primary text-right self-center">$1,240.00</div>
+</div>
+<!-- Row 2 -->
+<div class="flex w-full px-stack-md py-3 border-b border-outline-variant hover:bg-surface-container-lowest transition-colors cursor-pointer">
+<div class="w-1/4 font-data-mono text-data-mono text-secondary self-center">09:15 AM</div>
+<div class="w-1/2 font-body-sm text-body-sm text-primary self-center">Inventory Synced</div>
+<div class="w-1/4 font-body-sm text-body-sm text-secondary text-right self-center">System</div>
+</div>
+<!-- Row 3 -->
+<div class="flex w-full px-stack-md py-3 hover:bg-surface-container-lowest transition-colors cursor-pointer">
+<div class="w-1/4 font-data-mono text-data-mono text-secondary self-center">Yesterday</div>
+<div class="w-1/2 font-body-sm text-body-sm text-primary self-center">New Collection Published</div>
+<div class="w-1/4 font-body-sm text-body-sm text-secondary text-right self-center">Admin</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<script src="../assets/js/demo-navigation.js"></script>
+<script src="../assets/js/demo-interactions.js"></script>
+</body></html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Guild - Orders</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#c0cab4",
+                        "tertiary-container": "#151e10",
+                        "surface-bright": "#fbf9f3",
+                        "surface-variant": "#e4e2dd",
+                        "on-tertiary-fixed": "#151e10",
+                        "surface-container": "#f0eee8",
+                        "on-surface": "#1b1c19",
+                        "on-secondary-container": "#786044",
+                        "on-secondary-fixed-variant": "#584329",
+                        "on-tertiary-fixed-variant": "#404a39",
+                        "on-background": "#1b1c19",
+                        "secondary-fixed-dim": "#e0c29f",
+                        "tertiary": "#000000",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#eae8e2",
+                        "surface-container-highest": "#e4e2dd",
+                        "secondary": "#715a3e",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#fdddb9",
+                        "background": "#fbf9f3",
+                        "outline": "#747878",
+                        "primary-fixed": "#e5e2e1",
+                        "inverse-on-surface": "#f2f1eb",
+                        "primary": "#000000",
+                        "on-secondary-fixed": "#281803",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#1c1b1b",
+                        "outline-variant": "#c4c7c7",
+                        "inverse-surface": "#30312d",
+                        "primary-container": "#1c1b1b",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-primary-container": "#858383",
+                        "inverse-primary": "#c8c6c5",
+                        "surface": "#fbf9f3",
+                        "tertiary-fixed": "#dce6d0",
+                        "surface-container-low": "#f5f3ee",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "secondary-container": "#fdddb9",
+                        "surface-tint": "#5f5e5e",
+                        "surface-dim": "#dcdad4",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#444748",
+                        "on-tertiary-container": "#7d8774"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "margin-desktop": "64px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Hanken Grotesk"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-sm": ["Playfair Display"],
+                        "display-lg-mobile": ["Playfair Display"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "headline-md": ["Playfair Display"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "1.4", "letterSpacing": "0.03em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex antialiased">
+<!-- SideNavBar -->
+<nav class="bg-surface-container dark:bg-surface-container text-primary dark:text-on-background font-hanken-grotesk text-label-md h-screen w-64 fixed left-0 top-0 pt-24 border-r border-outline-variant/10 hidden md:flex flex-col">
+<div class="px-6 mb-8 flex flex-col gap-2">
+<h1 class="font-playfair-display text-headline-sm text-primary">The Guild</h1>
+<div class="flex items-center gap-3 mt-4">
+<img alt="User profile" class="w-10 h-10 rounded-full object-cover" data-alt="A sophisticated black and white portrait of a person with high contrast lighting, representing a premium user profile. The image should exude elegance, architectural precision, and a gallery-like minimal aesthetic. Pure whites, deep charcoal blacks." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div>
+<div class="font-label-md text-label-md">Julian Voss</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Premium Member since 2023</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2 flex-grow overflow-y-auto">
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 flex items-center gap-4 px-6 py-4 cursor-pointer rounded-r-full mr-4" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Overview
+            </a>
+<a class="text-primary font-bold bg-surface-container-highest rounded-r-full flex items-center gap-4 px-6 py-4 cursor-pointer mr-4" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">package_2</span>
+                Orders
+            </a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 flex items-center gap-4 px-6 py-4 cursor-pointer rounded-r-full mr-4" href="#">
+<span class="material-symbols-outlined">bookmark</span>
+                Saved Items
+            </a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 flex items-center gap-4 px-6 py-4 cursor-pointer rounded-r-full mr-4" href="#">
+<span class="material-symbols-outlined">location_on</span>
+                Addresses
+            </a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 flex items-center gap-4 px-6 py-4 cursor-pointer rounded-r-full mr-4" href="#">
+<span class="material-symbols-outlined">person</span>
+                Profile
+            </a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 flex items-center gap-4 px-6 py-4 cursor-pointer rounded-r-full mr-4" href="#">
+<span class="material-symbols-outlined">help_center</span>
+                Support
+            </a>
+</div>
+<div class="p-6 mt-auto">
+<button class="w-full py-3 px-4 border border-outline/10 rounded font-label-md text-label-md text-primary hover:bg-surface-container-high transition-colors">
+                Contact Concierge
+            </button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 px-margin-mobile md:px-margin-desktop py-12 md:py-24 max-w-container-max mx-auto w-full">
+<header class="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="font-headline-md text-headline-md text-primary mb-2">Order History</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Track your recent acquisitions and view past gallery purchases.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 border-b border-outline/20 bg-transparent focus:border-primary focus:outline-none font-body-md text-body-md w-full md:w-64 placeholder:text-on-surface-variant/50" placeholder="Search orders..." type="text"/>
+</div>
+<button class="flex items-center gap-2 border border-outline/10 px-4 py-2 rounded text-primary hover:bg-surface-container hover:border-outline/20 transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                    Filter
+                </button>
+</div>
+</header>
+<!-- Orders List -->
+<div class="flex flex-col gap-8">
+<!-- Order Item 1 -->
+<article class="group relative flex flex-col md:flex-row gap-6 p-6 border border-outline/10 rounded-DEFAULT bg-surface-bright hover:shadow-[0_32px_64px_rgba(0,0,0,0.04)] transition-all duration-300">
+<div class="w-full md:w-48 h-48 md:h-32 shrink-0 bg-surface-container overflow-hidden rounded-DEFAULT">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A highly detailed studio shot of a mid-century teak sideboard furniture piece. Warm natural wood tones against a pristine white studio background. Sharp architectural lines, minimalist high-end gallery presentation." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div class="flex flex-col md:flex-row md:justify-between items-start gap-4 mb-4">
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Established Lines</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Mid-Century Teak Sideboard</h3>
+<div class="font-body-md text-body-md text-on-surface-variant mt-1">Order #GLD-8472-A</div>
+</div>
+<div class="text-left md:text-right">
+<div class="font-headline-sm text-headline-sm text-primary">$6,850</div>
+<div class="font-body-md text-body-md text-on-surface-variant mt-1">Oct 12, 2023</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-outline/10">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-label-md text-label-md text-primary uppercase">In Transit</span>
+<span class="text-on-surface-variant mx-2">•</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Arriving Oct 18</span>
+</div>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-6 py-2 rounded-DEFAULT hover:bg-primary-container transition-colors">
+                            View Tracking
+                        </button>
+</div>
+</div>
+</article>
+<!-- Order Item 2 -->
+<article class="group relative flex flex-col md:flex-row gap-6 p-6 border border-outline/10 rounded-DEFAULT bg-surface-bright hover:shadow-[0_32px_64px_rgba(0,0,0,0.04)] transition-all duration-300">
+<div class="w-full md:w-48 h-48 md:h-32 shrink-0 bg-surface-container overflow-hidden rounded-DEFAULT">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A Pierre Jeanneret easy chair made of dark wood and woven cane, positioned in a minimalist setting. Soft, diffused lighting highlights the texture of the materials. High-fidelity architectural photography, warm ivory and rich brown tones." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div class="flex flex-col md:flex-row md:justify-between items-start gap-4 mb-4">
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Atelier Nouveau</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Pierre Jeanneret Easy Chair</h3>
+<div class="font-body-md text-body-md text-on-surface-variant mt-1">Order #GLD-7193-B</div>
+</div>
+<div class="text-left md:text-right">
+<div class="font-headline-sm text-headline-sm text-primary">$4,200</div>
+<div class="font-body-md text-body-md text-on-surface-variant mt-1">Sept 15, 2023</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-outline/10">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></div>
+<span class="font-label-md text-label-md text-primary uppercase">Delivered</span>
+<span class="text-on-surface-variant mx-2">•</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Sept 22, 2023</span>
+</div>
+<button class="border border-outline/20 text-primary font-label-md text-label-md px-6 py-2 rounded-DEFAULT hover:bg-surface-container transition-colors">
+                            Report Issue
+                        </button>
+</div>
+</div>
+</article>
+<!-- Order Item 3 -->
+<article class="group relative flex flex-col md:flex-row gap-6 p-6 border border-outline/10 rounded-DEFAULT bg-surface-bright hover:shadow-[0_32px_64px_rgba(0,0,0,0.04)] transition-all duration-300">
+<div class="w-full md:w-48 h-48 md:h-32 shrink-0 bg-surface-container overflow-hidden rounded-DEFAULT">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A brutalist ceramic vessel with a rough, textured dark grey finish. Sits alone on an ivory pedestal. Dramatic, high-contrast studio lighting emphasizing form and shadow. Minimalist, sculptural, high-end art piece aesthetic." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div class="flex flex-col md:flex-row md:justify-between items-start gap-4 mb-4">
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Obscura Objects</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Brutalist Ceramic Vessel</h3>
+<div class="font-body-md text-body-md text-on-surface-variant mt-1">Order #GLD-6021-C</div>
+</div>
+<div class="text-left md:text-right">
+<div class="font-headline-sm text-headline-sm text-primary">$1,250</div>
+<div class="font-body-md text-body-md text-on-surface-variant mt-1">Aug 20, 2023</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-outline/10">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></div>
+<span class="font-label-md text-label-md text-primary uppercase">Delivered</span>
+<span class="text-on-surface-variant mx-2">•</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Aug 28, 2023</span>
+</div>
+<button class="border border-outline/20 text-primary font-label-md text-label-md px-6 py-2 rounded-DEFAULT hover:bg-surface-container transition-colors">
+                            Buy Again
+                        </button>
+</div>
+</div>
+</article>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Confirmation - THE GUILD</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&amp;family=Playfair+Display:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#2f3131",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-primary-container": "#858383",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary-container": "#838484",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-secondary-container": "#626263",
+                        "surface-container": "#eeeeee",
+                        "primary-container": "#1c1b1b",
+                        "secondary": "#5e5e5f",
+                        "on-background": "#1a1c1c",
+                        "primary": "#000000",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-surface-variant": "#444748",
+                        "outline-variant": "#c4c7c7",
+                        "on-surface": "#1a1c1c",
+                        "surface-tint": "#5f5e5e",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#464747",
+                        "outline": "#747878",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f4f3f3",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e8e8e8",
+                        "secondary-fixed": "#e4e2e2",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#c8c6c5",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#dadada",
+                        "tertiary-fixed-dim": "#c7c6c6",
+                        "surface": "#f9f9f9",
+                        "secondary-container": "#e1dfdf",
+                        "primary-fixed": "#e5e2e1",
+                        "on-secondary-fixed-variant": "#464747",
+                        "background": "#f9f9f9",
+                        "tertiary-container": "#1a1c1c",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#e3e2e2",
+                        "surface-bright": "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "tertiary": "#000000",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-primary-fixed": "#1c1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "max-width-content": "1100px",
+                        "form-gap": "32px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Playfair Display"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "display-sm": ["Playfair Display"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "headline-xl": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "display-sm": ["20px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-xl": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-background border-b border-outline-variant full-width top-0 z-50">
+<div class="flex justify-center items-center py-4 w-full px-margin-mobile md:px-margin-desktop h-[80px]">
+<a class="font-display-sm text-display-sm tracking-tighter text-primary" href="#">
+                THE GUILD
+            </a>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex items-center justify-center py-[120px] px-margin-mobile md:px-margin-desktop">
+<div class="max-w-[800px] w-full mx-auto fade-in">
+<!-- Header Section -->
+<div class="text-center mb-[80px]">
+<span class="material-symbols-outlined text-[48px] text-primary mb-6 block" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<h1 class="font-headline-xl text-headline-xl text-primary mb-4">Thank you for your order.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Order #GLD-8472-9102</p>
+</div>
+<!-- Status Banner -->
+<div class="border border-outline-variant rounded-none p-[32px] mb-[64px] bg-surface-container-lowest text-center">
+<p class="font-label-md text-label-md uppercase text-secondary mb-2 tracking-widest">Status</p>
+<h2 class="font-display-sm text-display-sm text-primary">Seller Confirmation Pending</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-4 max-w-[500px] mx-auto">
+                    The curator has been notified of your acquisition. You will receive an update within 24 hours once the piece is prepared for its journey.
+                </p>
+</div>
+<!-- Item & Timeline Summary -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-[64px] mb-[80px]">
+<!-- Item -->
+<div>
+<h3 class="font-label-md text-label-md uppercase text-primary mb-6 border-b border-outline-variant pb-4">Acquired Piece</h3>
+<div class="flex gap-6 items-start">
+<div class="w-[120px] h-[160px] bg-surface-variant relative flex-shrink-0">
+<img class="w-full h-full object-cover absolute inset-0" data-alt="A minimalist architectural photograph showing a detail of a brutalist concrete staircase bathed in soft, diffused light, evoking a sense of calm luxury and structural integrity, in a light mode palette." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+<div>
+<p class="font-body-lg text-body-lg text-primary mb-2">Mid-Century Modern Lounge Chair</p>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">By Pierre Jeanneret</p>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mb-1">Total</p>
+<p class="font-body-md text-body-md text-primary">$12,500.00</p>
+</div>
+</div>
+</div>
+<!-- Timeline -->
+<div>
+<h3 class="font-label-md text-label-md uppercase text-primary mb-6 border-b border-outline-variant pb-4">Journey to You</h3>
+<div class="relative pl-8 border-l border-outline-variant ml-2 space-y-8">
+<!-- Step 1 -->
+<div class="relative">
+<div class="absolute -left-[41px] top-0 w-[18px] h-[18px] rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[12px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<p class="font-label-md text-label-md text-primary uppercase tracking-wider">Order Placed</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Today</p>
+</div>
+<!-- Step 2 (Active) -->
+<div class="relative">
+<div class="absolute -left-[41px] top-0 w-[18px] h-[18px] rounded-full border border-primary bg-surface-container-lowest flex items-center justify-center">
+<div class="w-[8px] h-[8px] bg-primary rounded-full"></div>
+</div>
+<p class="font-label-md text-label-md text-primary uppercase tracking-wider">Curator Vetting</p>
+<p class="font-label-sm text-label-sm text-secondary mt-1">In Progress</p>
+</div>
+<!-- Step 3 -->
+<div class="relative">
+<div class="absolute -left-[41px] top-0 w-[18px] h-[18px] rounded-full border border-outline-variant bg-surface-container-lowest"></div>
+<p class="font-label-md text-label-md text-secondary uppercase tracking-wider">White-Glove Pickup</p>
+</div>
+<!-- Step 4 -->
+<div class="relative">
+<div class="absolute -left-[41px] top-0 w-[18px] h-[18px] rounded-full border border-outline-variant bg-surface-container-lowest"></div>
+<p class="font-label-md text-label-md text-secondary uppercase tracking-wider">Inspected Delivery</p>
+<p class="font-label-sm text-label-sm text-secondary mt-1">Delivery Planning in Progress</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row justify-center gap-6 items-center">
+<a class="bg-primary text-white font-label-md text-label-md uppercase tracking-widest py-4 px-10 hover:bg-inverse-surface transition-colors duration-300 w-full sm:w-auto text-center" href="#">
+                    View Order Details
+                </a>
+<a class="border border-primary text-primary font-label-md text-label-md uppercase tracking-widest py-4 px-10 hover:bg-surface-container-low transition-colors duration-300 w-full sm:w-auto text-center" href="#">
+                    Continue Shopping
+                </a>
+</div>
+<div class="text-center mt-[64px]">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors border-b border-transparent hover:border-primary pb-1" href="#">
+                    Need assistance? Contact Support
+                </a>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant w-full mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center py-[24px] px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto w-full gap-6">
+<span class="font-display-sm text-display-sm text-primary tracking-tighter">THE GUILD</span>
+<nav class="flex flex-wrap justify-center gap-6">
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">Secure Checkout</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">Shipping &amp; Returns</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Support</a>
+</nav>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary text-center">
+                © 2024 THE GUILD. ARCHITECTURAL INTEGRITY IN EVERY PIECE.
+            </span>
+</div>
+</footer>
+</body></html>

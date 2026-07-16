@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Established Lines</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e4e2e2",
+                        "tertiary-fixed": "#e4e2dd",
+                        "on-tertiary-container": "#84847f",
+                        "on-secondary-fixed": "#301400",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e9e8e7",
+                        "secondary-fixed-dim": "#f5ba92",
+                        "outline": "#747878",
+                        "primary-fixed": "#e5e2e1",
+                        "surface": "#fbf9f8",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#f2f0f0",
+                        "on-surface": "#1b1c1c",
+                        "on-secondary-container": "#794e2d",
+                        "background": "#fbf9f8",
+                        "tertiary-container": "#1b1c19",
+                        "on-tertiary-fixed": "#1b1c19",
+                        "tertiary": "#000000",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "surface-dim": "#dbdad9",
+                        "outline-variant": "#c4c7c7",
+                        "primary": "#000000",
+                        "inverse-surface": "#303031",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#fec299",
+                        "surface-tint": "#5f5e5e",
+                        "secondary": "#815433",
+                        "on-surface-variant": "#444748",
+                        "tertiary-fixed-dim": "#c8c6c1",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-primary-container": "#858383",
+                        "secondary-fixed": "#ffdcc5",
+                        "on-secondary-fixed-variant": "#653d1e",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "on-background": "#1b1c1c",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#474743",
+                        "surface-container-low": "#f5f3f3",
+                        "surface-bright": "#fbf9f8",
+                        "inverse-primary": "#c8c6c5",
+                        "surface-container-highest": "#e4e2e2",
+                        "surface-container": "#efeded",
+                        "primary-container": "#1c1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "unit": "4px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Playfair Display"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-xl": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "utility-sm": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "utility-sm": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #fbf9f8; color: #1b1c1c; }
+        .hairline-border { border: 1px solid rgba(27, 28, 28, 0.2); }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md antialiased pb-24">
+<!-- Top Navigation (Mobile Optimized from JSON) -->
+<header class="sticky top-0 z-50 bg-background flex justify-between items-center w-full px-margin-mobile py-4 border-b border-outline-variant/30 transition-all ease-in-out duration-200">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer">menu</span>
+</div>
+<div class="text-headline-lg-mobile font-headline-lg-mobile tracking-tighter text-primary">
+            Established Lines
+        </div>
+<div class="flex items-center gap-4 text-primary">
+<span class="material-symbols-outlined cursor-pointer hover:opacity-70 transition-opacity duration-300">search</span>
+<span class="material-symbols-outlined cursor-pointer hover:opacity-70 transition-opacity duration-300">shopping_bag</span>
+</div>
+</header>
+<main class="w-full">
+<!-- Hero Section -->
+<section class="relative w-full h-[663px] flex flex-col justify-end p-margin-mobile pb-12 overflow-hidden bg-surface-variant group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105" data-alt="A striking, high-impact vertical photograph of a mid-century modern lounge chair placed elegantly in an expansive, sunlit architectural room with soaring white walls and polished concrete floors. The aesthetic is clean, minimalist, and deeply rooted in heritage American design. The lighting is soft and natural, casting long, deliberate shadows that emphasize form and craftsmanship. Color palette is warm neutrals, rich wood tones, and crisp white." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')">
+</div>
+<!-- Gradient Overlay for text readability -->
+<div class="absolute inset-0 bg-gradient-to-t from-tertiary/60 via-transparent to-transparent"></div>
+<div class="relative z-10 text-center flex flex-col items-center">
+<h1 class="text-headline-xl font-headline-xl text-on-primary mb-4 max-w-[90%] leading-tight">
+                    Heritage &amp; Form
+                </h1>
+<p class="text-body-md font-body-md text-on-primary/90 mb-8 max-w-[80%]">
+                    Curated American modernism and vintage architectural pieces.
+                </p>
+<button class="bg-primary text-on-primary rounded px-8 py-4 font-label-md text-label-md uppercase tracking-widest hover:bg-inverse-surface transition-colors">
+                    Explore Collection
+                </button>
+</div>
+</section>
+<!-- Product Grid: New Arrivals -->
+<section class="py-12 px-margin-mobile">
+<div class="flex justify-between items-end mb-6">
+<h2 class="text-headline-lg-mobile font-headline-lg-mobile text-primary tracking-tight">New Arrivals</h2>
+<a class="text-label-md font-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors border-b border-primary pb-1" href="#">View All</a>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Product Card 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] bg-surface-variant hairline-border rounded mb-3 overflow-hidden relative" data-alt="A beautifully restored vintage walnut side table with clean geometric lines, isolated on a stark, minimalist ivory background. The lighting highlights the rich grain of the wood and the precision of the joinery, reflecting a high-end editorial product photography style." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')">
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-utility-sm font-utility-sm uppercase text-on-surface-variant tracking-wider">Storage</h3>
+<p class="text-headline-md font-headline-md text-primary text-lg leading-tight truncate">Walnut Credenza</p>
+<p class="text-body-md font-body-md text-primary">$3,200</p>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] bg-surface-variant hairline-border rounded mb-3 overflow-hidden relative" data-alt="An iconic mid-century modern table lamp crafted from spun brass and matte black metal. It sits elegantly against a soft off-white backdrop, lit to emphasize its sculptural form and the subtle patina of the vintage materials. High-contrast, gallery-style presentation." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')">
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-utility-sm font-utility-sm uppercase text-on-surface-variant tracking-wider">Lighting</h3>
+<p class="text-headline-md font-headline-md text-primary text-lg leading-tight truncate">Spun Brass Lamp</p>
+<p class="text-body-md font-body-md text-primary">$850</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Editorial Tiles -->
+<section class="px-margin-mobile flex flex-col gap-4 py-8">
+<h2 class="text-headline-lg-mobile font-headline-lg-mobile text-primary tracking-tight mb-4">Curated Edits</h2>
+<!-- Tile 1 -->
+<div class="relative h-64 w-full rounded overflow-hidden flex items-end p-6 hairline-border group cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A moody, high-contrast interior shot of a contemporary living space featuring minimalist vintage furniture. Dark charcoal walls contrast with a stark white architectural sofa and a glass coffee table. The light is dramatic, creating strong shadows and an atmosphere of quiet authority and refined taste." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')">
+</div>
+<div class="absolute inset-0 bg-tertiary/40 group-hover:bg-tertiary/50 transition-colors"></div>
+<div class="relative z-10 w-full flex justify-between items-center">
+<h3 class="text-headline-md font-headline-md text-on-primary">Contemporary</h3>
+<span class="material-symbols-outlined text-on-primary">arrow_forward</span>
+</div>
+</div>
+<!-- Tile 2 -->
+<div class="relative h-64 w-full rounded overflow-hidden flex items-end p-6 hairline-border group cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A close-up detail shot of beautifully patinated leather and sculpted teak wood on a vintage Danish armchair. The image focuses heavily on texture and craftsmanship, bathed in soft, warm, diffused natural light that evokes a sense of heritage and enduring quality." style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')">
+</div>
+<div class="absolute inset-0 bg-tertiary/40 group-hover:bg-tertiary/50 transition-colors"></div>
+<div class="relative z-10 w-full flex justify-between items-center">
+<h3 class="text-headline-md font-headline-md text-on-primary">Vintage</h3>
+<span class="material-symbols-outlined text-on-primary">arrow_forward</span>
+</div>
+</div>
+</section>
+<!-- Heritage Text -->
+<section class="px-margin-mobile py-16 bg-surface-container-low text-center flex flex-col items-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-6">architecture</span>
+<h2 class="text-headline-lg-mobile font-headline-lg-mobile text-primary mb-4">Enduring Craft</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-sm">
+                We source pieces that transcend eras. Our collection embodies a quiet authority, celebrating architectural rigor and honest materials meant to anchor your space for generations.
+            </p>
+</section>
+</main>
+<!-- Footer (JSON Driven) -->
+<footer class="bg-surface text-on-surface w-full border-t border-outline-variant grid grid-cols-1 gap-gutter px-margin-mobile py-12">
+<div class="text-headline-md font-headline-md text-primary mb-6">
+            Established Lines
+        </div>
+<nav class="flex flex-col gap-4 font-body-sm text-body-sm text-on-surface-variant">
+<a class="hover:underline underline-offset-4 transition-colors duration-200" href="#">Shipping Info</a>
+<a class="hover:underline underline-offset-4 transition-colors duration-200" href="#">About</a>
+<a class="hover:underline underline-offset-4 transition-colors duration-200" href="#">Contact</a>
+<a class="hover:underline underline-offset-4 transition-colors duration-200" href="#">Newsletter</a>
+<a class="hover:underline underline-offset-4 transition-colors duration-200" href="#">Privacy Policy</a>
+</nav>
+<div class="mt-8 pt-8 border-t border-outline-variant/30 text-utility-sm font-utility-sm text-on-surface-variant">
+            © 2024 Established Lines. All rights reserved. Powered by Marketplace.
+        </div>
+</footer>
+<!-- Bottom Navigation Bar (Mobile Anchor) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant/30 flex justify-around items-center h-20 px-4 z-50 md:hidden shadow-[0_-4px_12px_rgba(26,26,26,0.05)]">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-[10px] font-label-md uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-[10px] font-label-md uppercase tracking-wider">Explore</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span class="text-[10px] font-label-md uppercase tracking-wider">Saved</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-label-md uppercase tracking-wider">Profile</span>
+</a>
+</nav>
+</body></html>

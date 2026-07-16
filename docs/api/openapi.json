@@ -1,0 +1,365 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/health/live": {
+      "get": {
+        "operationId": "HealthController_live",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Process liveness"
+          }
+        },
+        "tags": ["foundation"]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "HealthController_health",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Application liveness and dependency status"
+          }
+        },
+        "tags": ["foundation"]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "minLength": 10
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authenticated session"
+          }
+        },
+        "tags": ["identity"]
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "operationId": "AuthController_logout",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["identity"]
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "operationId": "AuthController_me",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["identity"]
+      }
+    },
+    "/organizations/{organizationId}/members": {
+      "get": {
+        "operationId": "TenancyController_members",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["tenancy"]
+      }
+    },
+    "/catalog/categories": {
+      "get": {
+        "operationId": "CatalogController_categories",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalog"]
+      }
+    },
+    "/catalog/products": {
+      "get": {
+        "operationId": "CatalogController_products",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalog"]
+      }
+    },
+    "/catalog/products/{slug}": {
+      "get": {
+        "operationId": "CatalogController_product",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalog"]
+      }
+    },
+    "/organizations/{organizationId}/catalog/products": {
+      "get": {
+        "operationId": "CatalogController_sellerProducts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["catalog"]
+      },
+      "post": {
+        "operationId": "CatalogController_create",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["catalog"]
+      }
+    },
+    "/organizations/{organizationId}/catalog/products/{productId}": {
+      "get": {
+        "operationId": "CatalogController_sellerProduct",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["catalog"]
+      },
+      "patch": {
+        "operationId": "CatalogController_update",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["catalog"]
+      }
+    },
+    "/organizations/{organizationId}/catalog/products/{productId}/submit": {
+      "post": {
+        "operationId": "CatalogController_submit",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["catalog"]
+      }
+    },
+    "/organizations/{organizationId}/catalog/products/{productId}/moderation": {
+      "post": {
+        "operationId": "CatalogController_moderate",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["catalog"]
+      }
+    },
+    "/organizations/{organizationId}/imports/shopify": {
+      "post": {
+        "operationId": "ImportController_shopify",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["imports"]
+      }
+    },
+    "/organizations/{organizationId}/imports/{jobId}": {
+      "get": {
+        "operationId": "ImportController_report",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["imports"]
+      }
+    },
+    "/organizations/{organizationId}/catalog/products/{productId}/media/upload-url": {
+      "post": {
+        "operationId": "MediaController_uploadUrl",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["media"]
+      }
+    },
+    "/storefronts/resolve": {
+      "get": {
+        "operationId": "StorefrontController_resolve",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["storefronts"]
+      }
+    },
+    "/storefronts/{slug}": {
+      "get": {
+        "operationId": "StorefrontController_home",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["storefronts"]
+      }
+    },
+    "/storefronts/{slug}/products/{productSlug}": {
+      "get": {
+        "operationId": "StorefrontController_product",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["storefronts"]
+      }
+    },
+    "/storefronts/{slug}/redirect": {
+      "get": {
+        "operationId": "StorefrontController_redirect",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["storefronts"]
+      }
+    }
+  },
+  "info": {
+    "title": "Project Atlas Foundation API",
+    "description": "",
+    "version": "0.1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "cookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "atlas_session"
+      }
+    },
+    "schemas": {}
+  }
+}

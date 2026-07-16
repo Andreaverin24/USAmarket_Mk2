@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quote Request Detail</title>
+<script>window.tailwind=window.tailwind||{};</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c4c7c7",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-surface-variant": "#444748",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface-variant": "#e2e2e2",
+                        "secondary": "#5e5e5e",
+                        "on-surface": "#1a1c1c",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "secondary-container": "#e1dfdf",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-secondary-container": "#626262",
+                        "surface-bright": "#f9f9f9",
+                        "on-primary-fixed": "#1c1b1b",
+                        "surface-dim": "#dadada",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "surface-container-high": "#e8e8e8",
+                        "surface": "#f9f9f9",
+                        "surface-tint": "#5f5e5e",
+                        "inverse-primary": "#c8c6c5",
+                        "primary-fixed": "#e5e2e1",
+                        "on-tertiary-container": "#838484",
+                        "on-background": "#1a1c1c",
+                        "inverse-on-surface": "#f1f1f1",
+                        "background": "#f9f9f9",
+                        "surface-container-low": "#f4f3f3",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#e4e2e2",
+                        "tertiary": "#000000",
+                        "outline": "#747878",
+                        "primary": "#000000",
+                        "inverse-surface": "#2f3131",
+                        "tertiary-container": "#1a1c1c",
+                        "on-primary-container": "#858383",
+                        "primary-container": "#1c1b1b",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-secondary-fixed-variant": "#464747",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px",
+                        "stack-xs": "4px",
+                        "stack-md": "16px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "display-lg": ["Playfair Display"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Playfair Display"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Playfair Display"],
+                        "data-mono": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-md": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "data-mono": ["13px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link rel="stylesheet" href="../assets/css/demo-navigation.css" />
+<link rel="icon" href="../assets/images/demo-favicon.svg" type="image/svg+xml">
+</head>
+<body class="bg-background text-on-background min-h-screen antialiased flex flex-col md:flex-row font-body-lg overflow-x-hidden">
+<!-- Side Navigation Shell -->
+<nav class="hidden md:flex flex-col py-stack-lg bg-surface dark:bg-inverse-surface fixed left-0 top-0 h-screen w-[280px] border-r border-outline-variant border-r border-outline-variant dark:border-outline z-20">
+<div class="px-gutter mb-stack-lg">
+<h1 class="text-headline-sm font-headline-sm uppercase tracking-widest text-primary dark:text-primary-fixed">Guild Logistics</h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-unit">Dispatch Unit 01</p>
+</div>
+<div class="px-gutter mb-stack-lg">
+<button class="w-full bg-primary text-on-primary py-2 px-4 rounded-lg font-label-bold text-label-bold uppercase tracking-wider hover:bg-surface-tint transition-colors duration-200 ease-in-out">Create Shipment</button>
+</div>
+<ul class="flex-1 space-y-unit">
+<li>
+<a class="flex items-center gap-3 py-3 px-gutter text-secondary dark:text-secondary-fixed-dim pl-4 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label-bold text-label-bold">Operations</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-3 px-gutter text-primary dark:text-primary-fixed font-bold border-l-2 border-primary dark:border-primary-fixed pl-4 bg-surface-container-low dark:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">request_quote</span>
+<span class="font-label-bold text-label-bold">Quote Requests</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-3 px-gutter text-secondary dark:text-secondary-fixed-dim pl-4 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">local_shipping</span>
+<span class="font-label-bold text-label-bold">Shipments</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-3 px-gutter text-secondary dark:text-secondary-fixed-dim pl-4 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">alt_route</span>
+<span class="font-label-bold text-label-bold">Routes</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-3 px-gutter text-secondary dark:text-secondary-fixed-dim pl-4 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person_pin</span>
+<span class="font-label-bold text-label-bold">Drivers</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-3 px-gutter text-secondary dark:text-secondary-fixed-dim pl-4 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">report_problem</span>
+<span class="font-label-bold text-label-bold">Incidents</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-3 px-gutter text-secondary dark:text-secondary-fixed-dim pl-4 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">calendar_today</span>
+<span class="font-label-bold text-label-bold">Calendar</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-3 px-gutter text-secondary dark:text-secondary-fixed-dim pl-4 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out mt-auto" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-label-bold text-label-bold">Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[280px] w-full max-w-[calc(100%-280px)] mx-auto flex flex-col min-h-screen">
+<!-- Top App Bar Shell -->
+<header class="flex justify-between items-center w-full h-16 px-gutter bg-surface dark:bg-inverse-surface border-b border-outline-variant border-b border-outline-variant dark:border-outline z-10 sticky top-0">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed">Dispatch Console</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden sm:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-1.5 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-md font-body-md focus:border-primary focus:ring-0 transition-colors" placeholder="Shipment ID Search" type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications_active</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="p-margin-mobile md:p-margin-desktop flex-1 w-full max-w-container-max mx-auto">
+<div class="mb-stack-lg">
+<div class="flex items-center gap-2 text-on-surface-variant mb-unit">
+<a class="font-label-bold text-label-bold uppercase hover:text-primary transition-colors" href="#">Quote Requests</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="font-label-bold text-label-bold uppercase text-primary">QR-8492-BX</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface">High-Value Transport Quote</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+                            Quote valid until Oct 25, 2024
+                        </p>
+</div>
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center px-2 py-1 rounded bg-[#E8F5E9] text-[#1B5E20] border border-[#C8E6C9]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#1B5E20] mr-2"></span>
+<span class="font-label-bold text-label-bold uppercase tracking-wider">Pending Review</span>
+</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Cargo Details -->
+<div class="lg:col-span-8 flex flex-col gap-stack-lg">
+<!-- Product Details Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT">
+<div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-bright">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Cargo Specifications</h3>
+</div>
+<div class="p-6">
+<div class="flex flex-col md:flex-row gap-6">
+<div class="w-full md:w-1/3 aspect-square bg-surface-container-low rounded-DEFAULT border border-outline-variant overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A brutalist, minimalist oak dining table photographed in a pristine, high-key studio environment. The lighting is crisp and even, highlighting the stark geometric lines and raw texture of the pale oak wood. The background is a seamless white void, creating a premium, gallery-like presentation." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+<div class="flex-1 grid grid-cols-2 gap-x-6 gap-y-4 content-start">
+<div class="col-span-2 border-b border-outline-variant pb-4 mb-2">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1">Item Description</label>
+<p class="font-headline-sm text-headline-sm text-on-surface">Brutalist Oak Table</p>
+</div>
+<div>
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1">Dimensions</label>
+<p class="font-data-mono text-data-mono text-on-surface">78" W × 32" D × 30" H</p>
+</div>
+<div>
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1">Weight</label>
+<p class="font-data-mono text-data-mono text-on-surface">220 lbs</p>
+</div>
+<div class="col-span-2 mt-2">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1">Handling Requirements</label>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="inline-block px-2 py-1 bg-surface-container-high text-on-surface-variant text-body-sm font-body-sm rounded-DEFAULT border border-outline-variant">Fragile</span>
+<span class="inline-block px-2 py-1 bg-surface-container-high text-on-surface-variant text-body-sm font-body-sm rounded-DEFAULT border border-outline-variant">Team Lift Required</span>
+<span class="inline-block px-2 py-1 bg-surface-container-high text-on-surface-variant text-body-sm font-body-sm rounded-DEFAULT border border-outline-variant">Do Not Stack</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Routing Details Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT">
+<div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-bright">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Transit Route &amp; Logistics</h3>
+</div>
+<div class="p-0">
+<div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-outline-variant">
+<!-- Origin -->
+<div class="p-6 relative">
+<div class="absolute top-6 right-6 text-on-surface-variant opacity-20">
+<span class="material-symbols-outlined text-[48px]">location_on</span>
+</div>
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline"></span> Origin
+                                    </label>
+<p class="font-headline-sm text-headline-sm text-on-surface mb-2">San Francisco, CA</p>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">94107 • Commercial Loading Dock</p>
+<div class="bg-surface-container-low p-3 border border-outline-variant rounded-DEFAULT mt-auto">
+<label class="font-label-bold text-label-bold text-on-surface-variant uppercase block mb-1 text-[10px]">Access Conditions</label>
+<p class="font-body-sm text-body-sm text-on-surface">Standard loading dock, pallet jack available on site.</p>
+</div>
+</div>
+<!-- Destination -->
+<div class="p-6 relative">
+<div class="absolute top-6 right-6 text-on-surface-variant opacity-20">
+<span class="material-symbols-outlined text-[48px]">flag</span>
+</div>
+<label class="font-label-bold text-label-bold text-primary uppercase block mb-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Destination
+                                    </label>
+<p class="font-headline-sm text-headline-sm text-on-surface mb-2">Los Angeles, CA</p>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">90013 • Residential Delivery</p>
+<div class="bg-error-container p-3 border border-error/20 rounded-DEFAULT mt-auto">
+<label class="font-label-bold text-label-bold text-on-error-container uppercase block mb-1 text-[10px]">Restricted Access</label>
+<p class="font-body-sm text-body-sm text-on-error-container font-medium">3rd Floor, Stairs Only, Narrow Entryway.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Pricing & Action -->
+<div class="lg:col-span-4 flex flex-col gap-stack-md">
+<div class="bg-primary text-on-primary rounded-DEFAULT shadow-lg border border-primary sticky top-24">
+<div class="px-6 py-5 border-b border-on-primary/10">
+<h3 class="font-headline-md text-headline-md">Financial Summary</h3>
+</div>
+<div class="p-6">
+<!-- Line Items -->
+<div class="space-y-3 mb-6">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-primary/80">Base Freight</span>
+<span class="font-data-mono text-data-mono">$450.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-primary/80">White Glove Surcharge</span>
+<span class="font-data-mono text-data-mono">$250.00</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-primary/80">Insurance</span>
+<span class="font-body-sm text-body-sm text-on-primary/50 mt-1">Collectible Value: $8,500</span>
+</div>
+<span class="font-data-mono text-data-mono">$120.00</span>
+</div>
+</div>
+<div class="border-t border-on-primary/20 pt-4 mb-8">
+<div class="flex justify-between items-end">
+<span class="font-headline-sm text-headline-sm uppercase tracking-wider">System Total</span>
+<span class="font-display-lg text-display-lg">$820.00</span>
+</div>
+</div>
+<!-- Manual Override Section -->
+<div class="bg-surface text-on-surface p-4 rounded-DEFAULT mb-6">
+<h4 class="font-label-bold text-label-bold uppercase text-on-surface-variant mb-4 border-b border-outline-variant pb-2">Manual Quote Adjustments</h4>
+<div class="space-y-4">
+<div>
+<label class="font-label-bold text-label-bold uppercase text-on-surface-variant block mb-1" for="adjusted-quote">Adjusted Total ($)</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-data-mono">$</span>
+<input class="w-full pl-8 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT text-data-mono font-data-mono focus:border-primary focus:ring-0 transition-colors" id="adjusted-quote" placeholder="820.00" type="text"/>
+</div>
+</div>
+<div>
+<label class="font-label-bold text-label-bold uppercase text-on-surface-variant block mb-1" for="override-reason">Override Reason</label>
+<select class="w-full px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT text-body-md font-body-md focus:border-primary focus:ring-0 transition-colors appearance-none" id="override-reason">
+<option disabled="" selected="" value="">Select reason...</option>
+<option value="discount">Frequent Seller Discount</option>
+<option value="competitor">Competitor Price Match</option>
+<option value="volume">Volume Agreement</option>
+<option value="manager">Manager Discretion</option>
+</select>
+</div>
+</div>
+</div>
+<button class="w-full bg-surface text-primary py-4 px-6 rounded-DEFAULT font-label-bold text-label-bold uppercase tracking-wider hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2 border border-transparent hover:border-outline-variant">
+                                Approve &amp; Send to Buyer
+                                <span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+<p class="font-body-sm text-body-sm text-on-primary/60 text-center mt-4">
+                                Action is irreversible once sent.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script src="../assets/js/demo-navigation.js"></script>
+<script src="../assets/js/demo-interactions.js"></script>
+</body></html>

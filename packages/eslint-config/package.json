@@ -1,0 +1,8 @@
+{
+  "name": "@atlas/eslint-config",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    ".": "../../eslint.config.mjs"
+  }
+}

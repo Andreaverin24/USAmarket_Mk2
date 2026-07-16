@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Guild Admin - Seller Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d8dadc",
+                        "secondary": "#505f76",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#000000",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-surface": "#2d3133",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#565e74",
+                        "surface-container": "#eceef0",
+                        "tertiary-fixed-dim": "#dec29a",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary-container": "#271901",
+                        "on-tertiary-fixed": "#271901",
+                        "surface": "#f7f9fb",
+                        "outline": "#76777d",
+                        "outline-variant": "#c6c6cd",
+                        "inverse-primary": "#bec6e0",
+                        "on-tertiary-fixed-variant": "#574425",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary-container": "#d0e1fb",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-secondary-container": "#54647a",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-primary-fixed": "#131b2e",
+                        "primary": "#000000",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#98805d",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#131b2e",
+                        "surface-variant": "#e0e3e5",
+                        "on-background": "#191c1e",
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d3e4fe",
+                        "tertiary-fixed": "#fcdeb5",
+                        "background": "#f7f9fb",
+                        "surface-container-high": "#e6e8ea",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-primary-container": "#7c839b",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#dae2fd",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-surface-variant": "#45464d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "unit": "4px",
+                        "container-padding": "32px",
+                        "gutter": "16px",
+                        "stack-lg": "32px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "title-lg": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "headline-md": ["Playfair Display"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Playfair Display"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Playfair Display"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "title-lg": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "data-mono": ["13px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface h-full flex antialiased">
+<!-- SideNavBar -->
+<nav class="bg-surface dark:bg-on-background text-primary dark:text-inverse-primary font-label-md text-label-md docked fixed-left h-full w-64 border-r border-outline-variant dark:border-outline flat no shadows transition-all duration-100 flex flex-col fixed left-0 top-0 pt-16 z-40 hidden md:flex">
+<div class="px-gutter pb-stack-lg border-b border-outline-variant dark:border-outline mb-stack-sm flex flex-col gap-unit">
+<h1 class="font-headline-sm text-headline-sm uppercase tracking-widest text-primary dark:text-inverse-primary">The Guild</h1>
+<span class="text-secondary dark:text-secondary-fixed-dim font-body-sm text-body-sm">Ops Control</span>
+</div>
+<ul class="flex flex-col flex-1 overflow-y-auto">
+<li>
+<a class="flex items-center gap-stack-sm px-gutter py-3 text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-gutter py-3 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary font-bold border-r-4 border-primary transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span>Sellers</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-gutter py-3 text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Products</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-gutter py-3 text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span>Orders</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-gutter py-3 text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span>Payments</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-gutter py-3 text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span>Payouts</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-gutter py-3 text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+<span>Logistics</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-gutter py-3 text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="report_problem">report_problem</span>
+<span>Incidents</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-gutter py-3 text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>Users</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-gutter py-3 text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="domain">domain</span>
+<span>Domains</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-gutter py-3 text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span>Audit Log</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-gutter py-3 text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 md:ml-64 flex flex-col min-h-screen pt-16 md:pt-0 bg-background">
+<!-- TopNavBar (Mobile only fallback, otherwise integrated into layout if needed, using custom header here for layout simplicity) -->
+<header class="bg-surface-container-lowest border-b border-outline-variant h-16 flex justify-between items-center px-container-padding sticky top-0 z-30 hidden md:flex w-full">
+<h2 class="font-title-lg text-title-lg text-primary">Seller Onboarding</h2>
+<div class="flex items-center gap-gutter">
+<button class="text-secondary hover:bg-surface-container p-2 rounded transition-colors duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="text-secondary hover:bg-surface-container p-2 rounded transition-colors duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 bg-surface-variant rounded-full border border-outline-variant flex items-center justify-center overflow-hidden">
+<img alt="Admin Profile" class="w-full h-full object-cover" data-alt="A small, professional headshot of an administrator in a minimalist setting. High contrast, clear lighting, neutral background, reflecting an authoritative and trustworthy ops environment." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+</div>
+</header>
+<div class="p-container-padding flex flex-col lg:flex-row gap-gutter h-[calc(100vh-4rem)] overflow-hidden">
+<!-- Pending Sellers List (Left Column) -->
+<section class="flex-1 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT flex flex-col overflow-hidden max-w-sm shrink-0">
+<div class="p-stack-md border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h3 class="font-title-lg text-title-lg text-primary">Pending Review</h3>
+<span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-2 py-1 rounded">3</span>
+</div>
+<div class="overflow-y-auto flex-1">
+<ul class="divide-y divide-outline-variant">
+<!-- Active Item -->
+<li class="bg-surface-container-highest cursor-pointer border-l-4 border-primary">
+<div class="p-stack-md flex justify-between items-start">
+<div>
+<h4 class="font-data-mono text-data-mono text-primary mb-1">Established Lines</h4>
+<p class="font-body-sm text-body-sm text-secondary">Julian Voss • New York</p>
+</div>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+</li>
+<!-- Inactive Items -->
+<li class="hover:bg-surface-container-low cursor-pointer transition-colors duration-150 border-l-4 border-transparent">
+<div class="p-stack-md flex justify-between items-start">
+<div>
+<h4 class="font-data-mono text-data-mono text-primary mb-1">Apex Minimalist</h4>
+<p class="font-body-sm text-body-sm text-secondary">Sarah Chen • Seattle</p>
+</div>
+</div>
+</li>
+<li class="hover:bg-surface-container-low cursor-pointer transition-colors duration-150 border-l-4 border-transparent">
+<div class="p-stack-md flex justify-between items-start">
+<div>
+<h4 class="font-data-mono text-data-mono text-primary mb-1">Vanguard Supplies</h4>
+<p class="font-body-sm text-body-sm text-secondary">Marcus Cole • London</p>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</section>
+<!-- Detailed Review Panel (Right Column) -->
+<section class="flex-[2] bg-surface-container-lowest border border-outline-variant rounded-DEFAULT flex flex-col overflow-y-auto">
+<!-- Header -->
+<div class="p-stack-lg border-b border-outline-variant flex justify-between items-start bg-surface-container-low">
+<div>
+<div class="flex items-center gap-stack-sm mb-stack-sm">
+<span class="w-[6px] h-[6px] bg-secondary rounded-sm"></span>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Status: Pending Review</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-primary mb-unit">Established Lines</h2>
+<p class="font-body-md text-body-md text-secondary">Application ID: #APP-2023-8942</p>
+</div>
+<div class="flex gap-stack-sm">
+<button class="bg-surface-container-lowest border border-outline-variant text-primary font-label-md text-label-md px-4 py-2 rounded-DEFAULT hover:bg-surface-container transition-none">
+                            Decline
+                        </button>
+<button class="bg-surface-container-lowest border border-outline-variant text-primary font-label-md text-label-md px-4 py-2 rounded-DEFAULT hover:bg-surface-container transition-none">
+                            Request Info
+                        </button>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-DEFAULT hover:bg-primary-container transition-none">
+                            Approve Seller
+                        </button>
+</div>
+</div>
+<div class="p-container-padding flex flex-col gap-stack-lg">
+<!-- Company Profile Bento -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="border border-outline-variant rounded-DEFAULT p-stack-md">
+<h4 class="font-label-md text-label-md text-secondary uppercase tracking-widest border-b border-outline-variant pb-2 mb-stack-sm">Company Details</h4>
+<dl class="space-y-stack-sm">
+<div>
+<dt class="font-label-sm text-label-sm text-secondary">Owner</dt>
+<dd class="font-data-mono text-data-mono text-primary">Julian Voss</dd>
+</div>
+<div>
+<dt class="font-label-sm text-label-sm text-secondary">Location</dt>
+<dd class="font-data-mono text-data-mono text-primary">New York, NY, USA</dd>
+</div>
+<div>
+<dt class="font-label-sm text-label-sm text-secondary">Est. Catalog Size</dt>
+<dd class="font-data-mono text-data-mono text-primary">45 Items</dd>
+</div>
+<div>
+<dt class="font-label-sm text-label-sm text-secondary">Category</dt>
+<dd class="font-data-mono text-data-mono text-primary">Home Goods &amp; Furniture</dd>
+</div>
+</dl>
+</div>
+<!-- Documents -->
+<div class="border border-outline-variant rounded-DEFAULT p-stack-md flex flex-col">
+<h4 class="font-label-md text-label-md text-secondary uppercase tracking-widest border-b border-outline-variant pb-2 mb-stack-sm">Uploaded Documents</h4>
+<ul class="flex-1 space-y-stack-sm">
+<li class="flex items-center justify-between p-2 bg-surface-container-low rounded-DEFAULT border border-outline-variant hover:border-primary transition-colors cursor-pointer">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="description">description</span>
+<span class="font-data-mono text-data-mono text-primary">ID_Julian_Voss.pdf</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="download">download</span>
+</li>
+<li class="flex items-center justify-between p-2 bg-surface-container-low rounded-DEFAULT border border-outline-variant hover:border-primary transition-colors cursor-pointer">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="description">description</span>
+<span class="font-data-mono text-data-mono text-primary">NY_Business_License_2023.pdf</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="download">download</span>
+</li>
+</ul>
+</div>
+</div>
+<hr class="border-outline-variant"/>
+<!-- Audit & Notes Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Internal Notes -->
+<div class="flex flex-col gap-stack-sm">
+<label class="font-label-md text-label-md text-secondary uppercase tracking-widest" for="internal-notes">Internal Notes</label>
+<textarea class="w-full bg-surface border border-outline-variant rounded-DEFAULT p-stack-md font-body-sm text-body-sm text-primary focus:outline-none focus:border-2 focus:border-primary resize-none" id="internal-notes" placeholder="Add assessment notes here..." rows="5"></textarea>
+<button class="self-end bg-surface-container-lowest border border-outline-variant text-primary font-label-sm text-label-sm px-3 py-1 rounded-DEFAULT mt-unit hover:bg-surface-container transition-none">Save Note</button>
+</div>
+<!-- Audit History -->
+<div class="flex flex-col gap-stack-sm">
+<h4 class="font-label-md text-label-md text-secondary uppercase tracking-widest border-b border-outline-variant pb-2">Audit History</h4>
+<ul class="space-y-stack-md pt-unit">
+<li class="flex items-start gap-stack-sm">
+<div class="mt-1 w-2 h-2 rounded-sm bg-outline-variant shrink-0"></div>
+<div>
+<p class="font-body-sm text-body-sm text-primary">Document verified by Admin A</p>
+<p class="font-label-sm text-label-sm text-secondary">Oct 24, 2023 - 14:32 UTC</p>
+</div>
+</li>
+<li class="flex items-start gap-stack-sm">
+<div class="mt-1 w-2 h-2 rounded-sm bg-outline-variant shrink-0"></div>
+<div>
+<p class="font-body-sm text-body-sm text-primary">Application Submitted</p>
+<p class="font-label-sm text-label-sm text-secondary">Oct 23, 2023 - 09:15 UTC</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

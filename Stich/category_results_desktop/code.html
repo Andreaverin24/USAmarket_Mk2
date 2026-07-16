@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vintage Seating - THE GUILD</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed": "#e3e2e0",
+                      "surface-container": "#efeded",
+                      "surface-container-highest": "#e3e2e2",
+                      "surface-container-high": "#e9e8e7",
+                      "surface": "#fbf9f9",
+                      "on-tertiary": "#ffffff",
+                      "surface-dim": "#dbdad9",
+                      "surface-bright": "#fbf9f9",
+                      "primary-fixed": "#e5e2e1",
+                      "inverse-surface": "#303031",
+                      "error-container": "#ffdad6",
+                      "surface-variant": "#e3e2e2",
+                      "on-error-container": "#93000a",
+                      "on-secondary-fixed": "#27180c",
+                      "on-error": "#ffffff",
+                      "on-surface-variant": "#444748",
+                      "on-primary-fixed-variant": "#474746",
+                      "background": "#fbf9f9",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "primary": "#000000",
+                      "outline-variant": "#c4c7c7",
+                      "secondary-fixed": "#faddc8",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed": "#1c1b1b",
+                      "on-tertiary-fixed": "#1a1c1b",
+                      "on-background": "#1b1c1c",
+                      "tertiary": "#000000",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f5f3f3",
+                      "secondary-container": "#faddc8",
+                      "on-secondary-container": "#756050",
+                      "inverse-primary": "#c8c6c5",
+                      "tertiary-container": "#1a1c1b",
+                      "secondary-fixed-dim": "#dcc2ad",
+                      "on-secondary-fixed-variant": "#564334",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#464746",
+                      "on-tertiary-container": "#838482",
+                      "on-surface": "#1b1c1c",
+                      "primary-container": "#1c1b1b",
+                      "on-primary-container": "#858383",
+                      "outline": "#747878",
+                      "tertiary-fixed-dim": "#c7c6c5",
+                      "surface-tint": "#5f5e5e",
+                      "secondary": "#6f5a4a",
+                      "inverse-on-surface": "#f2f0f0"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "gutter": "24px",
+                      "stack-md": "40px",
+                      "stack-sm": "24px",
+                      "container-max": "1440px",
+                      "stack-xl": "120px",
+                      "margin-desktop": "64px",
+                      "margin-mobile": "20px",
+                      "stack-lg": "80px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Playfair Display"
+                      ],
+                      "label-caps": [
+                              "Public Sans"
+                      ],
+                      "display-md": [
+                              "Playfair Display"
+                      ],
+                      "label-md": [
+                              "Public Sans"
+                      ],
+                      "body-lg": [
+                              "Public Sans"
+                      ],
+                      "headline-lg": [
+                              "Playfair Display"
+                      ],
+                      "headline-lg-mobile": [
+                              "Playfair Display"
+                      ],
+                      "body-sm": [
+                              "Public Sans"
+                      ],
+                      "display-lg": [
+                              "Playfair Display"
+                      ],
+                      "body-md": [
+                              "Public Sans"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-md": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background antialiased selection:bg-surface-dim selection:text-primary min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="sticky top-0 z-50 bg-background dark:bg-background flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto border-b border-outline-variant">
+<div class="flex items-center gap-gutter">
+<a class="font-display-md text-display-md tracking-tighter text-primary dark:text-on-background" href="#">THE GUILD</a>
+</div>
+<div class="hidden md:flex items-center gap-stack-sm">
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-on-background transition-colors duration-200 uppercase" href="#">Gallery</a>
+<a class="font-label-caps text-label-caps text-primary dark:text-on-background border-b border-primary pb-1 uppercase" href="#">Designers</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-on-background transition-colors duration-200 uppercase" href="#">Journal</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-on-background transition-colors duration-200 uppercase" href="#">Bespoke</a>
+</div>
+<div class="flex items-center gap-4">
+<button aria-label="shopping_bag" class="hover:text-primary transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="shopping_bag" style="font-variation-settings: 'FILL' 0;">shopping_bag</span>
+</button>
+<button aria-label="person" class="hover:text-primary transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 0;">person</span>
+</button>
+<!-- Mobile Menu Toggle -->
+<button aria-label="menu" class="md:hidden hover:text-primary transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-md flex flex-col md:flex-row gap-gutter">
+<!-- Left Sidebar Filters (Desktop) -->
+<aside class="hidden md:block w-64 flex-shrink-0 pr-gutter border-r border-outline-variant space-y-stack-sm">
+<div class="pb-4 border-b border-outline-variant">
+<h3 class="font-label-caps text-label-caps uppercase text-primary mb-4 tracking-widest">Active Filters</h3>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="inline-flex items-center gap-1 bg-surface-container-low px-3 py-1 font-body-sm text-body-sm text-primary">
+                        Designer: Hans Wegner
+                        <button class="hover:text-on-surface-variant ml-1 focus:outline-none"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 bg-surface-container-low px-3 py-1 font-body-sm text-body-sm text-primary">
+                        Period: 1950s
+                        <button class="hover:text-on-surface-variant ml-1 focus:outline-none"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+</div>
+<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary uppercase border-b border-transparent hover:border-primary transition-all">Clear All</button>
+</div>
+<!-- Filter Group: Category -->
+<div class="pb-4 border-b border-outline-variant">
+<button class="w-full flex justify-between items-center font-label-caps text-label-caps uppercase text-primary py-2 hover:opacity-70 transition-opacity">
+                    Category
+                    <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+<!-- Filter Group: Price -->
+<div class="pb-4 border-b border-outline-variant">
+<button class="w-full flex justify-between items-center font-label-caps text-label-caps uppercase text-primary py-2 hover:opacity-70 transition-opacity">
+                    Price
+                    <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+<!-- Filter Group: Availability -->
+<div class="pb-4 border-b border-outline-variant">
+<button class="w-full flex justify-between items-center font-label-caps text-label-caps uppercase text-primary py-2 hover:opacity-70 transition-opacity">
+                    Availability
+                    <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+<!-- Filter Group: Designer/Maker (Expanded for demo) -->
+<div class="pb-4 border-b border-outline-variant">
+<button class="w-full flex justify-between items-center font-label-caps text-label-caps uppercase text-primary py-2 hover:opacity-70 transition-opacity">
+                    Designer/Maker
+                    <span class="material-symbols-outlined text-[16px]">expand_less</span>
+</button>
+<div class="mt-3 space-y-2 max-h-48 overflow-y-auto">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-primary border-outline-variant rounded-none focus:ring-primary focus:ring-offset-0 bg-transparent group-hover:border-primary transition-colors" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-primary transition-colors">Alvar Aalto</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="form-checkbox h-4 w-4 text-primary border-primary rounded-none focus:ring-primary focus:ring-offset-0 bg-transparent transition-colors" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-primary">Hans Wegner</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-primary border-outline-variant rounded-none focus:ring-primary focus:ring-offset-0 bg-transparent group-hover:border-primary transition-colors" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-primary transition-colors">Finn Juhl</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-primary border-outline-variant rounded-none focus:ring-primary focus:ring-offset-0 bg-transparent group-hover:border-primary transition-colors" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-primary transition-colors">Arne Jacobsen</span>
+</label>
+</div>
+</div>
+<!-- More Filters... -->
+<div class="pb-4 border-b border-outline-variant">
+<button class="w-full flex justify-between items-center font-label-caps text-label-caps uppercase text-primary py-2 hover:opacity-70 transition-opacity">
+                    Condition
+                    <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+<div class="pb-4 border-b border-outline-variant">
+<button class="w-full flex justify-between items-center font-label-caps text-label-caps uppercase text-primary py-2 hover:opacity-70 transition-opacity">
+                    Period
+                    <span class="material-symbols-outlined text-[16px]">expand_less</span>
+</button>
+<div class="mt-3 space-y-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="form-checkbox h-4 w-4 text-primary border-primary rounded-none focus:ring-primary focus:ring-offset-0 bg-transparent transition-colors" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-primary">1950s</span>
+</label>
+</div>
+</div>
+</aside>
+<!-- Main Product Area -->
+<section class="flex-grow">
+<!-- Header & Meta -->
+<header class="mb-stack-md">
+<nav aria-label="Breadcrumb" class="mb-6">
+<ol class="flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant uppercase">
+<li><a class="hover:text-primary transition-colors" href="#">Home</a></li>
+<li><span class="text-outline-variant">/</span></li>
+<li><a class="hover:text-primary transition-colors" href="#">Furniture</a></li>
+<li><span class="text-outline-variant">/</span></li>
+<li aria-current="page" class="text-primary">Seating</li>
+</ol>
+</nav>
+<div class="max-w-3xl">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6 tracking-tight">Vintage Seating</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 leading-relaxed">
+                        A curated selection of seating from the mid-century modern era to contemporary masterpieces, each piece chosen for its architectural integrity and enduring design.
+                    </p>
+</div>
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-outline-variant pb-4 gap-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">128 Items</span>
+<!-- Mobile Filter Toggle -->
+<button class="md:hidden w-full sm:w-auto font-label-caps text-label-caps text-primary border border-outline-variant px-4 py-2 uppercase tracking-widest hover:bg-surface-container-low transition-colors">
+                        Filters &amp; Sort
+                    </button>
+<!-- Sort Dropdown (Desktop) -->
+<div class="hidden md:flex items-center gap-3">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Sort By:</span>
+<div class="relative group cursor-pointer">
+<button class="font-body-sm text-body-sm text-primary flex items-center gap-1 hover:opacity-70 transition-opacity focus:outline-none">
+                                Most Recent
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+<!-- Simple dropdown placeholder -->
+<div class="absolute right-0 top-full mt-2 w-48 bg-surface-container-lowest border border-outline-variant shadow-sm hidden group-hover:block z-10">
+<a class="block px-4 py-3 font-body-sm text-body-sm text-primary hover:bg-surface-container-low" href="#">Most Recent</a>
+<a class="block px-4 py-3 font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-primary" href="#">Price: High to Low</a>
+<a class="block px-4 py-3 font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-primary" href="#">Price: Low to High</a>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12">
+<!-- Product Card 1 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-[4/5] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="Model 500 Chair" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A professional studio shot of a vintage Hans Wegner Round Chair in oak and cane, positioned against a stark white gallery background with soft, natural lighting emphasizing the wood grain and structural joints." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<button class="absolute top-4 right-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity focus:outline-none bg-surface-container-lowest/80 p-2 rounded-full hover:bg-surface-container-lowest">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-start gap-2">
+<h2 class="font-headline-md text-headline-md text-primary leading-tight line-clamp-1">Model 500 Chair</h2>
+<span class="font-body-sm text-body-sm text-primary whitespace-nowrap">$12,500</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Hans Wegner, c. 1950</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase pt-2">Established Lines · New York</p>
+</div>
+</article>
+<!-- Product Card 2 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-[4/5] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="Chieftain Chair" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="An editorial photograph of a pair of Finn Juhl Chieftain chairs upholstered in deep walnut brown leather, sitting on a polished concrete floor in a bright, minimalist architectural space with large windows casting geometric shadows." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<button class="absolute top-4 right-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity focus:outline-none bg-surface-container-lowest/80 p-2 rounded-full hover:bg-surface-container-lowest">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-start gap-2">
+<h2 class="font-headline-md text-headline-md text-primary leading-tight line-clamp-1">Chieftain Chair</h2>
+<span class="font-body-sm text-body-sm text-primary whitespace-nowrap">$18,200</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Finn Juhl, c. 1949</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase pt-2">Galerie Møbler · Paris</p>
+</div>
+</article>
+<!-- Product Card 3 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-[4/5] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="Office Cane Chair" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A detailed close-up shot of a vintage Pierre Jeanneret Office Cane Chair from Chandigarh, highlighting the aged teak wood patina and the woven cane backrest, set against a muted soft stone gray background in high-key lighting." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<button class="absolute top-4 right-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity focus:outline-none bg-surface-container-lowest/80 p-2 rounded-full hover:bg-surface-container-lowest">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-start gap-2">
+<h2 class="font-headline-md text-headline-md text-primary leading-tight line-clamp-1">Office Cane Chair</h2>
+<span class="font-body-sm text-body-sm text-primary whitespace-nowrap">$8,900</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Pierre Jeanneret, c. 1955</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase pt-2">The Archive · London</p>
+</div>
+</article>
+<!-- Product Card 4 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-[4/5] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="Egg Chair" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A sleek, minimalist photograph of an Arne Jacobsen Egg Chair upholstered in original patinated black leather, isolated on a stark gallery white background, emphasizing its sculptural curves and architectural silhouette." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<button class="absolute top-4 right-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity focus:outline-none bg-surface-container-lowest/80 p-2 rounded-full hover:bg-surface-container-lowest">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-start gap-2">
+<h2 class="font-headline-md text-headline-md text-primary leading-tight line-clamp-1">Egg Chair</h2>
+<span class="font-body-sm text-body-sm text-primary whitespace-nowrap">$14,000</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Arne Jacobsen, c. 1958</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase pt-2">Nordic Form · Copenhagen</p>
+</div>
+</article>
+<!-- Product Card 5 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-[4/5] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="PK22 Lounge Chair" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A vintage PK22 lounge chair by Poul Kjærholm featuring woven cane seating over a matte steel frame, shot from a slight angle to highlight its low profile and minimalist construction, set in a bright, airy gallery space." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<button class="absolute top-4 right-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity focus:outline-none bg-surface-container-lowest/80 p-2 rounded-full hover:bg-surface-container-lowest">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-start gap-2">
+<h2 class="font-headline-md text-headline-md text-primary leading-tight line-clamp-1">PK22 Lounge Chair</h2>
+<span class="font-body-sm text-body-sm text-primary whitespace-nowrap">$6,500</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Poul Kjærholm, c. 1956</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase pt-2">Modernist Edge · Berlin</p>
+</div>
+</article>
+<!-- Product Card 6 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-[4/5] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="LC2 Armchair Pair" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A studio photograph of a pair of Le Corbusier LC2 armchairs in pristine black leather and chrome tubing. The chairs are arranged symmetrically on a solid white surface under highly diffused, soft gallery lighting, creating a sense of rigid permanence." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<button class="absolute top-4 right-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity focus:outline-none bg-surface-container-lowest/80 p-2 rounded-full hover:bg-surface-container-lowest">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-start gap-2">
+<h2 class="font-headline-md text-headline-md text-primary leading-tight line-clamp-1">LC2 Armchair Pair</h2>
+<span class="font-body-sm text-body-sm text-primary whitespace-nowrap">$9,200</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Le Corbusier, c. 1928</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase pt-2">Atelier 20 · Milan</p>
+</div>
+</article>
+<!-- Product Card 7 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-[4/5] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="Eames Lounge Chair" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A solitary Eames Lounge Chair and Ottoman in rosewood veneer and worn black leather. The piece sits isolated on a polished concrete floor against a neutral white wall, evoking a sense of classic mid-century luxury and comfort." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<button class="absolute top-4 right-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity focus:outline-none bg-surface-container-lowest/80 p-2 rounded-full hover:bg-surface-container-lowest">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-start gap-2">
+<h2 class="font-headline-md text-headline-md text-primary leading-tight line-clamp-1">Lounge Chair 670</h2>
+<span class="font-body-sm text-body-sm text-primary whitespace-nowrap">$7,800</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Charles &amp; Ray Eames, c. 1956</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase pt-2">Mid-Century LA · Los Angeles</p>
+</div>
+</article>
+<!-- Product Card 8 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-[4/5] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="Red and Blue Chair" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="An austere, highly structural vintage Gerrit Rietveld Red and Blue Chair, photographed strictly front-on against a pure white background. The vibrant primary colors of the seat and backrest sharply contrast with the black frame and gallery lighting." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<button class="absolute top-4 right-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity focus:outline-none bg-surface-container-lowest/80 p-2 rounded-full hover:bg-surface-container-lowest">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-start gap-2">
+<h2 class="font-headline-md text-headline-md text-primary leading-tight line-clamp-1">Red and Blue Chair</h2>
+<span class="font-body-sm text-body-sm text-primary whitespace-nowrap">$22,000</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Gerrit Rietveld, c. 1917</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase pt-2">De Stijl Gallery · Amsterdam</p>
+</div>
+</article>
+</div>
+<!-- Load More -->
+<div class="mt-stack-lg flex justify-center pb-stack-lg border-b border-outline-variant">
+<button class="font-label-caps text-label-caps text-primary border-b border-primary pb-1 hover:text-on-surface-variant hover:border-on-surface-variant transition-colors uppercase tracking-widest">
+                    Load More Items
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-stack-xl bg-background dark:bg-background border-t border-outline-variant px-margin-desktop py-stack-lg max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
+<a class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary dark:text-on-background tracking-tighter" href="#">THE GUILD</a>
+<div class="flex flex-wrap gap-6">
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors uppercase" href="#">The Gallery</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors uppercase" href="#">Our Story</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors uppercase" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors uppercase" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors uppercase" href="#">Shipping &amp; Returns</a>
+</div>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant dark:text-on-surface-variant">
+            © 2024 THE GUILD. ARCHITECTURAL INTEGRITY IN EVERY PIECE.
+        </div>
+</footer>
+</body></html>

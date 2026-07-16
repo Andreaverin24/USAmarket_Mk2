@@ -1,0 +1,25 @@
+{
+  "name": "@atlas/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "start": "next start",
+    "build": "next build",
+    "lint": "eslint app next.config.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@atlas/ui": "workspace:*",
+    "next": "15.4.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.16.4",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
+    "vitest": "3.2.4"
+  }
+}

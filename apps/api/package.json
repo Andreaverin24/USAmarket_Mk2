@@ -1,0 +1,44 @@
+{
+  "name": "@atlas/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/main.js",
+    "lint": "eslint src test",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --exclude '**/*.integration.test.ts'",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "openapi:generate": "cross-env OPENAPI_OUTPUT=../../docs/api/openapi.json tsx src/main.ts",
+    "phase2:acceptance": "tsx test/phase2-acceptance.ts"
+  },
+  "dependencies": {
+    "@atlas/catalog": "workspace:*",
+    "@atlas/auth": "workspace:*",
+    "@atlas/config": "workspace:*",
+    "@atlas/contracts": "workspace:*",
+    "@atlas/database": "workspace:*",
+    "@atlas/observability": "workspace:*",
+    "@aws-sdk/client-s3": "3.850.0",
+    "@aws-sdk/s3-request-presigner": "3.850.0",
+    "@fastify/cookie": "11.0.2",
+    "@nestjs/common": "11.1.5",
+    "@nestjs/core": "11.1.5",
+    "@nestjs/platform-fastify": "11.1.5",
+    "@nestjs/swagger": "11.2.0",
+    "fastify": "5.4.0",
+    "ioredis": "5.6.1",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@testcontainers/postgresql": "10.28.0",
+    "@types/node": "22.16.4",
+    "cross-env": "7.0.3",
+    "tsx": "4.20.3",
+    "vitest": "3.2.4"
+  }
+}
