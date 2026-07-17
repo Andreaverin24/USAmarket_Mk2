@@ -1,174 +1,257 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
 
-const pieces = [
-  {
-    name: 'Finn Juhl Chieftain Chair',
-    price: '$28,500',
-    detail: 'Niels Vodder',
-    dealer: 'Gallery Dansk',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuD9JtrIGh_1BW7N7fjiiIV3Oq7w0JHncRe9BkMr8zTrHA0_ISprxqXNfTXvX3xChQHin9XH1G90yKVjPuzM-pR42BXPuixnZ1DaCaqjP7DEqMMj1R9NvEzh8RrUXp6y_sCNp8WQUC0eY1DYpb2IZ2RdBkAZhyBDqBqIBRLYGbA7gyVARiYYdJ_w4qK_20EMHryHlV0z5IfL_w4P2_Bl_EOo7HrgYdCk-O3ty8-ds86i7L2rrL-wxPRt4Lt3usCdH9paJjkLNsrZllI',
-  },
-  {
-    name: 'Angelo Mangiarotti Eros Table',
-    price: '$14,200',
-    detail: 'Skipper Møbler',
-    dealer: 'Milano Modern',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBaplNPW41t9e0hHcQFrFQVvupIqEiamc2c25llEfhcWL6EoKceMjMdJyB75V4LB-sLvA_sQHwFMI2KGhuUf7T24Pse9xwYOGKAGsqDLoQsQ8la_XUATrxJKtSY4-hiJcgI6Vjd3Hcwfi4Cp9WvVLutqghQIXRUWusA-WTP1mlDBI_-sV6ZLPRl5Ysz6hCdfB8aL3xynRpm2KUtCxFttjFXth20T_Amu5KPJVp6ECO8P5ArGWgZydbKTv2lbmBHiGr6TFnIEET8Png',
-  },
-  {
-    name: 'Barovier & Toso Chandelier',
-    price: '$32,000',
-    detail: 'Murano, 1960s',
-    dealer: 'Luce Antica',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAi3uCIjia2lLUOelH9rCT8tMZN470NcHmrDsOY9eFcJp97Gdqldk5ft2onSn4gMGT-aEWkJXgtjrrCFq6nW9huTkNGr-2MQxooMl6V5fTh3liPlDURtL0u0CPc7hiuSMwuKitvXeJC9qt2M4tBWBxssXL5XjNXvZLVrDqcgMFjyDTdKeXtUyn7xE2lnMmSD6rXAii7ivrO3q9QtWJ4CkX4tD9QA62m2nuiPPkXJbSzWc4wXkHHqP8xAwsZu0vtcIL5MnjEpmNofNw',
-  },
-  {
-    name: 'Alberto Burri Composition',
-    price: 'Price on Request',
-    detail: 'Italian, 1958',
-    dealer: 'Studio Arte',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCmc9oVlmg71T_qQfyfEMoHqjnnlijfyfb_832ZaP5VSmAOlbyxEvopKN1EPRudAeZgf1E8eDCc76TFEnmyYp_q8iwsOr-hzuXcC26OxlwRPtqYmIFSMb25JO5y6rlBW_DYPmJkHr78CFexvjX3-t5PPe_AnnU7Uw3JzKtHqLg9MVhBl7A1n-OoyWM1xWG04Ha-6na_J42Bu1kGfG2IZqXN8V1XmlJ575qKWC22Yq0C59byNg22WufMJV3Y-ExUiNxUBOEZOCcazvs',
-  },
-  {
-    name: 'Gino Sarfatti Floor Lamp',
-    price: '$8,900',
-    detail: 'Arteluce',
-    dealer: 'Vanguard Gallery',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBdvBRl9fR_zqiLMsRJjGju1av962qVDFyx6gViIf_R3K9dPTEznW1azlrhuK2s3sceyYVefJMUsizDrz75AoECdTQpLnPBAt1O8dSE-EIKMlyDoXvV7bDkbHqFvzWVVykVh5YSPmfSozB7Vx3xs20bCw0WqnorUJIfxy8LyVxVUfw8T-wUGOCDjldjO31ZWNQARO9bk_0P8u_LbEZTqJ8zBxli_snAFDKkDSMQSRD7cPQ1hamnTSdPAJEt4RDIDfmBqZE1yMcM720',
-  },
-  {
-    name: 'Hans Wegner Papa Bear',
-    price: '$45,000',
-    detail: 'A.P. Stolen',
-    dealer: 'Nordic Design',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCrZ9M5edlK86Cug_9k2-qjR6TvjFpYHQlGsAV7abWRu0yBHjGJ2kL6DL9gjYMdgRPxyznUnhwUSP-sSaCcLgs4tlNVgPYbPM9KrVMuqxmEv_SHoiVHDx9fuRzXeKceuqMxZ4WMMVu12TdHrN3w8YJ8eBdUEksH7HUtAjCkEUTpmF4ySQzvvYPe6o-4GSUxj_0EGhEihaDAwLlF690bMP5OXn8ALKB5uUvlRIAfY8uXqPHanAUrSLTHKEf42MqWCSpUmjQAZTFIOwE',
-  },
-  {
-    name: 'Axel Einar Hjorth Table',
-    price: '$62,000',
-    detail: 'NK, 1930s',
-    dealer: 'Swedish Classic',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuA5Bp85eSe-qB64NVFC_SkfGRaxGVPUjDX6XPNbUJ2m4VqrWGqrRrFTQuJ_6q4JC50qAY-coR3u8y71FZiTXGy9RBYwcTwhiz6EavBE_DgDGXCBP4qR80SysVfc9LUZZuXiqTQ-ijDHB8yEz7m6_c32B0___OaSG37ExKVeJ0WtKkGMVBD6oxKAkpzKJFctLhKMSsHhnEMMx64rj2V8mP3B3F6E8VCzz54j8VUf5NHHSnPWpRgiGHa9I9yZ_ZGk1GTKZMxrtcSJdVg',
-  },
-  {
-    name: 'Marcel Breuer Wassily',
-    price: '$5,500',
-    detail: 'Gavina, 1960s',
-    dealer: 'Forma Gallery',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDjhNaQq7njO3PQps8fJoE1OOUq3_wASYGvlwEIAtTu5rna8sW9nhqeDuZ8wivTgx-qv48TRJoPzyYPP-laa4iHa_je7nmalqo_Gc4G6dLQWwkq82IvQSCyhbDFxG2gjF_9g6utr-zqc2kzcviI8zdiHxQ96PTLYafCozC4x6WE36OqGvaQ5su6QEZDr2ZPsagDeMOXJUqlUrDhGHXd1YenyKSz5TiILxA8fZ_vqUezndYSRmVS4eByTCdOxo2S6-3dKbh0BbboExo',
-  },
-  {
-    name: 'Renaissance Walnut Cabinet',
-    price: '$18,000',
-    detail: 'Italian, 17th C.',
-    dealer: 'Antichità',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuD4Unhtdh5CQltYYwoYqF8GQpBk3JktjzxzbkB_DMZHqX4Rvna4h7W--A8UPqT0lIk5YyBCXKQjl6diRIpA5swyoBwtYcV_Ep44w4dSSKt6cEzHumHopec_-KV7dKDFCxefYjpVj5tdjKcXG0f7rMFxFNcmMM7bkk-nuN8fEnwX5WDHD-GpZL9DHmh49fG7qCA4JwE4Pqq8ObOJzhSIRzIB24fwIb_T9wC8wnJTihzpzR-QoTQiedJ_8ATi2_TU38lhgxn2cFNs6Lo',
-  },
-  {
-    name: 'Lucie Rie Ceramic Vessel',
-    price: '$22,500',
-    detail: 'London, 1970s',
-    dealer: 'Modern Objects',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAKneFgf4aZe6iwldVcEvtZPdLPKzFO2TQv0aoMzQNNuokfWhqqUzfGl7jJ0zb-1Rg3KJP6p0ThkEAIgVqYI3_yddZZ6KMkWXvuYsEnE1amsdiPgQbY9BNnNV4MB9JHgyUe1uXo8v49DeDriJhlW3xXTH_hfXyFVYQHEwyiRwHZ1zuEEU2PHDwcBTbAd7raOHRd4kKld9VjcqYEAUPbMd9T40K8NA_luXP-nXG8P7CmHi9RHF8kWZ_cIZI0RACq4cymtCULsh9YYjo',
-  },
-];
-
-const mosaicPieces = Array.from({ length: 30 }, (_, index) => ({
-  ...pieces[index % pieces.length],
-  image: `/demoImg/${(index % 20) + 1}.png`,
+const products = [
+  ['Italian Travertine Dining Table', 'Mario Bellini', '$8,500'],
+  ['Pair of Sculptural Lounge Chairs', 'Pierre Jeanneret', '$12,000'],
+  ['Brass & Glass Chandelier', 'Stilnovo', '$4,200'],
+  ['Teak Geometric Credenza', 'Gianfranco Frattini', '$9,800'],
+  ['Low Slung Leather Lounge Chair', 'Afra & Tobia Scarpa', '$6,400'],
+  ['Handblown Murano Table Lamp', 'Carlo Nason', '$3,200'],
+  ['Monumental Oak Dining Table', 'Axel Einar Hjorth', '$18,500'],
+  ['Postmodern Marble Console', 'Ettore Sottsass', '$7,900'],
+  ['Bouclé Club Chair', 'Guillerme et Chambron', '$5,600'],
+  ['Architectural Floor Lamp', 'Gino Sarfatti', '$8,900'],
+  ['Ceramic Studio Vessel', 'Lucie Rie', '$4,800'],
+  ['Rosewood Writing Desk', 'Gio Ponti', '$11,200'],
+  ['Modular Seating System', 'Mario Bellini', '$14,600'],
+  ['Sculptural Bronze Sconce', 'Charlotte Perriand', '$2,900'],
+  ['Brutalist Coffee Table', 'Paul Evans', '$7,400'],
+  ['Walnut Cabinet', 'George Nakashima', '$16,800'],
+  ['Woven Cane Armchair', 'Finn Juhl', '$8,200'],
+  ['Opaline Pendant Light', 'Fontana Arte', '$4,500'],
+  ['Travertine Side Table', 'Angelo Mangiarotti', '$6,100'],
+  ['Abstract Composition', 'Alberto Burri', 'Price on request'],
+].map(([title, maker, price], index) => ({
+  title,
+  maker,
+  price,
+  image: `/demoImg/${index + 1}.png`,
+  badge: index % 6 === 0 ? 'Verified Dealer' : index % 9 === 0 ? 'Elite Gallery' : null,
 }));
 
 const SearchIcon = () => (
   <svg aria-hidden="true" viewBox="0 0 24 24">
-    <circle cx="11" cy="11" r="6.5" />
-    <path d="m16 16 4 4" />
+    <circle cx="10.5" cy="10.5" r="6.5" />
+    <path d="m15.5 15.5 4.5 4.5" />
   </svg>
 );
 
-export default function Page() {
-  return (
-    <main className="guild-home">
-      <nav className="guild-nav" aria-label="Main navigation">
-        <Link className="guild-wordmark" href="/">
-          THE GUILD
-        </Link>
-        <div className="guild-navlinks">
-          <Link className="active" href="/catalog">
-            Explore
-          </Link>
-          <Link href="/catalog">Dealers</Link>
-          <Link href="/catalog">Designers</Link>
-          <Link href="/catalog">Sell on The Guild</Link>
-        </div>
-        <div className="guild-account">
-          <Link className="guild-signin" href="/catalog">
-            Sign In
-          </Link>
-          <Link className="guild-join" href="/catalog">
-            Join The Guild
-          </Link>
-        </div>
-      </nav>
+const MenuIcon = () => (
+  <svg aria-hidden="true" viewBox="0 0 24 24">
+    <path d="M4 7h16M4 12h16M4 17h16" />
+  </svg>
+);
 
-      <header className="guild-hero">
-        <div className="guild-mosaic">
-          {mosaicPieces.map((piece, index) => (
-            <Link
-              aria-label={`${piece.name} — ${piece.price}`}
-              className="guild-piece"
-              href="/catalog"
-              key={`${piece.name}-${index}`}
-            >
-              <img src={piece.image} alt={piece.name} />
-              <div className="guild-piece-copy">
-                <div>
-                  <strong>{piece.name}</strong>
-                  <span>{piece.price}</span>
-                </div>
-                <div>
-                  <small>{piece.detail}</small>
-                  <small>{piece.dealer}</small>
-                </div>
-              </div>
-            </Link>
+const BookmarkIcon = () => (
+  <svg aria-hidden="true" viewBox="0 0 24 24">
+    <path d="M7 4h10v16l-5-3-5 3z" />
+  </svg>
+);
+
+const FilterIcon = () => (
+  <svg aria-hidden="true" viewBox="0 0 24 24">
+    <path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M7 14v6" />
+  </svg>
+);
+
+function FilterContents() {
+  return (
+    <div className="search-first-filter-content">
+      <div className="search-first-filter-section category-filter">
+        <h3>Category</h3>
+        {['Seating', 'Tables', 'Lighting', 'Storage'].map((item, index) => (
+          <label key={item}>
+            <input defaultChecked={index === 0} type="checkbox" />
+            <span>{item}</span>
+          </label>
+        ))}
+      </div>
+
+      <div className="search-first-filter-section price-filter">
+        <h3>Price</h3>
+        <div>
+          <label>
+            <span>$</span>
+            <input aria-label="Minimum price" placeholder="Min" type="number" />
+          </label>
+          <i>–</i>
+          <label>
+            <span>$</span>
+            <input aria-label="Maximum price" placeholder="Max" type="number" />
+          </label>
+        </div>
+      </div>
+
+      <div className="search-first-filter-section desktop-colors">
+        <h3>Color</h3>
+        <div className="search-first-swatches">
+          {['#050505', '#fff', '#fbfae8', '#a35515', '#aab0ba', '#e0b62d'].map((color) => (
+            <button
+              aria-label={`Color ${color}`}
+              key={color}
+              style={{ background: color }}
+              type="button"
+            />
           ))}
         </div>
-        <div className="guild-hero-wash">
-          <div className="guild-gradient-footer">
-            <p>© 2026 THE GUILD. All rights reserved. Crafted for the discerning collector.</p>
-          </div>
+      </div>
+
+      {['Condition', 'Dimensions'].map((item) => (
+        <button className="search-first-collapsed" key={item} type="button">
+          <span>{item}</span>
+          <b>+</b>
+        </button>
+      ))}
+
+      <div className="search-first-filter-section era-filter">
+        <h3>Time Era</h3>
+        <div className="search-first-era-pills">
+          {['Mid-Century', 'Postmodern', 'Contemporary', 'Art Deco'].map((era) => (
+            <button key={era} type="button">
+              {era}
+            </button>
+          ))}
         </div>
-        <div className="guild-search-panel">
-          <h1>Discover the extraordinary.</h1>
-          <form className="guild-search" action="/catalog">
-            <SearchIcon />
-            <input
-              aria-label="Search the collection"
-              name="q"
-              placeholder="What are you looking to source?"
-              type="search"
-            />
-            <button type="submit">Explore</button>
-          </form>
-          <div className="guild-chips" aria-label="Popular filters">
-            {['Dimensions', 'Color', 'Material', 'Dealer', 'Era', 'Designer'].map((filter) => (
-              <Link href={`/catalog?filter=${filter.toLowerCase()}`} key={filter}>
-                {filter}
+      </div>
+
+      <div className="search-first-filter-section mobile-sort">
+        <h3>Sort By</h3>
+        <select defaultValue="newest">
+          <option value="newest">Newest Arrivals</option>
+          <option value="high">Price: High to Low</option>
+          <option value="low">Price: Low to High</option>
+        </select>
+      </div>
+    </div>
+  );
+}
+
+export default function Page() {
+  const [filtersOpen, setFiltersOpen] = useState(false);
+
+  return (
+    <main className="search-first-home">
+      <header className="search-first-header">
+        <button
+          aria-label="Open menu"
+          className="search-first-mobile-menu"
+          onClick={() => setFiltersOpen(true)}
+          type="button"
+        >
+          <MenuIcon />
+        </button>
+        <Link className="search-first-logo" href="/">
+          THE GUILD
+        </Link>
+        <form action="/catalog" className="search-first-search">
+          <SearchIcon />
+          <input
+            aria-label="Search the marketplace"
+            name="q"
+            placeholder="Search furniture, designers, dealers, materials, eras, dimensions, and more"
+            type="search"
+          />
+        </form>
+        <div className="search-first-actions">
+          <button aria-label="Saved items" type="button">
+            <BookmarkIcon />
+          </button>
+          <button aria-label="Open menu" onClick={() => setFiltersOpen(true)} type="button">
+            <MenuIcon />
+          </button>
+        </div>
+      </header>
+
+      <div className="search-first-mobile-search">
+        <form action="/catalog" className="search-first-search">
+          <SearchIcon />
+          <input
+            aria-label="Search the marketplace"
+            name="q"
+            placeholder="Search designers, eras, or categories"
+            type="search"
+          />
+        </form>
+      </div>
+
+      <div className="search-first-layout">
+        <aside className="search-first-sidebar">
+          <div className="search-first-filter-heading">
+            <div>
+              <h2>Filters</h2>
+              <p>Refine your selection</p>
+            </div>
+            <button type="button">Clear all</button>
+          </div>
+          <FilterContents />
+        </aside>
+
+        <section className="search-first-results">
+          <div className="search-first-results-bar">
+            <span>Showing {products.length} items</span>
+            <label>
+              Sort by:
+              <select defaultValue="newest">
+                <option value="newest">Newly Listed</option>
+                <option value="high">Price: High to Low</option>
+                <option value="low">Price: Low to High</option>
+              </select>
+            </label>
+          </div>
+
+          <div className="search-first-mobile-results">
+            <span>{products.length} Results</span>
+            <button onClick={() => setFiltersOpen(true)} type="button">
+              <FilterIcon />
+              Filter & Sort
+            </button>
+          </div>
+
+          <div className="search-first-grid">
+            {products.map((product) => (
+              <Link
+                aria-label={`${product.title}, ${product.price}`}
+                className="search-first-card"
+                href="/catalog"
+                key={product.title}
+              >
+                <img alt={product.title} src={product.image} />
+                <span className="search-first-card-shade" />
+                {product.badge ? <em>{product.badge}</em> : null}
+                <div>
+                  <p>{product.maker}</p>
+                  <h2>{product.title}</h2>
+                  <strong>{product.price}</strong>
+                </div>
               </Link>
             ))}
           </div>
+        </section>
+      </div>
+
+      <div
+        aria-hidden={!filtersOpen}
+        className={`search-first-drawer ${filtersOpen ? 'open' : ''}`}
+      >
+        <div className="search-first-drawer-heading">
+          <h2>Filters</h2>
+          <button aria-label="Close filters" onClick={() => setFiltersOpen(false)} type="button">
+            ×
+          </button>
         </div>
-      </header>
+        <FilterContents />
+        <div className="search-first-drawer-actions">
+          <button onClick={() => setFiltersOpen(false)} type="button">
+            Clear
+          </button>
+          <button onClick={() => setFiltersOpen(false)} type="button">
+            View Results
+          </button>
+        </div>
+      </div>
     </main>
   );
 }
