@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import type { Prisma, ProductCondition } from '@atlas/database';
-import type { NormalizedShopifyRow } from '@atlas/catalog';
+import { parseWebImportConfig, type NormalizedShopifyRow } from '@atlas/catalog';
 import { DatabaseService } from '../../common/database.service.js';
 import { TenantService } from '../tenancy/tenant.service.js';
 import { parseCsv, priceToMinor, slugify } from './csv.js';
@@ -137,6 +137,84 @@ export class ImportService {
     });
   }
 
+  async web(
+    userId: string,
+    organizationId: string,
+    input: {
+      siteUrl: string;
+      categoryUrls: string[];
+      maxProducts?: number;
+      maxCategoryPages?: number;
+      idempotencyKey: string;
+      correlationId?: string;
+    },
+  ) {
+    const tenant = await this.tenants.resolve(userId, organizationId, 'catalog:write');
+    let config;
+    try {
+      config = parseWebImportConfig({
+        siteUrl: input.siteUrl,
+        categoryUrls: input.categoryUrls,
+        ...(input.maxProducts !== undefined ? { maxProducts: input.maxProducts } : {}),
+        ...(input.maxCategoryPages !== undefined
+          ? { maxCategoryPages: input.maxCategoryPages }
+          : {}),
+      });
+    } catch (error) {
+      throw new BadRequestException(error instanceof Error ? error.message : 'Invalid web import');
+    }
+    const checksum = createHash('sha256').update(JSON.stringify(config)).digest('hex');
+    const existing = await this.db.importJob.findUnique({
+      where: {
+        organizationId_idempotencyKey: {
+          organizationId: tenant.organizationId,
+          idempotencyKey: input.idempotencyKey,
+        },
+      },
+      include: { rows: { orderBy: { rowNumber: 'asc' } } },
+    });
+    if (existing) {
+      if (existing.checksum !== checksum || existing.source !== 'web')
+        throw new ConflictException('Idempotency key belongs to a different import request');
+      return existing;
+    }
+    return this.db.$transaction(async (tx) => {
+      const job = await tx.importJob.create({
+        data: {
+          organizationId: tenant.organizationId,
+          idempotencyKey: input.idempotencyKey,
+          source: 'web',
+          checksum,
+          dryRun: true,
+          status: 'PENDING',
+          mapping: config as unknown as Prisma.InputJsonValue,
+          requestedByUserId: userId,
+          correlationId: input.correlationId ?? randomUUID(),
+        },
+        include: { rows: true },
+      });
+      await tx.outboxEvent.create({
+        data: {
+          organizationId: tenant.organizationId,
+          aggregateType: 'ImportJob',
+          aggregateId: job.id,
+          eventType: 'catalog.web-extraction.requested',
+          payload: { importJobId: job.id },
+        },
+      });
+      return job;
+    });
+  }
+
+  async list(userId: string, organizationId: string) {
+    const tenant = await this.tenants.resolve(userId, organizationId, 'catalog:read');
+    return this.db.importJob.findMany({
+      where: { organizationId: tenant.organizationId },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+      include: { _count: { select: { rows: true } } },
+    });
+  }
   report(userId: string, organizationId: string, jobId: string) {
     return this.tenants.resolve(userId, organizationId, 'catalog:read').then((tenant) =>
       this.db.importJob.findFirstOrThrow({
@@ -175,6 +253,67 @@ export class ImportService {
           aggregateId: job.id,
           eventType: 'catalog.import.requested',
           payload: { importJobId: job.id, retry: true },
+        },
+      });
+      return updated;
+    });
+  }
+
+  async apply(
+    userId: string,
+    organizationId: string,
+    jobId: string,
+    input: { rightsConfirmed: true },
+  ) {
+    const tenant = await this.tenants.resolve(userId, organizationId, 'catalog:write');
+    return this.db.$transaction(async (tx) => {
+      const job = await tx.importJob.findFirst({
+        where: { id: jobId, organizationId: tenant.organizationId, source: 'web' },
+        include: { rows: true },
+      });
+      if (!job) throw new NotFoundException('Web import job not found');
+      if (job.status !== 'VALIDATED' || !job.dryRun)
+        throw new ConflictException('Web import job is not ready to apply');
+      if (!job.validRows) throw new ConflictException('Web import has no valid products to apply');
+      if (!input.rightsConfirmed) throw new BadRequestException('Rights confirmation is required');
+      const currentMapping =
+        job.mapping && typeof job.mapping === 'object' && !Array.isArray(job.mapping)
+          ? (job.mapping as Record<string, unknown>)
+          : {};
+      const rightsConfirmedAt = new Date();
+      const rightsScopeHash = createHash('sha256')
+        .update(`${job.id}:${job.checksum}`)
+        .digest('hex');
+      const confirmation = {
+        rightsConfirmed: true,
+        rightsConfirmedByUserId: userId,
+        rightsConfirmedAt: rightsConfirmedAt.toISOString(),
+        rightsScopeHash,
+      };
+      const updated = await tx.importJob.update({
+        where: { id: job.id },
+        data: {
+          dryRun: false,
+          status: 'PENDING',
+          importedRows: 0,
+          completedAt: null,
+          leaseOwner: null,
+          leaseExpiresAt: null,
+          lastError: null,
+          rightsConfirmedByUserId: userId,
+          rightsConfirmedAt,
+          rightsScopeHash,
+          mapping: { ...currentMapping, ...confirmation } as Prisma.InputJsonValue,
+        },
+        include: { rows: { orderBy: { rowNumber: 'asc' } } },
+      });
+      await tx.outboxEvent.create({
+        data: {
+          organizationId: tenant.organizationId,
+          aggregateType: 'ImportJob',
+          aggregateId: job.id,
+          eventType: 'catalog.import.requested',
+          payload: { importJobId: job.id, source: 'web', ...confirmation },
         },
       });
       return updated;

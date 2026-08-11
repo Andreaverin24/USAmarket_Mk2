@@ -26,7 +26,15 @@ export class StorefrontService {
       include: {
         storefront: {
           include: {
-            organization: { select: { id: true, slug: true, name: true, status: true } },
+            organization: {
+              select: {
+                id: true,
+                slug: true,
+                name: true,
+                status: true,
+                dealerProfile: { select: { status: true } },
+              },
+            },
             theme: true,
           },
         },
@@ -34,7 +42,8 @@ export class StorefrontService {
     });
     if (
       domain?.storefront.status === 'ACTIVE' &&
-      domain.storefront.organization.status === 'ACTIVE'
+      domain.storefront.organization.status === 'ACTIVE' &&
+      domain.storefront.organization.dealerProfile?.status === 'APPROVED'
     )
       return domain.storefront;
     const suffix = `.${appConfig().PLATFORM_DOMAIN.toLowerCase()}`;
@@ -46,7 +55,11 @@ export class StorefrontService {
 
   async bySlug(slug: string) {
     const storefront = await this.db.storefront.findFirst({
-      where: { slug, status: 'ACTIVE', organization: { status: 'ACTIVE' } },
+      where: {
+        slug,
+        status: 'ACTIVE',
+        organization: { status: 'ACTIVE', dealerProfile: { status: 'APPROVED' } },
+      },
       include: {
         organization: { select: { id: true, slug: true, name: true } },
         theme: true,
@@ -95,7 +108,11 @@ export class StorefrontService {
   product(slug: string, productSlug: string) {
     return this.db.storefront
       .findFirst({
-        where: { slug, status: 'ACTIVE' },
+        where: {
+          slug,
+          status: 'ACTIVE',
+          organization: { dealerProfile: { status: 'APPROVED' } },
+        },
         select: { organization: { select: { slug: true } } },
       })
       .then((storefront) => {
@@ -105,7 +122,11 @@ export class StorefrontService {
             where: {
               slug: productSlug,
               status: 'PUBLISHED',
-              organization: { slug: storefront.organization.slug, status: 'ACTIVE' },
+              organization: {
+                slug: storefront.organization.slug,
+                status: 'ACTIVE',
+                dealerProfile: { status: 'APPROVED' },
+              },
             },
             include: productInclude,
           })

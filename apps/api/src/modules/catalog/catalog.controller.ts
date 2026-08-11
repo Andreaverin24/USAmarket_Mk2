@@ -16,7 +16,12 @@ import type { AuthenticatedRequest } from '../../common/request.js';
 import { SessionGuard } from '../../common/session.guard.js';
 import { CsrfGuard } from '../../common/csrf.guard.js';
 import { CatalogService } from './catalog.service.js';
-import { moderationSchema, productInputSchema, productUpdateSchema } from './catalog.schemas.js';
+import {
+  moderationCommentSchema,
+  moderationSchema,
+  productInputSchema,
+  productUpdateSchema,
+} from './catalog.schemas.js';
 
 @ApiTags('catalog')
 @Controller()
@@ -156,6 +161,43 @@ export class CatalogController {
       request.auth!.userId,
       organizationId,
       productId,
+      request.correlationId,
+    );
+  }
+
+  @Get('organizations/:organizationId/catalog/products/:productId/moderation')
+  @UseGuards(SessionGuard)
+  @ApiCookieAuth()
+  moderationHistory(
+    @Req() request: AuthenticatedRequest,
+    @Param('organizationId', new ParseUUIDPipe()) organizationId: string,
+    @Param('productId', new ParseUUIDPipe()) productId: string,
+  ) {
+    return this.catalog.moderationHistory(request.auth!.userId, organizationId, productId);
+  }
+
+  @Get('admin/product-moderation')
+  @UseGuards(SessionGuard)
+  @ApiCookieAuth()
+  moderationQueue(@Req() request: AuthenticatedRequest) {
+    return this.catalog.moderationQueue(request.auth!.userId);
+  }
+
+  @Post('admin/product-moderation/:reviewId/comments')
+  @UseGuards(SessionGuard, CsrfGuard)
+  @ApiCookieAuth()
+  addModerationComment(
+    @Req() request: AuthenticatedRequest,
+    @Param('reviewId', new ParseUUIDPipe()) reviewId: string,
+    @Body() body: unknown,
+  ) {
+    const input = moderationCommentSchema.safeParse(body);
+    if (!input.success) throw new BadRequestException(input.error.flatten());
+    return this.catalog.addModerationComment(
+      request.auth!.userId,
+      reviewId,
+      input.data.body,
+      input.data.visibility,
       request.correlationId,
     );
   }

@@ -1,5 +1,8 @@
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 export default function Page() {
+  if (process.env.NEXT_PUBLIC_INVESTOR_DEMO === 'true') redirect('/catalog-dashboard');
+
   return (
     <main className="portal-home">
       <p className="eyebrow">Project Atlas</p>
@@ -11,6 +14,10 @@ export default function Page() {
       <Link className="button" href="/login">
         Open seller portal
       </Link>
+      <p>
+        <Link href="/dealer-onboarding">Dealer onboarding</Link> ·{' '}
+        <Link href="/admin/dealers">Admin operations</Link>
+      </p>
     </main>
   );
 }

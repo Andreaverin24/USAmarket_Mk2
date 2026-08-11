@@ -13,8 +13,10 @@ import {
   MAX_IMAGE_BYTES,
   MAX_IMAGE_PIXELS,
   processImportJob,
+  processWebExtractionJob,
   sniffImageMime,
 } from '@atlas/catalog';
+import { createWebCaptureSession } from './web-browser.js';
 
 const logger = createLogger('outbox-worker');
 
@@ -34,6 +36,23 @@ export function startOutboxWorker(config: AppConfig) {
         await processMedia(db, config, event.aggregateId);
       else if (event.eventType === 'catalog.import.requested')
         await processImportJob(db, event.aggregateId, `outbox-${event.id}`);
+      else if (event.eventType === 'catalog.web-extraction.requested') {
+        const importJob = await db.importJob.findUniqueOrThrow({
+          where: { id: event.aggregateId },
+        });
+        const mapping = importJob.mapping as { siteUrl?: unknown } | null;
+        if (typeof mapping?.siteUrl !== 'string') throw new Error('Web import site URL is missing');
+        const capture = createWebCaptureSession(mapping.siteUrl);
+        try {
+          await processWebExtractionJob(db, importJob.id, capture.capture);
+        } finally {
+          await capture.close();
+        }
+      } else if (
+        event.eventType.startsWith('dealer.application.') ||
+        event.eventType.startsWith('catalog.product.')
+      )
+        await materializeNotifications(db, event);
       else if (
         !event.eventType.startsWith('foundation.') &&
         !event.eventType.startsWith('catalog.product.')
@@ -105,9 +124,162 @@ export function startOutboxWorker(config: AppConfig) {
   };
 }
 
-async function importMedia(db: PrismaClient, config: AppConfig, mediaId: string) {
+async function materializeNotifications(
+  db: PrismaClient,
+  event: {
+    id: string;
+    organizationId: string | null;
+    eventType: string;
+    payload: unknown;
+  },
+) {
+  const payload =
+    typeof event.payload === 'object' && event.payload !== null
+      ? (event.payload as Record<string, unknown>)
+      : {};
+  const recipients = new Set<string>();
+  if (event.eventType === 'dealer.application.submitted') {
+    const reviewers = await platformRecipients(db, 'dealer:review');
+    reviewers.forEach((userId) => recipients.add(userId));
+  } else if (event.eventType.startsWith('dealer.application.')) {
+    const applicantUserId = payload.applicantUserId;
+    if (typeof applicantUserId === 'string') recipients.add(applicantUserId);
+  } else if (event.eventType === 'catalog.product.submitted') {
+    const moderators = await platformRecipients(db, 'catalog:moderate');
+    moderators.forEach((userId) => recipients.add(userId));
+  } else if (
+    ['catalog.product.reject', 'catalog.product.approve', 'catalog.product.publish'].includes(
+      event.eventType,
+    ) &&
+    event.organizationId
+  ) {
+    const members = await organizationRecipients(db, event.organizationId, 'catalog:submit');
+    members.forEach((userId) => recipients.add(userId));
+  } else if (
+    event.eventType === 'catalog.product.moderation_comment' &&
+    payload.visibility === 'SELLER' &&
+    event.organizationId
+  ) {
+    const members = await organizationRecipients(db, event.organizationId, 'catalog:submit');
+    members.forEach((userId) => recipients.add(userId));
+  } else {
+    return;
+  }
+  const content = notificationContent(event.eventType, payload);
+  for (const recipientUserId of recipients)
+    for (const channel of ['IN_APP', 'EMAIL'] as const)
+      await db.notification.upsert({
+        where: {
+          sourceEventId_recipientUserId_channel: {
+            sourceEventId: event.id,
+            recipientUserId,
+            channel,
+          },
+        },
+        create: {
+          organizationId: event.organizationId,
+          recipientUserId,
+          sourceEventId: event.id,
+          channel,
+          type: event.eventType,
+          subject: content.subject,
+          body: content.body,
+          payload: payload as never,
+          status: channel === 'IN_APP' ? 'DELIVERED' : 'QUEUED',
+          ...(channel === 'IN_APP' ? { deliveredAt: new Date() } : {}),
+        },
+        update: {},
+      });
+}
+
+async function platformRecipients(db: PrismaClient, permission: string) {
+  const memberships = await db.organizationMember.findMany({
+    where: {
+      status: 'ACTIVE',
+      organization: { type: 'PLATFORM', status: 'ACTIVE' },
+      role: {
+        permissions: {
+          some: { permission: { code: { in: ['platform:admin', permission] } } },
+        },
+      },
+    },
+    select: { userId: true },
+  });
+  return memberships.map(({ userId }) => userId);
+}
+
+async function organizationRecipients(
+  db: PrismaClient,
+  organizationId: string,
+  permission: string,
+) {
+  const memberships = await db.organizationMember.findMany({
+    where: {
+      organizationId,
+      status: 'ACTIVE',
+      role: { permissions: { some: { permission: { code: permission } } } },
+    },
+    select: { userId: true },
+  });
+  return memberships.map(({ userId }) => userId);
+}
+
+function notificationContent(eventType: string, payload: Record<string, unknown>) {
+  const reason = typeof payload.reason === 'string' ? ` Reason: ${payload.reason}` : '';
+  const content: Record<string, { subject: string; body: string }> = {
+    'dealer.application.submitted': {
+      subject: 'Dealer application awaiting review',
+      body: 'A dealer application has been submitted for platform review.',
+    },
+    'dealer.application.request_changes': {
+      subject: 'Dealer application changes requested',
+      body: `The platform requested changes to your dealer application.${reason}`,
+    },
+    'dealer.application.approve': {
+      subject: 'Dealer application approved',
+      body: 'Your dealer organization has been approved.',
+    },
+    'dealer.application.reject': {
+      subject: 'Dealer application declined',
+      body: `Your dealer application was declined.${reason}`,
+    },
+    'dealer.application.suspend': {
+      subject: 'Dealer account suspended',
+      body: `Your dealer account was suspended.${reason}`,
+    },
+    'catalog.product.submitted': {
+      subject: 'Product awaiting moderation',
+      body: 'A product has been submitted for moderation.',
+    },
+    'catalog.product.reject': {
+      subject: 'Product changes requested',
+      body: `Changes were requested for your product.${reason}`,
+    },
+    'catalog.product.approve': {
+      subject: 'Product approved',
+      body: 'Your product was approved and is ready for publication.',
+    },
+    'catalog.product.publish': {
+      subject: 'Product published',
+      body: 'Your product is now visible in the marketplace and storefront.',
+    },
+    'catalog.product.moderation_comment': {
+      subject: 'New product moderation comment',
+      body: 'A moderator added a comment to your product review.',
+    },
+  };
+  return (
+    content[eventType] ?? {
+      subject: 'THE GUILD update',
+      body: 'An item in your THE GUILD account was updated.',
+    }
+  );
+}
+
+export async function importMedia(db: PrismaClient, config: AppConfig, mediaId: string) {
   const media = await db.productMedia.findUnique({ where: { id: mediaId } });
   if (!media?.sourceUrl) throw new Error('Media source URL missing');
+  if (media.processingStatus === 'READY' && media.storageKey && media.checksum) return;
   const url = new URL(media.sourceUrl);
   await assertPublicHost(url.hostname);
   const response = await fetch(url, { redirect: 'error', signal: AbortSignal.timeout(10_000) });

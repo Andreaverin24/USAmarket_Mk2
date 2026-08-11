@@ -1,6 +1,4 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { PostgreSqlContainer, type StartedPostgreSqlContainer } from '@testcontainers/postgresql';
-import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { PrismaClient } from '@atlas/database';
@@ -13,9 +11,14 @@ import { ImportService } from '../src/modules/imports/import.service.js';
 import { MediaService } from '../src/modules/media/media.service.js';
 import { StorefrontService } from '../src/modules/storefronts/storefront.service.js';
 import { TenantService } from '../src/modules/tenancy/tenant.service.js';
+import {
+  setupIntegrationDatabase,
+  teardownIntegrationDatabase,
+  type IntegrationDatabase,
+} from './integration-database.js';
 
 describe('Phase 2 catalog vertical slice', () => {
-  let container: StartedPostgreSqlContainer;
+  let database: IntegrationDatabase;
   let db: PrismaClient;
   let catalog: CatalogService;
   let imports: ImportService;
@@ -28,15 +31,8 @@ describe('Phase 2 catalog vertical slice', () => {
   let otherOrgId: string;
   let csv: string;
   beforeAll(async () => {
-    container = await new PostgreSqlContainer('postgres:17-alpine').start();
-    process.env.DATABASE_URL = container.getConnectionUri();
-    execFileSync('pnpm', ['--filter', '@atlas/database', 'exec', 'prisma', 'migrate', 'deploy'], {
-      cwd: resolve(import.meta.dirname, '../../..'),
-      env: process.env,
-      stdio: 'pipe',
-      shell: process.platform === 'win32',
-    });
-    db = new PrismaClient({ datasources: { db: { url: process.env.DATABASE_URL } } });
+    database = await setupIntegrationDatabase();
+    db = new PrismaClient({ datasources: { db: { url: database.url } } });
     const permissions = await Promise.all(
       ['catalog:read', 'catalog:write', 'catalog:submit', 'catalog:moderate', 'platform:admin'].map(
         (code) => db.permission.create({ data: { code, description: code } }),
@@ -53,6 +49,24 @@ describe('Phase 2 catalog vertical slice', () => {
     ]);
     sellerOrgId = sellerOrg.id;
     otherOrgId = otherOrg.id;
+    await Promise.all([
+      db.dealerProfile.create({
+        data: {
+          organizationId: sellerOrg.id,
+          status: 'APPROVED',
+          publicDealerName: sellerOrg.name,
+          approvedAt: new Date(),
+        },
+      }),
+      db.dealerProfile.create({
+        data: {
+          organizationId: otherOrg.id,
+          status: 'APPROVED',
+          publicDealerName: otherOrg.name,
+          approvedAt: new Date(),
+        },
+      }),
+    ]);
     const [sellerRole, otherRole, adminRole] = await Promise.all([
       db.role.create({
         data: {
@@ -177,8 +191,7 @@ describe('Phase 2 catalog vertical slice', () => {
     csv = readFileSync(resolve(import.meta.dirname, 'fixtures/shopify-products.csv'), 'utf8');
   });
   afterAll(async () => {
-    await db?.$disconnect();
-    await container?.stop();
+    await teardownIntegrationDatabase(database, db);
   });
 
   it('dry-runs and idempotently imports exactly 10 products', async () => {

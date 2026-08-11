@@ -9,5 +9,5 @@
     "outDir": "dist"
   },
   "include": ["src", "test", "vitest.integration.config.ts"],
-  "exclude": ["test/phase2-acceptance.ts"]
+  "exclude": ["test/phase2-acceptance.ts", "test/phase3-acceptance.ts"]
 }

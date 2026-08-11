@@ -11,3 +11,5 @@ artifacts/
 *.log
 *.tsbuildinfo
 packages/database/prisma/dev.db
+.env
+.clickup-state.json

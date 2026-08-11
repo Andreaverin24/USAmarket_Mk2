@@ -122,6 +122,42 @@
         "tags": ["catalog"]
       }
     },
+    "/catalog/categories/{slug}": {
+      "get": {
+        "operationId": "CatalogController_category",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalog"]
+      }
+    },
+    "/catalog/facets": {
+      "get": {
+        "operationId": "CatalogController_facets",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalog"]
+      }
+    },
+    "/catalog/sitemap": {
+      "get": {
+        "operationId": "CatalogController_sitemap",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalog"]
+      }
+    },
     "/catalog/products": {
       "get": {
         "operationId": "CatalogController_products",
@@ -131,6 +167,23 @@
             "description": ""
           }
         },
+        "tags": ["catalog"]
+      }
+    },
+    "/organizations/{organizationId}/catalog/products/{productId}/archive": {
+      "post": {
+        "operationId": "CatalogController_archive",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
         "tags": ["catalog"]
       }
     },
@@ -167,6 +220,23 @@
         "parameters": [],
         "responses": {
           "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["catalog"]
+      }
+    },
+    "/organizations/{organizationId}/catalog/categories": {
+      "get": {
+        "operationId": "CatalogController_sellerCategories",
+        "parameters": [],
+        "responses": {
+          "200": {
             "description": ""
           }
         },
@@ -228,8 +298,57 @@
       }
     },
     "/organizations/{organizationId}/catalog/products/{productId}/moderation": {
+      "get": {
+        "operationId": "CatalogController_moderationHistory",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["catalog"]
+      },
       "post": {
         "operationId": "CatalogController_moderate",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["catalog"]
+      }
+    },
+    "/admin/product-moderation": {
+      "get": {
+        "operationId": "CatalogController_moderationQueue",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["catalog"]
+      }
+    },
+    "/admin/product-moderation/{reviewId}/comments": {
+      "post": {
+        "operationId": "CatalogController_addModerationComment",
         "parameters": [],
         "responses": {
           "201": {
@@ -261,9 +380,77 @@
         "tags": ["imports"]
       }
     },
+    "/organizations/{organizationId}/imports/web": {
+      "post": {
+        "operationId": "ImportController_web",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["imports"]
+      }
+    },
     "/organizations/{organizationId}/imports/{jobId}": {
       "get": {
         "operationId": "ImportController_report",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["imports"]
+      }
+    },
+    "/organizations/{organizationId}/imports/{jobId}/retry": {
+      "post": {
+        "operationId": "ImportController_retry",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["imports"]
+      }
+    },
+    "/organizations/{organizationId}/imports/{jobId}/apply": {
+      "post": {
+        "operationId": "ImportController_apply",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["imports"]
+      }
+    },
+    "/organizations/{organizationId}/imports/catalog/export.csv": {
+      "get": {
+        "operationId": "ImportController_exportCsv",
         "parameters": [],
         "responses": {
           "200": {
@@ -284,6 +471,40 @@
         "parameters": [],
         "responses": {
           "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["media"]
+      }
+    },
+    "/organizations/{organizationId}/catalog/products/{productId}/media/{mediaId}/complete": {
+      "post": {
+        "operationId": "MediaController_complete",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["media"]
+      }
+    },
+    "/organizations/{organizationId}/catalog/products/{productId}/media/{mediaId}": {
+      "patch": {
+        "operationId": "MediaController_update",
+        "parameters": [],
+        "responses": {
+          "200": {
             "description": ""
           }
         },
@@ -331,6 +552,18 @@
         "tags": ["storefronts"]
       }
     },
+    "/storefronts/{slug}/policies/{policySlug}": {
+      "get": {
+        "operationId": "StorefrontController_policy",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["storefronts"]
+      }
+    },
     "/storefronts/{slug}/redirect": {
       "get": {
         "operationId": "StorefrontController_redirect",
@@ -341,6 +574,174 @@
           }
         },
         "tags": ["storefronts"]
+      }
+    },
+    "/dealer-applications/mine": {
+      "get": {
+        "operationId": "DealerController_mine",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["dealers"]
+      }
+    },
+    "/dealer-applications": {
+      "post": {
+        "operationId": "DealerController_create",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["dealers"]
+      }
+    },
+    "/organizations/{organizationId}/dealer-application": {
+      "get": {
+        "operationId": "DealerController_owned",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["dealers"]
+      },
+      "patch": {
+        "operationId": "DealerController_update",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["dealers"]
+      }
+    },
+    "/organizations/{organizationId}/dealer-application/submit": {
+      "post": {
+        "operationId": "DealerController_submit",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["dealers"]
+      }
+    },
+    "/admin/dealer-applications": {
+      "get": {
+        "operationId": "DealerController_queue",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["dealers"]
+      }
+    },
+    "/admin/dealer-applications/{applicationId}": {
+      "get": {
+        "operationId": "DealerController_detail",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["dealers"]
+      }
+    },
+    "/admin/dealer-applications/{applicationId}/review": {
+      "post": {
+        "operationId": "DealerController_review",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["dealers"]
+      }
+    },
+    "/notifications": {
+      "get": {
+        "operationId": "NotificationController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["notifications"]
+      }
+    },
+    "/notifications/{notificationId}/read": {
+      "patch": {
+        "operationId": "NotificationController_markRead",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": ["notifications"]
       }
     }
   },

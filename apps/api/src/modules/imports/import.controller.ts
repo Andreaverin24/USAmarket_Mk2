@@ -40,6 +40,16 @@ const inputSchema = z.object({
     .optional(),
 });
 
+const webInputSchema = z.object({
+  siteUrl: z.string().url().max(2000),
+  categoryUrls: z.array(z.string().url().max(2000)).min(1).max(20),
+  maxProducts: z.number().int().min(1).max(200).default(50),
+  maxCategoryPages: z.number().int().min(1).max(20).default(5),
+  idempotencyKey: z.string().min(8).max(200),
+});
+
+const webApplySchema = z.object({ rightsConfirmed: z.literal(true) });
+
 @ApiTags('imports')
 @ApiCookieAuth()
 @UseGuards(SessionGuard, CsrfGuard)
@@ -68,6 +78,27 @@ export class ImportController {
       correlationId: request.correlationId,
     });
   }
+
+  @Post('web')
+  web(
+    @Req() request: AuthenticatedRequest,
+    @Param('organizationId', new ParseUUIDPipe()) organizationId: string,
+    @Body() body: unknown,
+  ) {
+    const input = webInputSchema.safeParse(body);
+    if (!input.success) throw new BadRequestException(input.error.flatten());
+    return this.imports.web(request.auth!.userId, organizationId, {
+      ...input.data,
+      correlationId: request.correlationId,
+    });
+  }
+  @Get()
+  list(
+    @Req() request: AuthenticatedRequest,
+    @Param('organizationId', new ParseUUIDPipe()) organizationId: string,
+  ) {
+    return this.imports.list(request.auth!.userId, organizationId);
+  }
   @Get(':jobId')
   report(
     @Req() request: AuthenticatedRequest,
@@ -84,6 +115,18 @@ export class ImportController {
     @Param('jobId', new ParseUUIDPipe()) jobId: string,
   ) {
     return this.imports.retry(request.auth!.userId, organizationId, jobId);
+  }
+
+  @Post(':jobId/apply')
+  apply(
+    @Req() request: AuthenticatedRequest,
+    @Param('organizationId', new ParseUUIDPipe()) organizationId: string,
+    @Param('jobId', new ParseUUIDPipe()) jobId: string,
+    @Body() body: unknown,
+  ) {
+    const input = webApplySchema.safeParse(body);
+    if (!input.success) throw new BadRequestException('Rights confirmation is required');
+    return this.imports.apply(request.auth!.userId, organizationId, jobId, input.data);
   }
 
   @Get('catalog/export.csv')

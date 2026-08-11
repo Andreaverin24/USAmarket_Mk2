@@ -1,0 +1,305 @@
+{
+  "generatedAt": "2026-08-05T03:45:34.156Z",
+  "products": {
+    "rehearsal-midcentury-modern-abstract-painting-signed-joseph-wolins": {
+      "productId": "22974309-3017-4371-a7ee-d7e8d1b686b0",
+      "total": 9,
+      "ready": 9,
+      "failed": 0,
+      "stored": 9,
+      "variants": 27,
+      "originalBytes": 3538113,
+      "variantBytes": 2966356
+    },
+    "v-shape-marble-base-thick-glass-top-modern-custom-design-console-table": {
+      "productId": "c02f5048-a294-4d43-938a-a7b8a4a24773",
+      "total": 12,
+      "ready": 12,
+      "failed": 0,
+      "stored": 12,
+      "variants": 36,
+      "originalBytes": 1386749,
+      "variantBytes": 1169593
+    },
+    "1920s-curved-glass-light-olive-tone-lacquer-finish-curio-display-cabinet-mint": {
+      "productId": "fd4eb7e2-b21d-4ecf-9821-176482b84b6f",
+      "total": 14,
+      "ready": 14,
+      "failed": 0,
+      "stored": 14,
+      "variants": 42,
+      "originalBytes": 4005291,
+      "variantBytes": 1872671
+    },
+    "1950s-tony-paul-style-wire-base-porcelain-pottery-ash-tray-mint": {
+      "productId": "9f275c9a-cfbf-4f0d-8b48-b9eefdcdf4db",
+      "total": 11,
+      "ready": 11,
+      "failed": 0,
+      "stored": 11,
+      "variants": 33,
+      "originalBytes": 2697374,
+      "variantBytes": 1657503
+    },
+    "1960-solid-maple-restored-wrussel-right-conant-ball-solid-maple-4-drawer-dresser": {
+      "productId": "786a1a4b-ab96-4724-9be3-65281cf9fee4",
+      "total": 15,
+      "ready": 15,
+      "failed": 0,
+      "stored": 15,
+      "variants": 45,
+      "originalBytes": 4389056,
+      "variantBytes": 2824611
+    },
+    "1970s-round-solid-oiled-walnut-brass-trims-base-mid-century-modern-floor-lamp": {
+      "productId": "f1374f5b-f6fa-4625-abb8-b666be2fcdca",
+      "total": 8,
+      "ready": 8,
+      "failed": 0,
+      "stored": 8,
+      "variants": 24,
+      "originalBytes": 520836,
+      "variantBytes": 563596
+    },
+    "1970s-mid-century-molded-bent-white-acrylic-lotus-petal-flower-table-lamp-mint": {
+      "productId": "13aac380-e64c-449b-915d-e607b431e058",
+      "total": 9,
+      "ready": 9,
+      "failed": 0,
+      "stored": 9,
+      "variants": 27,
+      "originalBytes": 639014,
+      "variantBytes": 734526
+    },
+    "1970s-oiled-walnut-storage-compartment-wedge-shape-full-size-headboard-bed-mint": {
+      "productId": "e906ed17-f05a-49da-9f07-5342b03f0546",
+      "total": 13,
+      "ready": 13,
+      "failed": 0,
+      "stored": 13,
+      "variants": 39,
+      "originalBytes": 2738273,
+      "variantBytes": 1546367
+    },
+    "1970s-striped-blue-upholstery-bamboo-frame-mid-century-modern-sofa-mint": {
+      "productId": "899ef78b-5d29-4cc2-b72e-c55ebed43f34",
+      "total": 17,
+      "ready": 17,
+      "failed": 0,
+      "stored": 17,
+      "variants": 51,
+      "originalBytes": 6684122,
+      "variantBytes": 5708728
+    },
+    "19h-century-cast-polished-brass-tripod-base-adjustable-height-oil-flor-lamp-mint": {
+      "productId": "d275e3a4-e41a-42d8-9ba8-db846185b9f6",
+      "total": 17,
+      "ready": 17,
+      "failed": 0,
+      "stored": 17,
+      "variants": 51,
+      "originalBytes": 4865601,
+      "variantBytes": 3886322
+    },
+    "19th-century-davenport-heavily-carved-oak-desk-w-rope-twist-supports-4-drawers": {
+      "productId": "72a8d9b7-881d-4398-99fc-898b4f03f9e5",
+      "total": 19,
+      "ready": 19,
+      "failed": 0,
+      "stored": 19,
+      "variants": 57,
+      "originalBytes": 4151473,
+      "variantBytes": 3892972
+    },
+    "19th-century-french-empire-reclining-arm-bench-recamier-carved-old-distressed": {
+      "productId": "489b027e-6e43-4c95-9396-e7f0fd12a855",
+      "total": 15,
+      "ready": 15,
+      "failed": 0,
+      "stored": 15,
+      "variants": 45,
+      "originalBytes": 2456771,
+      "variantBytes": 3079440
+    },
+    "19th-century-solid-mahogany-tilt-top-claw-feet-lamp-side-center-breakfast-table": {
+      "productId": "f2d04e64-5858-4b1a-a6f5-122af9b27180",
+      "total": 13,
+      "ready": 13,
+      "failed": 0,
+      "stored": 13,
+      "variants": 39,
+      "originalBytes": 2544248,
+      "variantBytes": 1315110
+    },
+    "19th-century-triple-ball-claw-armchair-style-settee-bench-sofa-chippendale": {
+      "productId": "89f6ce3c-d880-4aa0-a8b1-0aed82d3ea98",
+      "total": 17,
+      "ready": 17,
+      "failed": 0,
+      "stored": 17,
+      "variants": 51,
+      "originalBytes": 3002965,
+      "variantBytes": 3011363
+    },
+    "19th-century-wellington-mahogany-chest-of-drawers-secretary-desk-dovetails-clean": {
+      "productId": "b4aa2aaa-8cd8-45a7-889c-d5c13eef89bc",
+      "total": 19,
+      "ready": 19,
+      "failed": 0,
+      "stored": 19,
+      "variants": 57,
+      "originalBytes": 6722317,
+      "variantBytes": 4591237
+    },
+    "20-sqaure-solid-brass-case-7-tall-glass-shelve-display-cabinet-vitrine-mint": {
+      "productId": "f92d94bb-0098-463b-83db-df6c131eaabd",
+      "total": 18,
+      "ready": 18,
+      "failed": 0,
+      "stored": 18,
+      "variants": 54,
+      "originalBytes": 3877198,
+      "variantBytes": 2569265
+    },
+    "20th-century-german-white-porcelain-square-vase-painted-rosenthal-studio-linie": {
+      "productId": "b0961734-63ef-4558-ab46-a2f9090a0d30",
+      "total": 11,
+      "ready": 11,
+      "failed": 0,
+      "stored": 11,
+      "variants": 33,
+      "originalBytes": 2563963,
+      "variantBytes": 2225792
+    },
+    "24-round-terrazzo-brass-strip-cross-inlay-top-urn-shape-tripod-base-side-table": {
+      "productId": "dc3933e0-7d84-47e4-9cb1-6256f23b1ad4",
+      "total": 11,
+      "ready": 11,
+      "failed": 0,
+      "stored": 11,
+      "variants": 33,
+      "originalBytes": 2324152,
+      "variantBytes": 1811391
+    },
+    "3-bay-burl-walnut-smoked-glass-doors-cabinets-adjustable-shelves-wall-unit-mint": {
+      "productId": "11e2bf26-3671-410a-a982-02c55cc6e412",
+      "total": 19,
+      "ready": 19,
+      "failed": 0,
+      "stored": 19,
+      "variants": 57,
+      "originalBytes": 3306811,
+      "variantBytes": 2974731
+    },
+    "3-bay-mid-mentury-modern-walnut-glass-doors-bookcase-wall-unit-curio-cabinet": {
+      "productId": "be95a97c-67e0-4af8-8ae6-928fc8478b3f",
+      "total": 18,
+      "ready": 18,
+      "failed": 0,
+      "stored": 18,
+      "variants": 54,
+      "originalBytes": 4389064,
+      "variantBytes": 3569698
+    },
+    "3-blond-wood-glass-door-curio-cases-display-vitrine-cabinet-glass-shelves-mint": {
+      "productId": "9dc8df4d-5aea-4052-9f80-5a858287ee3e",
+      "total": 14,
+      "ready": 14,
+      "failed": 0,
+      "stored": 14,
+      "variants": 42,
+      "originalBytes": 4387444,
+      "variantBytes": 2737654
+    },
+    "3-dovetail-drawers-heavily-carved-wooden-pulls-rope-edge-bachelor-chest-dresser": {
+      "productId": "b8fb313f-03bf-4d02-9f0e-f1d013c40bd3",
+      "total": 19,
+      "ready": 19,
+      "failed": 0,
+      "stored": 19,
+      "variants": 57,
+      "originalBytes": 5496012,
+      "variantBytes": 5688530
+    },
+    "3-tier-grass-cloth-hexagon-burnt-bamboo-antique-pedestal-candle-lamp-table-stand": {
+      "productId": "0a3e93f1-6ccd-4c7c-bb00-215791a21160",
+      "total": 10,
+      "ready": 10,
+      "failed": 0,
+      "stored": 10,
+      "variants": 30,
+      "originalBytes": 1255090,
+      "variantBytes": 1148767
+    },
+    "3-tier-solid-cast-brass-glass-top-tri-legged-dragon-motive-stand": {
+      "productId": "8dc9c576-05f2-468e-9544-2341e0719611",
+      "total": 14,
+      "ready": 14,
+      "failed": 0,
+      "stored": 14,
+      "variants": 42,
+      "originalBytes": 2598034,
+      "variantBytes": 2966008
+    },
+    "3-4-thick-glass-top-rounded-corners-brass-cylinder-legs-mid-century-modern": {
+      "productId": "c329fc51-58bb-4512-bd0c-803b390af9a7",
+      "total": 13,
+      "ready": 13,
+      "failed": 0,
+      "stored": 13,
+      "variants": 39,
+      "originalBytes": 1804722,
+      "variantBytes": 1045355
+    },
+    "4-doors-carved-teak-5-shelves-2-bottom-drawers-72-tall-curio-cabinet-showcase": {
+      "productId": "a3135f36-3ba4-487b-baca-4fd53b46bd6c",
+      "total": 16,
+      "ready": 16,
+      "failed": 0,
+      "stored": 16,
+      "variants": 48,
+      "originalBytes": 6884857,
+      "variantBytes": 2572127
+    },
+    "4-panel-honey-comb-checker-board-style-carved-teak-screen-room-divider-mint": {
+      "productId": "e3769198-9ca4-4283-8079-f18cd02bbd36",
+      "total": 12,
+      "ready": 12,
+      "failed": 0,
+      "stored": 12,
+      "variants": 36,
+      "originalBytes": 6221614,
+      "variantBytes": 3809045
+    },
+    "4-panels-carved-teak-fine-details-room-divider-screen-heavy-brass-hinges-mint": {
+      "productId": "50ae3fc5-1841-4219-b1bf-c2ed55971014",
+      "total": 20,
+      "ready": 20,
+      "failed": 0,
+      "stored": 20,
+      "variants": 60,
+      "originalBytes": 6406978,
+      "variantBytes": 6238697
+    },
+    "4-tier-italian-twisted-rope-gilt-metal-step-etagere-decorative-shelf-mint": {
+      "productId": "83d7dda0-76cc-4d19-99a2-1fe92f45e89d",
+      "total": 20,
+      "ready": 20,
+      "failed": 0,
+      "stored": 20,
+      "variants": 60,
+      "originalBytes": 6189064,
+      "variantBytes": 4123029
+    },
+    "4-white-acrylic-shade-mid-century-modern-adjustable-light-fixture-chandelier": {
+      "productId": "d08ca5bf-7810-4dc7-8870-96d2a8091e6e",
+      "total": 8,
+      "ready": 8,
+      "failed": 0,
+      "stored": 8,
+      "variants": 24,
+      "originalBytes": 345454,
+      "variantBytes": 377074
+    }
+  }
+}

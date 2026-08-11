@@ -19,6 +19,11 @@ async function main() {
     ['catalog:submit', 'Submit tenant catalog products for moderation'],
     ['catalog:moderate', 'Moderate and publish catalog products'],
     ['storefront:write', 'Manage approved storefront presentation settings'],
+    ['dealer:application:read', 'Read the tenant dealer application'],
+    ['dealer:application:write', 'Create, edit and submit the tenant dealer application'],
+    ['dealer:read', 'Read dealer profiles and applications for platform operations'],
+    ['dealer:review', 'Review and decide dealer applications'],
+    ['notifications:read', 'Read personal notifications'],
   ] as const;
   for (const [code, description] of permissions) {
     await db.permission.upsert({
@@ -44,14 +49,14 @@ async function main() {
   });
   const roles = await Promise.all([
     db.role.upsert({
-      where: { code: 'platform-admin' },
+      where: { code: 'PLATFORM_ADMIN' },
       update: {},
-      create: { code: 'platform-admin', name: 'Platform Admin', organizationId: platform.id },
+      create: { code: 'PLATFORM_ADMIN', name: 'PLATFORM_ADMIN', organizationId: platform.id },
     }),
     db.role.upsert({
       where: { code: 'established-lines-owner' },
       update: {},
-      create: { code: 'established-lines-owner', name: 'Seller Owner', organizationId: seller.id },
+      create: { code: 'established-lines-owner', name: 'OWNER', organizationId: seller.id },
     }),
     db.role.upsert({
       where: { code: 'atlas-driver' },
@@ -63,7 +68,7 @@ async function main() {
       update: {},
       create: {
         code: 'second-seller-owner',
-        name: 'Second Seller Owner',
+        name: 'OWNER',
         organizationId: other.id,
       },
     }),
@@ -72,7 +77,7 @@ async function main() {
       update: {},
       create: {
         code: 'established-lines-staff',
-        name: 'Seller Catalog Staff',
+        name: 'CATALOG_MANAGER',
         organizationId: seller.id,
       },
     }),
@@ -87,9 +92,15 @@ async function main() {
         .filter(
           (p) =>
             p.code.startsWith('organization:') ||
-            ['catalog:read', 'catalog:write', 'catalog:submit', 'storefront:write'].includes(
-              p.code,
-            ),
+            [
+              'catalog:read',
+              'catalog:write',
+              'catalog:submit',
+              'storefront:write',
+              'dealer:application:read',
+              'dealer:application:write',
+              'notifications:read',
+            ].includes(p.code),
         )
         .map((p) => p.id),
     ],
@@ -100,16 +111,26 @@ async function main() {
         .filter(
           (p) =>
             p.code.startsWith('organization:') ||
-            ['catalog:read', 'catalog:write', 'catalog:submit', 'storefront:write'].includes(
-              p.code,
-            ),
+            [
+              'catalog:read',
+              'catalog:write',
+              'catalog:submit',
+              'storefront:write',
+              'dealer:application:read',
+              'dealer:application:write',
+              'notifications:read',
+            ].includes(p.code),
         )
         .map((p) => p.id),
     ],
     [
       staffRole.id,
       permissionRows
-        .filter((p) => ['catalog:read', 'catalog:write', 'catalog:submit'].includes(p.code))
+        .filter((p) =>
+          ['catalog:read', 'catalog:write', 'catalog:submit', 'notifications:read'].includes(
+            p.code,
+          ),
+        )
         .map((p) => p.id),
     ],
   ];
@@ -120,6 +141,75 @@ async function main() {
         update: {},
         create: { roleId, permissionId },
       });
+  const additionalRoles = [
+    {
+      code: 'PLATFORM_OPERATOR',
+      name: 'PLATFORM_OPERATOR',
+      organizationId: platform.id,
+      permissions: ['dealer:read', 'dealer:review', 'notifications:read'],
+    },
+    {
+      code: 'PLATFORM_MODERATOR',
+      name: 'PLATFORM_MODERATOR',
+      organizationId: platform.id,
+      permissions: ['dealer:read', 'catalog:moderate', 'notifications:read'],
+    },
+    {
+      code: 'PLATFORM_SUPPORT',
+      name: 'PLATFORM_SUPPORT',
+      organizationId: platform.id,
+      permissions: ['dealer:read', 'catalog:read', 'notifications:read'],
+    },
+    ...[seller, other].flatMap((organization) =>
+      [
+        [
+          'ADMIN',
+          [
+            'organization:members:read',
+            'organization:settings:write',
+            'dealer:application:read',
+            'dealer:application:write',
+            'catalog:read',
+            'catalog:write',
+            'catalog:submit',
+            'storefront:write',
+            'notifications:read',
+          ],
+        ],
+        [
+          'CATALOG_MANAGER',
+          ['catalog:read', 'catalog:write', 'catalog:submit', 'notifications:read'],
+        ],
+        ['SALES_MANAGER', ['catalog:read', 'notifications:read']],
+        ['FULFILLMENT_MANAGER', ['catalog:read', 'notifications:read']],
+        ['VIEWER', ['catalog:read', 'notifications:read']],
+      ].map(([name, rolePermissions]) => ({
+        code: `${organization.slug}:${name as string}`,
+        name: name as string,
+        organizationId: organization.id,
+        permissions: rolePermissions as string[],
+      })),
+    ),
+  ];
+  for (const definition of additionalRoles) {
+    const role = await db.role.upsert({
+      where: { code: definition.code },
+      update: { name: definition.name, organizationId: definition.organizationId },
+      create: {
+        code: definition.code,
+        name: definition.name,
+        organizationId: definition.organizationId,
+      },
+    });
+    for (const permission of permissionRows.filter((row) =>
+      definition.permissions.includes(row.code),
+    ))
+      await db.rolePermission.upsert({
+        where: { roleId_permissionId: { roleId: role.id, permissionId: permission.id } },
+        update: {},
+        create: { roleId: role.id, permissionId: permission.id },
+      });
+  }
   const users = await Promise.all([
     db.user.upsert({
       where: { email: 'admin@atlas.local' },
@@ -163,6 +253,15 @@ async function main() {
       create: {
         email: 'staff@atlas.local',
         displayName: 'Established Lines Catalog Staff',
+        passwordHash: await hashPassword(passwords.seller),
+      },
+    }),
+    db.user.upsert({
+      where: { email: 'applicant@atlas.local' },
+      update: {},
+      create: {
+        email: 'applicant@atlas.local',
+        displayName: 'Prospective Dealer',
         passwordHash: await hashPassword(passwords.seller),
       },
     }),
@@ -293,6 +392,20 @@ async function main() {
     update: { enabled: true },
     create: { organizationId: seller.id, key: 'foundation.ready', enabled: true },
   });
+  for (const organization of [seller, other])
+    await db.dealerProfile.upsert({
+      where: { organizationId: organization.id },
+      update: { status: 'APPROVED', approvedAt: new Date() },
+      create: {
+        organizationId: organization.id,
+        status: 'APPROVED',
+        publicDealerName: organization.name,
+        description: `${organization.name} is an approved THE GUILD dealer.`,
+        specialties: ['Vintage furniture'],
+        yearsInBusiness: 10,
+        approvedAt: new Date(),
+      },
+    });
   console.log(
     JSON.stringify({
       seeded: true,

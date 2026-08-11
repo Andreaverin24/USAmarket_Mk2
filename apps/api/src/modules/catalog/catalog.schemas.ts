@@ -65,6 +65,10 @@ export const moderationSchema = z.object({
   action: z.enum(['approve', 'publish', 'reject', 'archive']),
   note: z.string().max(2000).optional(),
 });
+export const moderationCommentSchema = z.object({
+  body: z.string().trim().min(1).max(4000),
+  visibility: z.enum(['SELLER', 'INTERNAL']).default('INTERNAL'),
+});
 
 export type ProductInput = z.infer<typeof productInputSchema>;
 export type ProductUpdate = z.infer<typeof productUpdateSchema>;

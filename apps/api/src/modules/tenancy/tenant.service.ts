@@ -13,26 +13,62 @@ export class TenantService {
       },
     });
     if (!membership) {
-      const platformAdmin = await this.db.organizationMember.findFirst({
+      const platformMembership = await this.db.organizationMember.findFirst({
         where: {
           userId,
           status: 'ACTIVE',
-          role: { permissions: { some: { permission: { code: 'platform:admin' } } } },
+          organization: { type: 'PLATFORM', status: 'ACTIVE' },
+          role: {
+            permissions: {
+              some: { permission: { code: { in: ['platform:admin', requiredPermission] } } },
+            },
+          },
+        },
+        select: {
+          role: { select: { permissions: { select: { permission: { select: { code: true } } } } } },
         },
       });
-      const organization = platformAdmin
+      const organization = platformMembership
         ? await this.db.organization.findFirst({
             where: { id: organizationId, status: 'ACTIVE' },
             select: { id: true },
           })
         : null;
       if (!organization) throw new NotFoundException('Organization not found');
-      return { userId, organizationId: organization.id, permissions: ['platform:admin'] };
+      return {
+        userId,
+        organizationId: organization.id,
+        permissions: platformMembership!.role.permissions.map((grant) => grant.permission.code),
+      };
     }
     const permissions = membership.role.permissions.map((grant) => grant.permission.code);
     if (!permissions.includes(requiredPermission) && !permissions.includes('platform:admin'))
       throw new NotFoundException('Organization not found');
     return { userId, organizationId: membership.organizationId, permissions };
+  }
+  async requirePlatformPermission(userId: string, requiredPermission: string) {
+    const membership = await this.db.organizationMember.findFirst({
+      where: {
+        userId,
+        status: 'ACTIVE',
+        organization: { type: 'PLATFORM', status: 'ACTIVE' },
+        role: {
+          permissions: {
+            some: { permission: { code: { in: ['platform:admin', requiredPermission] } } },
+          },
+        },
+      },
+      select: {
+        organizationId: true,
+        role: { select: { permissions: { select: { permission: { select: { code: true } } } } } },
+      },
+    });
+    if (!membership) throw new NotFoundException('Platform resource not found');
+    return {
+      userId,
+      organizationId: membership.organizationId,
+      permissions: membership.role.permissions.map((grant) => grant.permission.code),
+    };
   }
   async members(userId: string, organizationId: string) {
     const tenant = await this.resolve(userId, organizationId, 'organization:members:read');

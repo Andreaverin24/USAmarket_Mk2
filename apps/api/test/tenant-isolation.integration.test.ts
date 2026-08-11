@@ -1,31 +1,22 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { PostgreSqlContainer, type StartedPostgreSqlContainer } from '@testcontainers/postgresql';
-import { execFileSync } from 'node:child_process';
-import { resolve } from 'node:path';
 import { PrismaClient } from '@atlas/database';
 import { hashPassword } from '@atlas/auth';
 import { TenantService } from '../src/modules/tenancy/tenant.service.js';
+import {
+  setupIntegrationDatabase,
+  teardownIntegrationDatabase,
+  type IntegrationDatabase,
+} from './integration-database.js';
 
 describe('tenant isolation with PostgreSQL', () => {
-  let container: StartedPostgreSqlContainer;
+  let database: IntegrationDatabase;
   let db: PrismaClient;
   let sellerUserId: string;
   let sellerOrgId: string;
   let otherOrgId: string;
   beforeAll(async () => {
-    container = await new PostgreSqlContainer('postgres:17-alpine').start();
-    process.env.DATABASE_URL = container.getConnectionUri();
-    execFileSync(
-      'pnpm',
-      ['--filter', '@atlas/database', 'exec', 'prisma', 'db', 'push', '--skip-generate'],
-      {
-        cwd: resolve(import.meta.dirname, '../../..'),
-        env: process.env,
-        stdio: 'pipe',
-        shell: process.platform === 'win32',
-      },
-    );
-    db = new PrismaClient({ datasources: { db: { url: process.env.DATABASE_URL } } });
+    database = await setupIntegrationDatabase();
+    db = new PrismaClient({ datasources: { db: { url: database.url } } });
     const permission = await db.permission.create({
       data: { code: 'organization:members:read', description: 'read' },
     });
@@ -58,8 +49,7 @@ describe('tenant isolation with PostgreSQL', () => {
     });
   });
   afterAll(async () => {
-    await db?.$disconnect();
-    await container?.stop();
+    await teardownIntegrationDatabase(database, db);
   });
   it('allows the member tenant', async () => {
     const service = new TenantService(db as any);

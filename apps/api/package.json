@@ -11,8 +11,9 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --exclude '**/*.integration.test.ts'",
     "test:integration": "vitest run --config vitest.integration.config.ts",
-    "openapi:generate": "cross-env OPENAPI_OUTPUT=../../docs/api/openapi.json tsx src/main.ts",
-    "phase2:acceptance": "tsx test/phase2-acceptance.ts"
+    "openapi:generate": "cross-env OPENAPI_OUTPUT=../../docs/api/openapi.json tsx src/main.ts && prettier --write ../../docs/api/openapi.json",
+    "phase2:acceptance": "tsx test/phase2-acceptance.ts",
+    "phase3:acceptance": "tsx test/phase3-acceptance.ts"
   },
   "dependencies": {
     "@atlas/catalog": "workspace:*",

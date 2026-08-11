@@ -14,6 +14,7 @@
     "test:integration": "pnpm --filter @atlas/api test:integration",
     "test:e2e": "pnpm --filter @atlas/api build && pnpm --filter @atlas/web build && playwright test",
     "phase2:acceptance": "pnpm --filter @atlas/worker build && pnpm --filter @atlas/api phase2:acceptance",
+    "phase3:acceptance": "pnpm --filter @atlas/worker build && pnpm --filter @atlas/api phase3:acceptance",
     "db:generate": "pnpm --filter @atlas/database db:generate",
     "db:migrate": "pnpm --filter @atlas/database db:migrate",
     "db:seed": "pnpm --filter @atlas/database db:seed",

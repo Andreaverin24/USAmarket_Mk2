@@ -18,6 +18,14 @@ const include = {
   attributes: { orderBy: [{ sortOrder: 'asc' as const }, { name: 'asc' as const }] },
   location: true,
   organization: { select: { id: true, name: true, slug: true } },
+  externalListings: {
+    orderBy: { lastSeenAt: 'desc' as const },
+    take: 5,
+    include: {
+      source: true,
+      _count: { select: { snapshots: true } },
+    },
+  },
 };
 
 @Injectable()
@@ -31,7 +39,14 @@ export class CatalogService {
 
   categories() {
     return this.db.category.findMany({
-      where: { products: { some: { status: 'PUBLISHED', organization: { status: 'ACTIVE' } } } },
+      where: {
+        products: {
+          some: {
+            status: 'PUBLISHED',
+            organization: { status: 'ACTIVE', dealerProfile: { status: 'APPROVED' } },
+          },
+        },
+      },
       orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
       include: { _count: { select: { products: { where: { status: 'PUBLISHED' } } } } },
     });
@@ -52,7 +67,10 @@ export class CatalogService {
 
   async facets() {
     const products = await this.db.product.findMany({
-      where: { status: 'PUBLISHED', organization: { status: 'ACTIVE' } },
+      where: {
+        status: 'PUBLISHED',
+        organization: { status: 'ACTIVE', dealerProfile: { status: 'APPROVED' } },
+      },
       select: {
         materials: true,
         colors: true,
@@ -76,7 +94,10 @@ export class CatalogService {
   async sitemap() {
     const [products, categories, sellers] = await Promise.all([
       this.db.product.findMany({
-        where: { status: 'PUBLISHED', organization: { status: 'ACTIVE' } },
+        where: {
+          status: 'PUBLISHED',
+          organization: { status: 'ACTIVE', dealerProfile: { status: 'APPROVED' } },
+        },
         select: { slug: true, updatedAt: true, organization: { select: { slug: true } } },
       }),
       this.db.category.findMany({
@@ -84,7 +105,12 @@ export class CatalogService {
         select: { slug: true, updatedAt: true },
       }),
       this.db.organization.findMany({
-        where: { status: 'ACTIVE', type: 'SELLER', products: { some: { status: 'PUBLISHED' } } },
+        where: {
+          status: 'ACTIVE',
+          type: 'SELLER',
+          dealerProfile: { status: 'APPROVED' },
+          products: { some: { status: 'PUBLISHED' } },
+        },
         select: { slug: true, updatedAt: true },
       }),
     ]);
@@ -112,7 +138,11 @@ export class CatalogService {
     const ids = filters.q ? await this.search.productIds(filters.q) : undefined;
     const where: Prisma.ProductWhereInput = {
       status: 'PUBLISHED',
-      organization: { status: 'ACTIVE', ...(filters.seller ? { slug: filters.seller } : {}) },
+      organization: {
+        status: 'ACTIVE',
+        dealerProfile: { status: 'APPROVED' },
+        ...(filters.seller ? { slug: filters.seller } : {}),
+      },
       ...(ids ? { id: { in: ids } } : {}),
       ...(filters.category ? { category: { slug: filters.category } } : {}),
       ...(filters.condition ? { condition: filters.condition as ProductCondition } : {}),
@@ -176,7 +206,10 @@ export class CatalogService {
       where: {
         slug,
         status: 'PUBLISHED',
-        ...(organizationSlug ? { organization: { slug: organizationSlug } } : {}),
+        organization: {
+          dealerProfile: { status: 'APPROVED' },
+          ...(organizationSlug ? { slug: organizationSlug } : {}),
+        },
       },
       include,
     });
@@ -196,12 +229,45 @@ export class CatalogService {
 
   async sellerProduct(userId: string, organizationId: string, productId: string) {
     const tenant = await this.tenants.resolve(userId, organizationId, 'catalog:read');
-    const product = await this.db.product.findFirst({
-      where: { id: productId, organizationId: tenant.organizationId },
-      include,
-    });
+    const [product, fieldEvidence, listingSnapshots] = await Promise.all([
+      this.db.product.findFirst({
+        where: { id: productId, organizationId: tenant.organizationId },
+        include,
+      }),
+      this.db.productFieldEvidence.findMany({
+        where: { productId, organizationId: tenant.organizationId },
+        orderBy: [{ isSelected: 'desc' }, { fieldPath: 'asc' }, { createdAt: 'desc' }],
+      }),
+      this.db.listingSnapshot.findMany({
+        where: {
+          organizationId: tenant.organizationId,
+          listing: { productId, organizationId: tenant.organizationId },
+        },
+        orderBy: { capturedAt: 'desc' },
+        take: 20,
+        select: {
+          id: true,
+          listingId: true,
+          contentHash: true,
+          capturedAt: true,
+          captureMethod: true,
+          adapterKey: true,
+          adapterVersion: true,
+          normalizedPayload: true,
+          provenance: true,
+          validationErrors: true,
+        },
+      }),
+    ]);
     if (!product) throw new NotFoundException('Product not found');
-    return presentProduct(product);
+    return {
+      ...presentProduct(product),
+      fieldEvidence: fieldEvidence.map((entry) => ({
+        ...entry,
+        confidence: entry.confidence.toString(),
+      })),
+      listingSnapshots,
+    };
   }
 
   async create(userId: string, organizationId: string, input: ProductInput, correlationId: string) {
@@ -278,6 +344,7 @@ export class CatalogService {
       ) as Prisma.ProductUncheckedUpdateManyInput;
       if (changes.priceMinor) data.priceMinor = BigInt(changes.priceMinor);
       data.version = { increment: 1 };
+      data.sourceRefreshLocked = true;
       const result = await tx.product.updateMany({
         where: {
           id: productId,
@@ -356,6 +423,99 @@ export class CatalogService {
     );
   }
 
+  async moderationHistory(userId: string, organizationId: string, productId: string) {
+    const tenant = await this.tenants.resolve(userId, organizationId, 'catalog:read');
+    const product = await this.db.product.findFirst({
+      where: { id: productId, organizationId: tenant.organizationId },
+      select: { id: true },
+    });
+    if (!product) throw new NotFoundException('Product not found');
+    return this.db.productModerationReview.findMany({
+      where: { productId, organizationId: tenant.organizationId },
+      include: {
+        moderator: { select: { id: true, displayName: true } },
+        comments: {
+          where: { visibility: 'SELLER' },
+          include: { author: { select: { id: true, displayName: true } } },
+          orderBy: { createdAt: 'asc' },
+        },
+      },
+      orderBy: { submittedAt: 'asc' },
+    });
+  }
+
+  async moderationQueue(userId: string) {
+    await this.tenants.requirePlatformPermission(userId, 'catalog:moderate');
+    return this.db.productModerationReview.findMany({
+      where: { status: { in: ['SUBMITTED', 'CHANGES_REQUESTED', 'APPROVED'] } },
+      include: {
+        product: { include },
+        organization: {
+          select: { id: true, name: true, slug: true, dealerProfile: { select: { status: true } } },
+        },
+        moderator: { select: { id: true, displayName: true } },
+        comments: {
+          include: { author: { select: { id: true, displayName: true } } },
+          orderBy: { createdAt: 'asc' },
+        },
+      },
+      orderBy: { submittedAt: 'asc' },
+    });
+  }
+
+  async addModerationComment(
+    userId: string,
+    reviewId: string,
+    body: string,
+    visibility: 'SELLER' | 'INTERNAL',
+    correlationId: string,
+  ) {
+    await this.tenants.requirePlatformPermission(userId, 'catalog:moderate');
+    const review = await this.db.productModerationReview.findUnique({
+      where: { id: reviewId },
+      select: { id: true, organizationId: true, productId: true },
+    });
+    if (!review) throw new NotFoundException('Moderation review not found');
+    return this.db.$transaction(async (tx) => {
+      const comment = await tx.productModerationComment.create({
+        data: {
+          organizationId: review.organizationId,
+          reviewId: review.id,
+          authorUserId: userId,
+          body,
+          visibility,
+        },
+      });
+      const event = await tx.outboxEvent.create({
+        data: {
+          organizationId: review.organizationId,
+          aggregateType: 'Product',
+          aggregateId: review.productId,
+          eventType: 'catalog.product.moderation_comment',
+          payload: {
+            productId: review.productId,
+            reviewId: review.id,
+            commentId: comment.id,
+            visibility,
+          },
+        },
+      });
+      await tx.auditLog.create({
+        data: this.audit.entry({
+          organizationId: review.organizationId,
+          actorUserId: userId,
+          action: 'catalog.product.moderation_comment',
+          resourceType: 'ProductModerationComment',
+          resourceId: comment.id,
+          correlationId,
+          after: { reviewId: review.id, productId: review.productId, visibility },
+          metadata: { sourceEventId: event.id },
+        }),
+      });
+      return comment;
+    });
+  }
+
   async moderate(
     userId: string,
     organizationId: string,
@@ -402,9 +562,15 @@ export class CatalogService {
     const product = await this.db.$transaction(async (tx) => {
       const before = await tx.product.findFirst({
         where: { id: productId, organizationId: tenant.organizationId },
-        include: { media: true, inventory: true },
+        include: {
+          media: true,
+          inventory: true,
+          organization: { select: { dealerProfile: { select: { status: true } } } },
+        },
       });
       if (!before) throw new NotFoundException('Product not found');
+      if (action === 'submit' && before.organization.dealerProfile?.status !== 'APPROVED')
+        throw new ConflictException('Approved dealer status is required to submit products');
       let to;
       try {
         to = transitionProductStatus(before.status, action, note);
@@ -438,6 +604,55 @@ export class CatalogService {
       });
       if (!result.count) throw new ConflictException('Invalid product state transition');
       const current = await tx.product.findUniqueOrThrow({ where: { id: productId }, include });
+      if (action === 'submit') {
+        await tx.productModerationReview.create({
+          data: {
+            organizationId: tenant.organizationId,
+            productId,
+            submittedVersion: current.version,
+          },
+        });
+      } else if (['approve', 'reject', 'publish'].includes(action)) {
+        const review = await tx.productModerationReview.findFirst({
+          where: {
+            productId,
+            organizationId: tenant.organizationId,
+            status:
+              action === 'publish'
+                ? 'APPROVED'
+                : action === 'approve'
+                  ? 'SUBMITTED'
+                  : { in: ['SUBMITTED', 'APPROVED'] },
+          },
+          orderBy: { submittedAt: 'desc' },
+        });
+        if (!review) throw new ConflictException('Active moderation review not found');
+        const reviewStatus =
+          action === 'approve'
+            ? 'APPROVED'
+            : action === 'publish'
+              ? 'PUBLISHED'
+              : 'CHANGES_REQUESTED';
+        await tx.productModerationReview.update({
+          where: { id: review.id },
+          data: {
+            status: reviewStatus,
+            moderatorUserId: userId,
+            requestedChanges: action === 'reject' ? note!.trim() : null,
+            reviewedAt: new Date(),
+          },
+        });
+        if (note)
+          await tx.productModerationComment.create({
+            data: {
+              organizationId: tenant.organizationId,
+              reviewId: review.id,
+              authorUserId: userId,
+              visibility: 'SELLER',
+              body: note.trim(),
+            },
+          });
+      }
       await tx.auditLog.create({
         data: this.audit.entry({
           organizationId: tenant.organizationId,
@@ -457,7 +672,7 @@ export class CatalogService {
           aggregateType: 'Product',
           aggregateId: productId,
           eventType,
-          payload: { productId, status: to },
+          payload: { productId, status: to, ...(note ? { reason: note } : {}) },
         },
       });
       return current;

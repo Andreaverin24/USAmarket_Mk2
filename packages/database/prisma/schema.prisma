@@ -101,18 +101,90 @@ enum ImportRowStatus {
   FAILED
 }
 
+enum CatalogSourceKind {
+  WEBSITE
+  MARKETPLACE
+  AUCTION_HOUSE
+  API
+  CSV
+  MANUAL
+}
+
+enum ExternalListingAvailability {
+  AVAILABLE
+  RESERVED
+  SOLD
+  UNAVAILABLE
+  UNKNOWN
+}
+
+enum ExternalListingSaleType {
+  FIXED_PRICE
+  PRICE_ON_REQUEST
+  AUCTION
+  UNKNOWN
+}
+
+enum DealerStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  CHANGES_REQUESTED
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum DealerVerificationAction {
+  START_REVIEW
+  REQUEST_CHANGES
+  APPROVE
+  REJECT
+  SUSPEND
+}
+
+enum ProductModerationReviewStatus {
+  SUBMITTED
+  CHANGES_REQUESTED
+  APPROVED
+  PUBLISHED
+}
+
+enum ModerationCommentVisibility {
+  SELLER
+  INTERNAL
+}
+
+enum NotificationChannel {
+  IN_APP
+  EMAIL
+}
+
+enum NotificationStatus {
+  QUEUED
+  DELIVERED
+  READ
+  FAILED
+}
+
 model User {
-  id           String               @id @default(uuid()) @db.Uuid
-  email        String               @unique @db.VarChar(320)
-  passwordHash String               @map("password_hash")
-  displayName  String               @map("display_name") @db.VarChar(160)
-  status       UserStatus           @default(ACTIVE)
-  version      Int                  @default(1)
-  createdAt    DateTime             @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt    DateTime             @updatedAt @map("updated_at") @db.Timestamptz
-  sessions     Session[]
-  memberships  OrganizationMember[]
-  auditEntries AuditLog[]           @relation("AuditActor")
+  id                         String                     @id @default(uuid()) @db.Uuid
+  email                      String                     @unique @db.VarChar(320)
+  passwordHash               String                     @map("password_hash")
+  displayName                String                     @map("display_name") @db.VarChar(160)
+  status                     UserStatus                 @default(ACTIVE)
+  version                    Int                        @default(1)
+  createdAt                  DateTime                   @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt                  DateTime                   @updatedAt @map("updated_at") @db.Timestamptz
+  sessions                   Session[]
+  memberships                OrganizationMember[]
+  auditEntries               AuditLog[]                 @relation("AuditActor")
+  dealerApplications         DealerApplication[]        @relation("DealerApplicant")
+  dealerApplicationsReviewed DealerApplication[]        @relation("DealerApplicationReviewer")
+  dealerVerifications        DealerVerification[]       @relation("DealerVerificationReviewer")
+  productModerationReviews   ProductModerationReview[]  @relation("ProductModerator")
+  productModerationComments  ProductModerationComment[] @relation("ProductModerationCommentAuthor")
+  notifications              Notification[]
 
   @@map("users")
 }
@@ -136,28 +208,38 @@ model Session {
 }
 
 model Organization {
-  id           String               @id @default(uuid()) @db.Uuid
-  slug         String               @unique @db.VarChar(80)
-  name         String               @db.VarChar(200)
-  type         OrganizationType
-  status       OrganizationStatus   @default(ACTIVE)
-  version      Int                  @default(1)
-  createdAt    DateTime             @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt    DateTime             @updatedAt @map("updated_at") @db.Timestamptz
-  members      OrganizationMember[]
-  roles        Role[]
-  storefront   Storefront?
-  auditLogs    AuditLog[]
-  featureFlags FeatureFlag[]
-  outboxEvents OutboxEvent[]
-  locations    Location[]
-  products     Product[]
-  collections  Collection[]
-  importJobs   ImportJob[]
-  redirects    RedirectMapping[]
-  inventoryItems InventoryItem[]
-  productAttributes ProductAttribute[]
-  mediaVariants MediaVariant[]
+  id                        String                     @id @default(uuid()) @db.Uuid
+  slug                      String                     @unique @db.VarChar(80)
+  name                      String                     @db.VarChar(200)
+  type                      OrganizationType
+  status                    OrganizationStatus         @default(ACTIVE)
+  version                   Int                        @default(1)
+  createdAt                 DateTime                   @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt                 DateTime                   @updatedAt @map("updated_at") @db.Timestamptz
+  members                   OrganizationMember[]
+  roles                     Role[]
+  storefront                Storefront?
+  auditLogs                 AuditLog[]
+  featureFlags              FeatureFlag[]
+  outboxEvents              OutboxEvent[]
+  locations                 Location[]
+  products                  Product[]
+  collections               Collection[]
+  importJobs                ImportJob[]
+  catalogSources            CatalogSource[]
+  externalListings          ExternalListing[]
+  listingSnapshots          ListingSnapshot[]
+  productFieldEvidence      ProductFieldEvidence[]
+  redirects                 RedirectMapping[]
+  inventoryItems            InventoryItem[]
+  productAttributes         ProductAttribute[]
+  mediaVariants             MediaVariant[]
+  dealerProfile             DealerProfile?
+  dealerApplication         DealerApplication?
+  dealerVerifications       DealerVerification[]
+  productModerationReviews  ProductModerationReview[]
+  productModerationComments ProductModerationComment[]
+  notifications             Notification[]
 
   @@map("organizations")
 }
@@ -309,23 +391,98 @@ model FeatureFlag {
 }
 
 model OutboxEvent {
-  id             String        @id @default(uuid()) @db.Uuid
-  organizationId String?       @map("organization_id") @db.Uuid
-  aggregateType  String        @map("aggregate_type") @db.VarChar(100)
-  aggregateId    String        @map("aggregate_id") @db.VarChar(100)
-  eventType      String        @map("event_type") @db.VarChar(160)
-  schemaVersion  Int           @default(1) @map("schema_version")
+  id             String         @id @default(uuid()) @db.Uuid
+  organizationId String?        @map("organization_id") @db.Uuid
+  aggregateType  String         @map("aggregate_type") @db.VarChar(100)
+  aggregateId    String         @map("aggregate_id") @db.VarChar(100)
+  eventType      String         @map("event_type") @db.VarChar(160)
+  schemaVersion  Int            @default(1) @map("schema_version")
   payload        Json
-  occurredAt     DateTime      @default(now()) @map("occurred_at") @db.Timestamptz
-  availableAt    DateTime      @default(now()) @map("available_at") @db.Timestamptz
-  lockedAt       DateTime?     @map("locked_at") @db.Timestamptz
-  processedAt    DateTime?     @map("processed_at") @db.Timestamptz
-  attempts       Int           @default(0)
-  lastError      String?       @map("last_error") @db.VarChar(1000)
-  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  occurredAt     DateTime       @default(now()) @map("occurred_at") @db.Timestamptz
+  availableAt    DateTime       @default(now()) @map("available_at") @db.Timestamptz
+  lockedAt       DateTime?      @map("locked_at") @db.Timestamptz
+  processedAt    DateTime?      @map("processed_at") @db.Timestamptz
+  attempts       Int            @default(0)
+  lastError      String?        @map("last_error") @db.VarChar(1000)
+  organization   Organization?  @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  notifications  Notification[]
 
   @@index([processedAt, availableAt])
   @@map("outbox_events")
+}
+
+model DealerProfile {
+  id               String       @id @default(uuid()) @db.Uuid
+  organizationId   String       @unique @map("organization_id") @db.Uuid
+  status           DealerStatus @default(DRAFT)
+  publicDealerName String       @map("public_dealer_name") @db.VarChar(200)
+  website          String?      @db.VarChar(1000)
+  description      String?
+  specialties      String[]     @default([])
+  yearsInBusiness  Int?         @map("years_in_business")
+  approvedAt       DateTime?    @map("approved_at") @db.Timestamptz
+  suspendedAt      DateTime?    @map("suspended_at") @db.Timestamptz
+  version          Int          @default(1)
+  createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt        DateTime     @updatedAt @map("updated_at") @db.Timestamptz
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([status, updatedAt])
+  @@map("dealer_profiles")
+}
+
+model DealerApplication {
+  id                  String               @id @default(uuid()) @db.Uuid
+  organizationId      String               @unique @map("organization_id") @db.Uuid
+  applicantUserId     String               @map("applicant_user_id") @db.Uuid
+  legalBusinessName   String               @map("legal_business_name") @db.VarChar(240)
+  publicDealerName    String               @map("public_dealer_name") @db.VarChar(200)
+  businessType        String               @map("business_type") @db.VarChar(120)
+  website             String?              @db.VarChar(1000)
+  email               String               @db.VarChar(320)
+  phone               String               @db.VarChar(60)
+  businessAddress     Json                 @map("business_address")
+  contactPerson       String               @map("contact_person") @db.VarChar(200)
+  companyDescription  String               @map("company_description")
+  specialties         String[]             @default([])
+  yearsInBusiness     Int                  @map("years_in_business")
+  supportingDocuments Json?                @map("supporting_documents")
+  status              DealerStatus         @default(DRAFT)
+  reviewReason        String?              @map("review_reason")
+  submittedAt         DateTime?            @map("submitted_at") @db.Timestamptz
+  reviewedByUserId    String?              @map("reviewed_by_user_id") @db.Uuid
+  reviewedAt          DateTime?            @map("reviewed_at") @db.Timestamptz
+  version             Int                  @default(1)
+  createdAt           DateTime             @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt           DateTime             @updatedAt @map("updated_at") @db.Timestamptz
+  organization        Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  applicant           User                 @relation("DealerApplicant", fields: [applicantUserId], references: [id], onDelete: Restrict)
+  reviewedBy          User?                @relation("DealerApplicationReviewer", fields: [reviewedByUserId], references: [id], onDelete: SetNull)
+  verifications       DealerVerification[]
+
+  @@index([status, submittedAt])
+  @@index([applicantUserId, createdAt])
+  @@map("dealer_applications")
+}
+
+model DealerVerification {
+  id             String                   @id @default(uuid()) @db.Uuid
+  organizationId String                   @map("organization_id") @db.Uuid
+  applicationId  String                   @map("application_id") @db.Uuid
+  reviewerUserId String                   @map("reviewer_user_id") @db.Uuid
+  action         DealerVerificationAction
+  fromStatus     DealerStatus             @map("from_status")
+  toStatus       DealerStatus             @map("to_status")
+  reason         String?
+  internalNote   String?                  @map("internal_note")
+  createdAt      DateTime                 @default(now()) @map("created_at") @db.Timestamptz
+  organization   Organization             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  application    DealerApplication        @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  reviewer       User                     @relation("DealerVerificationReviewer", fields: [reviewerUserId], references: [id], onDelete: Restrict)
+
+  @@index([applicationId, createdAt])
+  @@index([organizationId, createdAt])
+  @@map("dealer_verifications")
 }
 
 model Category {
@@ -363,58 +520,74 @@ model Location {
 }
 
 model Product {
-  id                String              @id @default(uuid()) @db.Uuid
-  organizationId    String              @map("organization_id") @db.Uuid
-  categoryId        String              @map("category_id") @db.Uuid
-  locationId        String?             @map("location_id") @db.Uuid
-  externalSource    String?             @map("external_source") @db.VarChar(40)
-  externalId        String?             @map("external_id") @db.VarChar(200)
-  title             String              @db.VarChar(240)
-  slug              String              @db.VarChar(240)
-  shortDescription  String?             @map("short_description") @db.VarChar(500)
-  description       String?
-  productType       String              @map("product_type") @db.VarChar(120)
-  condition         ProductCondition
-  quantity          Int                 @default(1)
-  priceMinor        BigInt              @map("price_minor")
-  currency          String              @default("USD") @db.Char(3)
-  status            ProductStatus       @default(DRAFT)
-  width             Decimal?            @db.Decimal(12, 2)
-  height            Decimal?            @db.Decimal(12, 2)
-  depth             Decimal?            @db.Decimal(12, 2)
-  dimensionUnit     String              @default("in") @map("dimension_unit") @db.VarChar(10)
-  weight            Decimal?            @db.Decimal(12, 2)
-  weightUnit        String              @default("lb") @map("weight_unit") @db.VarChar(10)
-  materials         String[]            @default([])
-  colors            String[]            @default([])
-  styles            String[]            @default([])
-  periods           String[]            @default([])
-  maker             String?             @db.VarChar(240)
-  countryOfOrigin   String?             @map("country_of_origin") @db.VarChar(120)
-  estimatedYearFrom Int?                @map("estimated_year_from")
-  estimatedYearTo   Int?                @map("estimated_year_to")
-  inventorySku      String              @map("inventory_sku") @db.VarChar(120)
-  pickupReadyDays   Int                 @default(3) @map("pickup_ready_days")
-  authenticityNotes String?             @map("authenticity_notes")
-  provenance        String?
-  restorationNotes  String?             @map("restoration_notes")
-  seoTitle          String?             @map("seo_title") @db.VarChar(240)
-  seoDescription    String?             @map("seo_description") @db.VarChar(500)
-  featured          Boolean             @default(false)
-  publishedAt       DateTime?           @map("published_at") @db.Timestamptz
-  submittedAt       DateTime?           @map("submitted_at") @db.Timestamptz
-  approvedAt        DateTime?           @map("approved_at") @db.Timestamptz
-  moderationNote    String?             @map("moderation_note")
-  version           Int                 @default(1)
-  createdAt         DateTime            @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt         DateTime            @updatedAt @map("updated_at") @db.Timestamptz
-  organization      Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  category          Category            @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  location          Location?           @relation(fields: [locationId], references: [id], onDelete: SetNull)
-  media             ProductMedia[]
-  collections       CollectionProduct[]
-  inventory         InventoryItem?
-  attributes        ProductAttribute[]
+  id                   String                    @id @default(uuid()) @db.Uuid
+  organizationId       String                    @map("organization_id") @db.Uuid
+  categoryId           String                    @map("category_id") @db.Uuid
+  locationId           String?                   @map("location_id") @db.Uuid
+  externalSource       String?                   @map("external_source") @db.VarChar(40)
+  externalId           String?                   @map("external_id") @db.VarChar(200)
+  title                String                    @db.VarChar(240)
+  slug                 String                    @db.VarChar(240)
+  shortDescription     String?                   @map("short_description") @db.VarChar(500)
+  description          String?
+  productType          String                    @map("product_type") @db.VarChar(120)
+  condition            ProductCondition
+  quantity             Int                       @default(1)
+  pieceCount           Int                       @default(1) @map("piece_count")
+  priceMinor           BigInt                    @map("price_minor")
+  currency             String                    @default("USD") @db.Char(3)
+  status               ProductStatus             @default(DRAFT)
+  width                Decimal?                  @db.Decimal(12, 2)
+  height               Decimal?                  @db.Decimal(12, 2)
+  depth                Decimal?                  @db.Decimal(12, 2)
+  diameter             Decimal?                  @db.Decimal(12, 2)
+  seatHeight           Decimal?                  @map("seat_height") @db.Decimal(12, 2)
+  dimensionUnit        String                    @default("in") @map("dimension_unit") @db.VarChar(10)
+  weight               Decimal?                  @db.Decimal(12, 2)
+  weightUnit           String                    @default("lb") @map("weight_unit") @db.VarChar(10)
+  materials            String[]                  @default([])
+  colors               String[]                  @default([])
+  styles               String[]                  @default([])
+  periods              String[]                  @default([])
+  maker                String?                   @db.VarChar(240)
+  designer             String?                   @db.VarChar(240)
+  manufacturer         String?                   @db.VarChar(240)
+  modelName            String?                   @map("model_name") @db.VarChar(240)
+  medium               String?                   @db.VarChar(500)
+  conditionDescription String?                   @map("condition_description")
+  countryOfOrigin      String?                   @map("country_of_origin") @db.VarChar(120)
+  estimatedYearFrom    Int?                      @map("estimated_year_from")
+  estimatedYearTo      Int?                      @map("estimated_year_to")
+  inventorySku         String                    @map("inventory_sku") @db.VarChar(120)
+  pickupReadyDays      Int                       @default(3) @map("pickup_ready_days")
+  authenticityNotes    String?                   @map("authenticity_notes")
+  provenance           String?
+  restorationNotes     String?                   @map("restoration_notes")
+  signedDetails        String?                   @map("signed_details")
+  editionDetails       String?                   @map("edition_details")
+  literature           String?
+  exhibitionHistory    String?                   @map("exhibition_history")
+  sourceRefreshLocked  Boolean                   @default(false) @map("source_refresh_locked")
+  seoTitle             String?                   @map("seo_title") @db.VarChar(240)
+  seoDescription       String?                   @map("seo_description") @db.VarChar(500)
+  featured             Boolean                   @default(false)
+  publishedAt          DateTime?                 @map("published_at") @db.Timestamptz
+  submittedAt          DateTime?                 @map("submitted_at") @db.Timestamptz
+  approvedAt           DateTime?                 @map("approved_at") @db.Timestamptz
+  moderationNote       String?                   @map("moderation_note")
+  version              Int                       @default(1)
+  createdAt            DateTime                  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt            DateTime                  @updatedAt @map("updated_at") @db.Timestamptz
+  organization         Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  category             Category                  @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  location             Location?                 @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  media                ProductMedia[]
+  collections          CollectionProduct[]
+  inventory            InventoryItem?
+  attributes           ProductAttribute[]
+  moderationReviews    ProductModerationReview[]
+  externalListings     ExternalListing[]
+  fieldEvidence        ProductFieldEvidence[]
 
   @@unique([organizationId, slug])
   @@unique([organizationId, inventorySku])
@@ -423,6 +596,46 @@ model Product {
   @@index([categoryId, status])
   @@index([priceMinor, status])
   @@map("products")
+}
+
+model ProductModerationReview {
+  id               String                        @id @default(uuid()) @db.Uuid
+  organizationId   String                        @map("organization_id") @db.Uuid
+  productId        String                        @map("product_id") @db.Uuid
+  submittedVersion Int                           @map("submitted_version")
+  status           ProductModerationReviewStatus @default(SUBMITTED)
+  moderatorUserId  String?                       @map("moderator_user_id") @db.Uuid
+  requestedChanges String?                       @map("requested_changes")
+  submittedAt      DateTime                      @default(now()) @map("submitted_at") @db.Timestamptz
+  reviewedAt       DateTime?                     @map("reviewed_at") @db.Timestamptz
+  createdAt        DateTime                      @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt        DateTime                      @updatedAt @map("updated_at") @db.Timestamptz
+  organization     Organization                  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  product          Product                       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  moderator        User?                         @relation("ProductModerator", fields: [moderatorUserId], references: [id], onDelete: SetNull)
+  comments         ProductModerationComment[]
+
+  @@unique([productId, submittedVersion])
+  @@index([status, submittedAt])
+  @@index([organizationId, status])
+  @@map("product_moderation_reviews")
+}
+
+model ProductModerationComment {
+  id             String                      @id @default(uuid()) @db.Uuid
+  organizationId String                      @map("organization_id") @db.Uuid
+  reviewId       String                      @map("review_id") @db.Uuid
+  authorUserId   String                      @map("author_user_id") @db.Uuid
+  visibility     ModerationCommentVisibility @default(SELLER)
+  body           String
+  createdAt      DateTime                    @default(now()) @map("created_at") @db.Timestamptz
+  organization   Organization                @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  review         ProductModerationReview     @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  author         User                        @relation("ProductModerationCommentAuthor", fields: [authorUserId], references: [id], onDelete: Restrict)
+
+  @@index([reviewId, createdAt])
+  @@index([organizationId, createdAt])
+  @@map("product_moderation_comments")
 }
 
 model InventoryItem {
@@ -540,31 +753,143 @@ model CollectionProduct {
   @@map("collection_products")
 }
 
+model CatalogSource {
+  id                   String            @id @default(uuid()) @db.Uuid
+  organizationId       String            @map("organization_id") @db.Uuid
+  key                  String            @db.VarChar(160)
+  name                 String            @db.VarChar(200)
+  kind                 CatalogSourceKind
+  baseUrl              String?           @map("base_url") @db.VarChar(2000)
+  adapterKey           String            @map("adapter_key") @db.VarChar(120)
+  adapterVersion       String            @map("adapter_version") @db.VarChar(40)
+  enabled              Boolean           @default(true)
+  config               Json?
+  lastSuccessfulSyncAt DateTime?         @map("last_successful_sync_at") @db.Timestamptz
+  createdAt            DateTime          @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt            DateTime          @updatedAt @map("updated_at") @db.Timestamptz
+  organization         Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  listings             ExternalListing[]
+
+  @@unique([organizationId, key])
+  @@index([organizationId, kind, enabled])
+  @@map("catalog_sources")
+}
+
+model ExternalListing {
+  id                String                      @id @default(uuid()) @db.Uuid
+  organizationId    String                      @map("organization_id") @db.Uuid
+  sourceId          String                      @map("source_id") @db.Uuid
+  productId         String                      @map("product_id") @db.Uuid
+  externalId        String                      @map("external_id") @db.VarChar(200)
+  canonicalUrl      String?                     @map("canonical_url") @db.VarChar(2000)
+  sourceSku         String?                     @map("source_sku") @db.VarChar(120)
+  sourceTitle       String?                     @map("source_title") @db.VarChar(500)
+  saleType          ExternalListingSaleType     @default(UNKNOWN) @map("sale_type")
+  availability      ExternalListingAvailability @default(UNKNOWN)
+  priceMinor        BigInt?                     @map("price_minor")
+  currency          String?                     @db.Char(3)
+  estimateLowMinor  BigInt?                     @map("estimate_low_minor")
+  estimateHighMinor BigInt?                     @map("estimate_high_minor")
+  auctionSaleName   String?                     @map("auction_sale_name") @db.VarChar(240)
+  auctionLotNumber  String?                     @map("auction_lot_number") @db.VarChar(120)
+  auctionStartsAt   DateTime?                   @map("auction_starts_at") @db.Timestamptz
+  auctionEndsAt     DateTime?                   @map("auction_ends_at") @db.Timestamptz
+  firstSeenAt       DateTime                    @default(now()) @map("first_seen_at") @db.Timestamptz
+  lastSeenAt        DateTime                    @default(now()) @map("last_seen_at") @db.Timestamptz
+  lastCapturedAt    DateTime?                   @map("last_captured_at") @db.Timestamptz
+  createdAt         DateTime                    @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime                    @updatedAt @map("updated_at") @db.Timestamptz
+  organization      Organization                @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  source            CatalogSource               @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  product           Product                     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  snapshots         ListingSnapshot[]
+  fieldEvidence     ProductFieldEvidence[]
+
+  @@unique([sourceId, externalId])
+  @@unique([sourceId, canonicalUrl])
+  @@index([organizationId, productId])
+  @@index([sourceId, availability, lastSeenAt])
+  @@map("external_listings")
+}
+
+model ListingSnapshot {
+  id                String                 @id @default(uuid()) @db.Uuid
+  organizationId    String                 @map("organization_id") @db.Uuid
+  listingId         String                 @map("listing_id") @db.Uuid
+  importRowId       String?                @map("import_row_id") @db.Uuid
+  contentHash       String                 @map("content_hash") @db.Char(64)
+  capturedAt        DateTime               @default(now()) @map("captured_at") @db.Timestamptz
+  captureMethod     String                 @map("capture_method") @db.VarChar(20)
+  adapterKey        String                 @map("adapter_key") @db.VarChar(120)
+  adapterVersion    String                 @map("adapter_version") @db.VarChar(40)
+  rawPayload        Json                   @map("raw_payload")
+  normalizedPayload Json                   @map("normalized_payload")
+  provenance        Json?
+  validationErrors  Json?                  @map("validation_errors")
+  createdAt         DateTime               @default(now()) @map("created_at") @db.Timestamptz
+  organization      Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  listing           ExternalListing        @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  importRow         ImportRow?             @relation(fields: [importRowId], references: [id], onDelete: SetNull)
+  fieldEvidence     ProductFieldEvidence[]
+
+  @@unique([listingId, contentHash])
+  @@index([organizationId, capturedAt])
+  @@index([importRowId])
+  @@map("listing_snapshots")
+}
+
+model ProductFieldEvidence {
+  id                    String          @id @default(uuid()) @db.Uuid
+  organizationId        String          @map("organization_id") @db.Uuid
+  productId             String          @map("product_id") @db.Uuid
+  listingId             String          @map("listing_id") @db.Uuid
+  snapshotId            String          @map("snapshot_id") @db.Uuid
+  fieldPath             String          @map("field_path") @db.VarChar(200)
+  sourcePath            String          @map("source_path") @db.VarChar(500)
+  confidence            Decimal         @db.Decimal(5, 4)
+  value                 Json?
+  isSelected            Boolean         @default(true) @map("is_selected")
+  appliedProductVersion Int             @map("applied_product_version")
+  createdAt             DateTime        @default(now()) @map("created_at") @db.Timestamptz
+  organization          Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  product               Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  listing               ExternalListing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  snapshot              ListingSnapshot @relation(fields: [snapshotId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, snapshotId, fieldPath])
+  @@index([productId, fieldPath, isSelected])
+  @@index([listingId, snapshotId])
+  @@map("product_field_evidence")
+}
+
 model ImportJob {
-  id             String       @id @default(uuid()) @db.Uuid
-  organizationId String       @map("organization_id") @db.Uuid
-  idempotencyKey String       @map("idempotency_key") @db.VarChar(200)
-  source         String       @default("shopify") @db.VarChar(40)
-  checksum       String       @db.Char(64)
-  dryRun         Boolean      @default(true) @map("dry_run")
-  status         ImportStatus @default(PENDING)
-  totalRows      Int          @default(0) @map("total_rows")
-  validRows      Int          @default(0) @map("valid_rows")
-  importedRows   Int          @default(0) @map("imported_rows")
-  failedRows     Int          @default(0) @map("failed_rows")
-  mapping        Json?
-  requestedByUserId String?   @map("requested_by_user_id") @db.Uuid
-  correlationId  String?      @map("correlation_id") @db.Uuid
-  leaseOwner     String?      @map("lease_owner") @db.VarChar(200)
-  leaseExpiresAt DateTime?    @map("lease_expires_at") @db.Timestamptz
-  attempts       Int          @default(0)
-  lastError      String?      @map("last_error") @db.VarChar(1000)
-  startedAt      DateTime?    @map("started_at") @db.Timestamptz
-  completedAt    DateTime?    @map("completed_at") @db.Timestamptz
-  createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt      DateTime     @updatedAt @map("updated_at") @db.Timestamptz
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  rows           ImportRow[]
+  id                      String       @id @default(uuid()) @db.Uuid
+  organizationId          String       @map("organization_id") @db.Uuid
+  idempotencyKey          String       @map("idempotency_key") @db.VarChar(200)
+  source                  String       @default("shopify") @db.VarChar(40)
+  checksum                String       @db.Char(64)
+  dryRun                  Boolean      @default(true) @map("dry_run")
+  status                  ImportStatus @default(PENDING)
+  totalRows               Int          @default(0) @map("total_rows")
+  validRows               Int          @default(0) @map("valid_rows")
+  importedRows            Int          @default(0) @map("imported_rows")
+  failedRows              Int          @default(0) @map("failed_rows")
+  mapping                 Json?
+  rightsConfirmedByUserId String?      @map("rights_confirmed_by_user_id") @db.Uuid
+  rightsConfirmedAt       DateTime?    @map("rights_confirmed_at") @db.Timestamptz
+  rightsScopeHash         String?      @map("rights_scope_hash") @db.Char(64)
+  requestedByUserId       String?      @map("requested_by_user_id") @db.Uuid
+  correlationId           String?      @map("correlation_id") @db.Uuid
+  leaseOwner              String?      @map("lease_owner") @db.VarChar(200)
+  leaseExpiresAt          DateTime?    @map("lease_expires_at") @db.Timestamptz
+  attempts                Int          @default(0)
+  lastError               String?      @map("last_error") @db.VarChar(1000)
+  startedAt               DateTime?    @map("started_at") @db.Timestamptz
+  completedAt             DateTime?    @map("completed_at") @db.Timestamptz
+  createdAt               DateTime     @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt               DateTime     @updatedAt @map("updated_at") @db.Timestamptz
+  organization            Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  rows                    ImportRow[]
 
   @@unique([organizationId, idempotencyKey])
   @@index([organizationId, createdAt])
@@ -572,20 +897,21 @@ model ImportJob {
 }
 
 model ImportRow {
-  id          String          @id @default(uuid()) @db.Uuid
-  importJobId String          @map("import_job_id") @db.Uuid
-  rowNumber   Int             @map("row_number")
-  externalId  String?         @map("external_id") @db.VarChar(200)
-  sku         String?         @db.VarChar(120)
-  status      ImportRowStatus
-  payload     Json
-  normalizedPayload Json?     @map("normalized_payload")
-  errors      Json?
-  attempts    Int             @default(0)
-  productId   String?         @map("product_id") @db.Uuid
-  createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt   DateTime        @updatedAt @map("updated_at") @db.Timestamptz
-  importJob   ImportJob       @relation(fields: [importJobId], references: [id], onDelete: Cascade)
+  id                String            @id @default(uuid()) @db.Uuid
+  importJobId       String            @map("import_job_id") @db.Uuid
+  rowNumber         Int               @map("row_number")
+  externalId        String?           @map("external_id") @db.VarChar(200)
+  sku               String?           @db.VarChar(120)
+  status            ImportRowStatus
+  payload           Json
+  normalizedPayload Json?             @map("normalized_payload")
+  errors            Json?
+  attempts          Int               @default(0)
+  productId         String?           @map("product_id") @db.Uuid
+  createdAt         DateTime          @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime          @updatedAt @map("updated_at") @db.Timestamptz
+  importJob         ImportJob         @relation(fields: [importJobId], references: [id], onDelete: Cascade)
+  snapshots         ListingSnapshot[]
 
   @@unique([importJobId, rowNumber])
   @@map("import_rows")
@@ -605,4 +931,30 @@ model RedirectMapping {
 
   @@unique([organizationId, sourcePath])
   @@map("redirect_mappings")
+}
+
+model Notification {
+  id              String              @id @default(uuid()) @db.Uuid
+  organizationId  String?             @map("organization_id") @db.Uuid
+  recipientUserId String              @map("recipient_user_id") @db.Uuid
+  sourceEventId   String              @map("source_event_id") @db.Uuid
+  channel         NotificationChannel
+  type            String              @db.VarChar(160)
+  subject         String              @db.VarChar(240)
+  body            String
+  payload         Json?
+  status          NotificationStatus  @default(QUEUED)
+  deliveredAt     DateTime?           @map("delivered_at") @db.Timestamptz
+  readAt          DateTime?           @map("read_at") @db.Timestamptz
+  lastError       String?             @map("last_error") @db.VarChar(1000)
+  createdAt       DateTime            @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt       DateTime            @updatedAt @map("updated_at") @db.Timestamptz
+  organization    Organization?       @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  recipient       User                @relation(fields: [recipientUserId], references: [id], onDelete: Cascade)
+  sourceEvent     OutboxEvent         @relation(fields: [sourceEventId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceEventId, recipientUserId, channel])
+  @@index([recipientUserId, channel, status, createdAt])
+  @@index([organizationId, createdAt])
+  @@map("notifications")
 }

@@ -11,10 +11,12 @@
     "start": "node dist/main.js",
     "lint": "eslint src",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests --pool=threads && node scripts/verify-web-browser.mjs",
+    "test:browser": "node scripts/verify-web-browser.mjs"
   },
   "dependencies": {
     "@atlas/catalog": "workspace:*",
+    "@playwright/test": "1.54.1",
     "@aws-sdk/client-s3": "3.850.0",
     "@atlas/config": "workspace:*",
     "@atlas/database": "workspace:*",

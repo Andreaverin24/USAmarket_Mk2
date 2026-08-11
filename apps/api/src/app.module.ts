@@ -17,6 +17,10 @@ import { MediaController } from './modules/media/media.controller.js';
 import { MediaService } from './modules/media/media.service.js';
 import { StorefrontController } from './modules/storefronts/storefront.controller.js';
 import { StorefrontService } from './modules/storefronts/storefront.service.js';
+import { DealerController } from './modules/dealers/dealer.controller.js';
+import { DealerService } from './modules/dealers/dealer.service.js';
+import { NotificationController } from './modules/notifications/notification.controller.js';
+import { NotificationService } from './modules/notifications/notification.service.js';
 
 @Module({
   controllers: [
@@ -27,6 +31,8 @@ import { StorefrontService } from './modules/storefronts/storefront.service.js';
     ImportController,
     MediaController,
     StorefrontController,
+    DealerController,
+    NotificationController,
   ],
   providers: [
     DatabaseService,
@@ -40,6 +46,8 @@ import { StorefrontService } from './modules/storefronts/storefront.service.js';
     ImportService,
     MediaService,
     StorefrontService,
+    DealerService,
+    NotificationService,
   ],
 })
 export class AppModule {}

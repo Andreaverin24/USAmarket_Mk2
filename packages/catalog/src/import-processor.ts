@@ -2,7 +2,9 @@ import { randomUUID } from 'node:crypto';
 import { Prisma } from '@atlas/database';
 import type { PrismaClient, ProductCondition } from '@atlas/database';
 
-export interface NormalizedShopifyRow {
+export interface NormalizedProductDraft {
+  externalSource?: string;
+  sourceUrl?: string;
   externalId?: string;
   title: string;
   slug: string;
@@ -16,7 +18,12 @@ export interface NormalizedShopifyRow {
   styles: string[];
   maker?: string;
   imageUrl?: string;
+  imageUrls?: string[];
+  attributes?: Record<string, string[]>;
+  currency?: string;
 }
+
+export type NormalizedShopifyRow = NormalizedProductDraft;
 
 export async function processImportJob(
   db: PrismaClient,
@@ -57,10 +64,13 @@ export async function processImportJob(
   });
 
   for (const row of job.rows) {
-    const value = row.normalizedPayload as unknown as NormalizedShopifyRow | null;
+    const value = row.normalizedPayload as unknown as NormalizedProductDraft | null;
     if (!value) continue;
     try {
       const productId = await db.$transaction(async (tx) => {
+        if (!value.title || !value.slug || !value.sku || !/^\d+$/.test(value.priceMinor))
+          throw new Error('Normalized product draft is incomplete');
+        const externalSource = (value.externalSource ?? job.source).slice(0, 40);
         const categorySlug = slugify(value.productType) || 'furniture';
         const category = await tx.category.upsert({
           where: { slug: categorySlug },
@@ -70,7 +80,7 @@ export async function processImportJob(
         const identity: Prisma.ProductWhereInput = value.externalId
           ? {
               organizationId: job.organizationId,
-              externalSource: 'shopify',
+              externalSource,
               externalId: value.externalId,
             }
           : { organizationId: job.organizationId, inventorySku: value.sku };
@@ -78,7 +88,7 @@ export async function processImportJob(
         const data = {
           categoryId: category.id,
           ...(location?.id ? { locationId: location.id } : {}),
-          externalSource: 'shopify',
+          externalSource,
           ...(value.externalId ? { externalId: value.externalId } : {}),
           title: value.title,
           slug: value.slug,
@@ -88,7 +98,7 @@ export async function processImportJob(
           condition: value.condition,
           quantity: 1,
           priceMinor: BigInt(value.priceMinor),
-          currency: 'USD',
+          currency: value.currency && /^[A-Z]{3}$/.test(value.currency) ? value.currency : 'USD',
           materials: value.materials,
           colors: value.colors,
           styles: value.styles,
@@ -126,6 +136,9 @@ export async function processImportJob(
           ...value.materials.map((facet) => ['material', facet] as const),
           ...value.colors.map((facet) => ['color', facet] as const),
           ...value.styles.map((facet) => ['style', facet] as const),
+          ...Object.entries(value.attributes ?? {}).flatMap(([name, facets]) =>
+            facets.map((facet) => [name.slice(0, 100), facet.slice(0, 500)] as const),
+          ),
         ];
         if (attributes.length)
           await tx.productAttribute.createMany({
@@ -139,22 +152,26 @@ export async function processImportJob(
             })),
             skipDuplicates: true,
           });
-        if (value.imageUrl) {
+        const imageUrls = [value.imageUrl, ...(value.imageUrls ?? [])].filter(
+          (url): url is string => Boolean(url),
+        );
+        for (const [sortOrder, imageUrl] of [...new Set(imageUrls)].entries()) {
           const media =
             (await tx.productMedia.findFirst({
               where: {
                 organizationId: job.organizationId,
                 productId: product.id,
-                sourceUrl: value.imageUrl,
+                sourceUrl: imageUrl,
               },
             })) ??
             (await tx.productMedia.create({
               data: {
                 organizationId: job.organizationId,
                 productId: product.id,
-                sourceUrl: value.imageUrl,
+                sourceUrl: imageUrl,
                 altText: product.title,
-                isPrimary: true,
+                sortOrder,
+                isPrimary: sortOrder === 0,
                 processingStatus: 'PENDING',
               },
             }));
@@ -176,7 +193,12 @@ export async function processImportJob(
             resourceType: 'Product',
             resourceId: product.id,
             correlationId: job.correlationId ?? randomUUID(),
-            metadata: { importJobId: job.id, rowNumber: row.rowNumber },
+            metadata: {
+              importJobId: job.id,
+              rowNumber: row.rowNumber,
+              source: externalSource,
+              ...(value.sourceUrl ? { sourceUrl: value.sourceUrl } : {}),
+            },
           },
         });
         await tx.outboxEvent.create({
