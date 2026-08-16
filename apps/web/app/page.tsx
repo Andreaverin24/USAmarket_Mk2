@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -144,7 +145,14 @@ export default function Page() {
           <MenuIcon />
         </button>
         <Link className="search-first-logo" href="/">
-          THE GUILD
+          <Image
+            alt="DecorFlavor"
+            className="search-first-logo-image"
+            height={724}
+            priority
+            src="/brand/decorflavor-logo-horizontal.svg"
+            width={2172}
+          />
         </Link>
         <form action="/catalog" className="search-first-search">
           <SearchIcon />
