@@ -867,6 +867,9 @@ button {
   backdrop-filter: blur(24px) saturate(130%);
 }
 .search-first-logo {
+  display: flex;
+  width: min(100%, 156px);
+  align-items: center;
   color: #000;
   font:
     500 27px/1 Georgia,
@@ -874,6 +877,11 @@ button {
     serif;
   letter-spacing: -0.04em;
   text-decoration: none;
+}
+.search-first-logo-image {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 .search-first-search {
   display: flex;
