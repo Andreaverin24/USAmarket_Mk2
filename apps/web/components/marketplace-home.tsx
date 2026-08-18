@@ -1,12 +1,11 @@
 'use client';
-'use client';
 
 import Image from 'next/image';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
-import type { PublicProduct } from '../lib/api';
+import { useEffect, useMemo, useState } from 'react';
+import type { DiscoveryProduct } from '../lib/api';
 
 type HomeFacets = {
   colors: string[];
@@ -34,7 +33,7 @@ const FilterIcon = () => (
   </svg>
 );
 
-function currency(product: PublicProduct) {
+function currency(product: DiscoveryProduct) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: product.currency,
@@ -42,7 +41,7 @@ function currency(product: PublicProduct) {
   }).format(Number(product.priceMinor) / 100);
 }
 
-function productImage(product: PublicProduct) {
+function productImage(product: DiscoveryProduct) {
   return product.media.find((media) => media.sourceUrl)?.sourceUrl ?? null;
 }
 
@@ -50,12 +49,15 @@ export function MarketplaceHome({
   products,
   facets,
   catalogAvailable,
+  catalogMode,
 }: {
-  products: PublicProduct[];
+  products: DiscoveryProduct[];
   facets: HomeFacets;
   catalogAvailable: boolean;
+  catalogMode: 'live' | 'snapshot';
 }) {
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('');
@@ -144,7 +146,19 @@ export function MarketplaceHome({
     setSort('newest');
   };
 
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false);
+        setFiltersOpen(false);
+      }
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, []);
+
   const openCatalog = () => {
+    if (catalogMode === 'snapshot') return;
     const params = new URLSearchParams();
     if (query.trim()) params.set('q', query.trim());
     if (category) params.set('category', category);
@@ -161,6 +175,7 @@ export function MarketplaceHome({
 
   const submitSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (catalogMode === 'snapshot') return;
     openCatalog();
   };
 
@@ -272,9 +287,11 @@ export function MarketplaceHome({
     <main className="search-first-home">
       <header className="search-first-header">
         <button
-          aria-label="Open filters"
+          aria-controls="decorflavor-navigation-menu"
+          aria-expanded={menuOpen}
+          aria-label="Open menu"
           className="search-first-mobile-menu"
-          onClick={() => setFiltersOpen(true)}
+          onClick={() => setMenuOpen(true)}
           type="button"
         >
           <MenuIcon />
@@ -300,10 +317,28 @@ export function MarketplaceHome({
           />
         </form>
         <div className="search-first-actions">
-          <Link aria-label="Open catalogue" className="search-first-catalog-link" href="/catalog">
-            View all
-          </Link>
-          <button aria-label="Open filters" onClick={() => setFiltersOpen(true)} type="button">
+          {catalogMode === 'snapshot' ? (
+            <button
+              aria-label="Show all prepared catalogue pieces"
+              className="search-first-catalog-link"
+              onClick={clearFilters}
+              type="button"
+            >
+              View all
+            </button>
+          ) : (
+            <Link aria-label="Open catalogue" className="search-first-catalog-link" href="/catalog">
+              View all
+            </Link>
+          )}
+          <button
+            aria-controls="decorflavor-navigation-menu"
+            aria-expanded={menuOpen}
+            aria-label="Open menu"
+            className="search-first-desktop-menu"
+            onClick={() => setMenuOpen(true)}
+            type="button"
+          >
             <MenuIcon />
           </button>
         </div>
@@ -350,6 +385,13 @@ export function MarketplaceHome({
             </label>
           </div>
 
+          {catalogMode === 'snapshot' ? (
+            <p className="search-first-snapshot-note">
+              Showing the prepared Established Lines catalogue while the live service starts. Opening
+              a piece takes you to its verified source listing.
+            </p>
+          ) : null}
+
           <div className="search-first-mobile-results">
             <span>{visibleProducts.length} results</span>
             <button onClick={() => setFiltersOpen(true)} type="button">
@@ -368,13 +410,8 @@ export function MarketplaceHome({
             <div className="search-first-grid">
               {visibleProducts.map((product) => {
                 const image = productImage(product);
-                return (
-                  <Link
-                    aria-label={`${product.title}, ${currency(product)}`}
-                    className="search-first-card"
-                    href={`/products/${product.slug}`}
-                    key={product.id}
-                  >
+                const content = (
+                  <>
                     {image ? (
                       <img
                         alt={
@@ -392,6 +429,28 @@ export function MarketplaceHome({
                       <h2>{product.title}</h2>
                       <strong>{currency(product)}</strong>
                     </div>
+                  </>
+                );
+                const label = `${product.title}, ${currency(product)}`;
+                return product.sourceListingUrl ? (
+                  <a
+                    aria-label={`${label}. Open verified source listing`}
+                    className="search-first-card"
+                    href={product.sourceListingUrl}
+                    key={product.id}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <Link
+                    aria-label={label}
+                    className="search-first-card"
+                    href={`/products/${product.slug}`}
+                    key={product.id}
+                  >
+                    {content}
                   </Link>
                 );
               })}
@@ -428,13 +487,57 @@ export function MarketplaceHome({
           <button
             onClick={() => {
               setFiltersOpen(false);
-              openCatalog();
+              if (catalogMode === 'live') openCatalog();
             }}
             type="button"
           >
             View full results
           </button>
         </div>
+      </div>
+
+      <div
+        aria-hidden={!menuOpen}
+        className={`search-first-menu-drawer ${menuOpen ? 'open' : ''}`}
+        id="decorflavor-navigation-menu"
+        onClick={(event) => {
+          if (event.target === event.currentTarget) setMenuOpen(false);
+        }}
+      >
+        <nav aria-label="DecorFlavor navigation" className="search-first-menu-panel">
+          <div className="search-first-menu-heading">
+            <span>DecorFlavor</span>
+            <button aria-label="Close menu" onClick={() => setMenuOpen(false)} type="button">
+              ×
+            </button>
+          </div>
+          <div className="search-first-menu-links">
+            <Link href="/" onClick={() => setMenuOpen(false)}>
+              Discover
+            </Link>
+            {catalogMode === 'snapshot' ? (
+              <button
+                onClick={() => {
+                  clearFilters();
+                  setMenuOpen(false);
+                }}
+                type="button"
+              >
+                All pieces
+              </button>
+            ) : (
+              <Link href="/catalog" onClick={() => setMenuOpen(false)}>
+                All pieces
+              </Link>
+            )}
+            <Link href="/account/orders" onClick={() => setMenuOpen(false)}>
+              My orders
+            </Link>
+            <Link href="/account/support" onClick={() => setMenuOpen(false)}>
+              Support
+            </Link>
+          </div>
+        </nav>
       </div>
     </main>
   );
