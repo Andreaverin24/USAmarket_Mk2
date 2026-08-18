@@ -2,12 +2,19 @@ import { describe, expect, it } from 'vitest';
 import {
   discoverNextPageLinks,
   discoverProductLinks,
+  extractEra,
   extractProductFromHtml,
   normalizeWebUrl,
   parseWebImportConfig,
 } from './web-extraction.js';
 
 describe('public web product extraction', () => {
+  it('normalizes explicit decade expressions without guessing from exact years', () => {
+    expect(extractEra('Circa 1950s')).toBe('1950s');
+    expect(extractEra("Made in the 1950's")).toBe('1950s');
+    expect(extractEra('Made in 1954')).toBeUndefined();
+  });
+
   it('normalizes a Schema.org Product into a deterministic catalog draft', () => {
     const html = `
       <html><head>
@@ -79,7 +86,7 @@ describe('public web product extraction', () => {
         {
           "@type":"Product",
           "name":"Pair of Leather Post Modern Benches",
-          "description":"Height: 21 in (53.34 cm). Width: 70 in. Depth: 16 in. Seat Height: 18 in. Condition: Excellent vintage condition with minor wear.",
+          "description":"Circa 1950s. Height: 21 in (53.34 cm). Width: 70 in. Depth: 16 in. Seat Height: 18 in. Condition: Excellent vintage condition with minor wear.",
           "sku":"LU-8837",
           "brand":{"name":"EstablishedLines"},
           "image":"https://www.establishedlines.com/cdn/shop/files/main.jpg?width=1946",
@@ -103,6 +110,7 @@ describe('public web product extraction', () => {
       seatHeight: '18',
       dimensionUnit: 'in',
       condition: 'EXCELLENT',
+      era: '1950s',
       conditionDescription: 'Condition: Excellent vintage condition with minor wear.',
       listing: {
         availability: 'AVAILABLE',
@@ -115,6 +123,10 @@ describe('public web product extraction', () => {
       },
     });
     expect(result.candidate.maker).toBeUndefined();
+    expect(result.candidate.provenance.era).toEqual({
+      source: 'description.decade',
+      confidence: 0.86,
+    });
     expect(result.candidate.imageUrls).toEqual([
       'https://www.establishedlines.com/cdn/shop/files/main.jpg?width=1946',
       'https://www.establishedlines.com/cdn/shop/files/detail.jpg?width=1946',

@@ -12,7 +12,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { sellerSlug } = await params;
   return {
-    title: `${sellerSlug.replace(/-/g, ' ')} — Atlas seller`,
+    title: `${sellerSlug.replace(/-/g, ' ')} — DecorFlavor seller`,
     alternates: { canonical: `/sellers/${sellerSlug}` },
   };
 }

@@ -1,18 +1,15 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { siteUrl } from '../lib/site-url';
 import './globals.css';
-
-const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-const siteUrl = configuredSiteUrl
-  ? configuredSiteUrl.startsWith('http://') || configuredSiteUrl.startsWith('https://')
-    ? configuredSiteUrl
-    : `https://${configuredSiteUrl}`
-  : 'http://localhost:3000';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'The Guild | Crafted for the discerning collector',
+  title: 'DecorFlavor | Curated furniture and decor',
   description: 'Extraordinary furniture, art and design from the world’s leading dealers.',
+  icons: {
+    icon: [{ url: '/brand/decorflavor-logo-stacked.svg', type: 'image/svg+xml' }],
+  },
 };
 export default function Layout({ children }: { children: ReactNode }) {
   return (

@@ -334,6 +334,7 @@ MVP должен подтвердить четыре гипотезы:
 - materials
 - colors
 - styles
+- era (e.g. `1950s`)
 - periods
 - maker/designer
 - country_of_origin

@@ -16,6 +16,7 @@ export interface NormalizedProductDraft {
   materials: string[];
   colors: string[];
   styles: string[];
+  era?: string;
   maker?: string;
   imageUrl?: string;
   imageUrls?: string[];
@@ -102,6 +103,7 @@ export async function processImportJob(
           materials: value.materials,
           colors: value.colors,
           styles: value.styles,
+          ...(value.era ? { era: value.era.slice(0, 40) } : {}),
           ...(value.maker ? { maker: value.maker } : {}),
           inventorySku: value.sku,
         } satisfies Prisma.ProductUncheckedUpdateInput;
@@ -136,6 +138,7 @@ export async function processImportJob(
           ...value.materials.map((facet) => ['material', facet] as const),
           ...value.colors.map((facet) => ['color', facet] as const),
           ...value.styles.map((facet) => ['style', facet] as const),
+          ...(value.era ? [['era', value.era] as const] : []),
           ...Object.entries(value.attributes ?? {}).flatMap(([name, facets]) =>
             facets.map((facet) => [name.slice(0, 100), facet.slice(0, 500)] as const),
           ),

@@ -8,9 +8,7 @@
   "failedRows": 0,
   "createdAt": "2026-08-04T17:10:28.106Z",
   "siteUrl": "https://www.establishedlines.com/",
-  "categoryUrls": [
-    "https://www.establishedlines.com/collections/all"
-  ],
+  "categoryUrls": ["https://www.establishedlines.com/collections/all"],
   "visitedCategoryPages": [
     "https://www.establishedlines.com/collections/all",
     "https://www.establishedlines.com/collections/all?page=2"
@@ -539,6 +537,10 @@
             "imageUrls": {
               "source": "jsonld/meta/html.img",
               "confidence": 0.95
+            },
+            "era": {
+              "source": "title.decade",
+              "confidence": 0.9
             }
           },
           "title": "1920s Curved Glass Light Olive Tone Lacquer Finish Curio Display Cabinet MINT!",
@@ -548,7 +550,8 @@
           "height": "61",
           "depth": "16",
           "dimensionUnit": "in",
-          "captureMethod": "http"
+          "captureMethod": "http",
+          "era": "1920s"
         }
       },
       "normalizedPayload": {
@@ -642,6 +645,10 @@
           "imageUrls": {
             "source": "jsonld/meta/html.img",
             "confidence": 0.95
+          },
+          "era": {
+            "source": "title.decade",
+            "confidence": 0.9
           }
         },
         "title": "1920s Curved Glass Light Olive Tone Lacquer Finish Curio Display Cabinet MINT!",
@@ -651,7 +658,8 @@
         "height": "61",
         "depth": "16",
         "dimensionUnit": "in",
-        "captureMethod": "http"
+        "captureMethod": "http",
+        "era": "1920s"
       }
     },
     {
@@ -754,6 +762,10 @@
             "imageUrls": {
               "source": "jsonld/meta/html.img",
               "confidence": 0.95
+            },
+            "era": {
+              "source": "title.decade",
+              "confidence": 0.9
             }
           },
           "title": "1950's Tony Paul Style Wire Base Porcelain Pottery Ash Tray MINT!",
@@ -764,7 +776,8 @@
           "depth": "10",
           "dimensionUnit": "in",
           "conditionDescription": "Height: 24 in (60.96 cm) Width: 16 in (40.64 cm) Depth: 10 in (25.4 cm) Mint vintage condition.",
-          "captureMethod": "http"
+          "captureMethod": "http",
+          "era": "1950s"
         }
       },
       "normalizedPayload": {
@@ -859,6 +872,10 @@
           "imageUrls": {
             "source": "jsonld/meta/html.img",
             "confidence": 0.95
+          },
+          "era": {
+            "source": "title.decade",
+            "confidence": 0.9
           }
         },
         "title": "1950's Tony Paul Style Wire Base Porcelain Pottery Ash Tray MINT!",
@@ -869,7 +886,8 @@
         "depth": "10",
         "dimensionUnit": "in",
         "conditionDescription": "Height: 24 in (60.96 cm) Width: 16 in (40.64 cm) Depth: 10 in (25.4 cm) Mint vintage condition.",
-        "captureMethod": "http"
+        "captureMethod": "http",
+        "era": "1950s"
       }
     },
     {
@@ -972,6 +990,10 @@
             "imageUrls": {
               "source": "jsonld/meta/html.img",
               "confidence": 0.95
+            },
+            "era": {
+              "source": "description.decade",
+              "confidence": 0.86
             }
           },
           "title": "1960 Solid Maple Restored Wrussel Right Conant Ball Solid Maple 4 Drawer Dresser",
@@ -981,7 +1003,8 @@
           "height": "33",
           "depth": "19",
           "dimensionUnit": "in",
-          "captureMethod": "http"
+          "captureMethod": "http",
+          "era": "1960s"
         }
       },
       "normalizedPayload": {
@@ -1076,6 +1099,10 @@
           "imageUrls": {
             "source": "jsonld/meta/html.img",
             "confidence": 0.95
+          },
+          "era": {
+            "source": "description.decade",
+            "confidence": 0.86
           }
         },
         "title": "1960 Solid Maple Restored Wrussel Right Conant Ball Solid Maple 4 Drawer Dresser",
@@ -1085,7 +1112,8 @@
         "height": "33",
         "depth": "19",
         "dimensionUnit": "in",
-        "captureMethod": "http"
+        "captureMethod": "http",
+        "era": "1960s"
       }
     },
     {
@@ -1181,6 +1209,10 @@
             "imageUrls": {
               "source": "jsonld/meta/html.img",
               "confidence": 0.95
+            },
+            "era": {
+              "source": "title.decade",
+              "confidence": 0.9
             }
           },
           "title": "1970's Round Solid Oiled Walnut Brass Trims Base Mid Century Modern Floor Lamp",
@@ -1190,7 +1222,8 @@
           "diameter": "18",
           "dimensionUnit": "in",
           "conditionDescription": "Height: 55 in (139.7 cm) Diameter: 18 in (45.72 cm) Wear consistent with age and use. Mint vintage condition.",
-          "captureMethod": "http"
+          "captureMethod": "http",
+          "era": "1970s"
         }
       },
       "normalizedPayload": {
@@ -1278,6 +1311,10 @@
           "imageUrls": {
             "source": "jsonld/meta/html.img",
             "confidence": 0.95
+          },
+          "era": {
+            "source": "title.decade",
+            "confidence": 0.9
           }
         },
         "title": "1970's Round Solid Oiled Walnut Brass Trims Base Mid Century Modern Floor Lamp",
@@ -1287,7 +1324,8 @@
         "diameter": "18",
         "dimensionUnit": "in",
         "conditionDescription": "Height: 55 in (139.7 cm) Diameter: 18 in (45.72 cm) Wear consistent with age and use. Mint vintage condition.",
-        "captureMethod": "http"
+        "captureMethod": "http",
+        "era": "1970s"
       }
     },
     {
@@ -1388,6 +1426,10 @@
             "imageUrls": {
               "source": "jsonld/meta/html.img",
               "confidence": 0.95
+            },
+            "era": {
+              "source": "title.decade",
+              "confidence": 0.9
             }
           },
           "title": "1970s Mid Century Molded Bent White Acrylic Lotus Petal Flower Table Lamp MINT!",
@@ -1398,7 +1440,8 @@
           "depth": "22",
           "dimensionUnit": "in",
           "conditionDescription": "Height: 28 in (71.12 cm) Width: 22 in (55.88 cm) Depth: 22 in (55.88 cm) Wear consistent with age and use. Mint vintage condition.",
-          "captureMethod": "http"
+          "captureMethod": "http",
+          "era": "1970s"
         }
       },
       "normalizedPayload": {
@@ -1491,6 +1534,10 @@
           "imageUrls": {
             "source": "jsonld/meta/html.img",
             "confidence": 0.95
+          },
+          "era": {
+            "source": "title.decade",
+            "confidence": 0.9
           }
         },
         "title": "1970s Mid Century Molded Bent White Acrylic Lotus Petal Flower Table Lamp MINT!",
@@ -1501,7 +1548,8 @@
         "depth": "22",
         "dimensionUnit": "in",
         "conditionDescription": "Height: 28 in (71.12 cm) Width: 22 in (55.88 cm) Depth: 22 in (55.88 cm) Wear consistent with age and use. Mint vintage condition.",
-        "captureMethod": "http"
+        "captureMethod": "http",
+        "era": "1970s"
       }
     },
     {
@@ -1602,6 +1650,10 @@
             "imageUrls": {
               "source": "jsonld/meta/html.img",
               "confidence": 0.95
+            },
+            "era": {
+              "source": "title.decade",
+              "confidence": 0.9
             }
           },
           "title": "1970s Oiled Walnut Storage Compartment Wedge Shape Full Size HeadBoard Bed MINT",
@@ -1611,7 +1663,8 @@
           "height": "39",
           "depth": "9",
           "dimensionUnit": "in",
-          "captureMethod": "http"
+          "captureMethod": "http",
+          "era": "1970s"
         }
       },
       "normalizedPayload": {
@@ -1704,6 +1757,10 @@
           "imageUrls": {
             "source": "jsonld/meta/html.img",
             "confidence": 0.95
+          },
+          "era": {
+            "source": "title.decade",
+            "confidence": 0.9
           }
         },
         "title": "1970s Oiled Walnut Storage Compartment Wedge Shape Full Size HeadBoard Bed MINT",
@@ -1713,7 +1770,8 @@
         "height": "39",
         "depth": "9",
         "dimensionUnit": "in",
-        "captureMethod": "http"
+        "captureMethod": "http",
+        "era": "1970s"
       }
     },
     {
@@ -1826,6 +1884,10 @@
             "imageUrls": {
               "source": "jsonld/meta/html.img",
               "confidence": 0.95
+            },
+            "era": {
+              "source": "title.decade",
+              "confidence": 0.9
             }
           },
           "title": "1970s Striped Blue Upholstery Bamboo Frame Mid Century Modern Sofa MINT!",
@@ -1837,7 +1899,8 @@
           "seatHeight": "16",
           "dimensionUnit": "in",
           "conditionDescription": "Inspected mint vintage condition.",
-          "captureMethod": "http"
+          "captureMethod": "http",
+          "era": "1970s"
         }
       },
       "normalizedPayload": {
@@ -1942,6 +2005,10 @@
           "imageUrls": {
             "source": "jsonld/meta/html.img",
             "confidence": 0.95
+          },
+          "era": {
+            "source": "title.decade",
+            "confidence": 0.9
           }
         },
         "title": "1970s Striped Blue Upholstery Bamboo Frame Mid Century Modern Sofa MINT!",
@@ -1953,7 +2020,8 @@
         "seatHeight": "16",
         "dimensionUnit": "in",
         "conditionDescription": "Inspected mint vintage condition.",
-        "captureMethod": "http"
+        "captureMethod": "http",
+        "era": "1970s"
       }
     },
     {
@@ -6503,6 +6571,10 @@
             "imageUrls": {
               "source": "jsonld/meta/html.img",
               "confidence": 0.95
+            },
+            "era": {
+              "source": "description.decade",
+              "confidence": 0.86
             }
           },
           "title": "4 White Acrylic Shade Mid Century Modern Adjustable Light Fixture Chandelier",
@@ -6513,7 +6585,8 @@
           "depth": "25",
           "dimensionUnit": "in",
           "conditionDescription": "Height: 17 in (43.18 cm) Width: 25 in (63.5 cm) Depth: 25 in (63.5 cm) Wear consistent with age and use. Inspected mint vintage condition.",
-          "captureMethod": "http"
+          "captureMethod": "http",
+          "era": "1950s"
         }
       },
       "normalizedPayload": {
@@ -6605,6 +6678,10 @@
           "imageUrls": {
             "source": "jsonld/meta/html.img",
             "confidence": 0.95
+          },
+          "era": {
+            "source": "description.decade",
+            "confidence": 0.86
           }
         },
         "title": "4 White Acrylic Shade Mid Century Modern Adjustable Light Fixture Chandelier",
@@ -6615,7 +6692,8 @@
         "depth": "25",
         "dimensionUnit": "in",
         "conditionDescription": "Height: 17 in (43.18 cm) Width: 25 in (63.5 cm) Depth: 25 in (63.5 cm) Wear consistent with age and use. Inspected mint vintage condition.",
-        "captureMethod": "http"
+        "captureMethod": "http",
+        "era": "1950s"
       }
     }
   ]

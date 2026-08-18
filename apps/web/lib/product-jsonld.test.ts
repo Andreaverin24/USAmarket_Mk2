@@ -16,6 +16,7 @@ describe('Product JSON-LD', () => {
       materials: ['Walnut'],
       colors: [],
       styles: [],
+      era: null,
       maker: 'Atlas Atelier',
       provenance: null,
       restorationNotes: null,

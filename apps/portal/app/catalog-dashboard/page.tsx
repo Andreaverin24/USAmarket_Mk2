@@ -34,6 +34,7 @@ interface Product {
   condition: string;
   conditionDescription?: string | null;
   productType: string;
+  era?: string | null;
   inventorySku: string;
   priceMinor: string;
   currency: string;
@@ -64,6 +65,7 @@ interface ExtractedProduct {
   sourceUrl: string;
   title?: string;
   productType?: string;
+  era?: string;
   priceMinor?: string;
   currency?: string;
   sku?: string;
@@ -230,7 +232,13 @@ export default function CatalogDashboardPage() {
       const listing = product.externalListings[0];
       const matchesQuery =
         !needle ||
-        [product.title, product.inventorySku, product.productType, listing?.source.name]
+        [
+          product.title,
+          product.inventorySku,
+          product.productType,
+          product.era,
+          listing?.source.name,
+        ]
           .filter(Boolean)
           .some((value) => value!.toLowerCase().includes(needle));
       const matchesStatus = status === 'ALL' || product.status === status;
@@ -253,7 +261,7 @@ export default function CatalogDashboardPage() {
     return previewCards.filter(({ item }) => {
       const matchesQuery =
         !needle ||
-        [item.title, item.sku, item.productType, item.sourceUrl]
+        [item.title, item.sku, item.productType, item.era, item.sourceUrl]
           .filter(Boolean)
           .some((value) => value!.toLowerCase().includes(needle));
       const matchesAvailability =
@@ -413,7 +421,7 @@ export default function CatalogDashboardPage() {
       <header className={styles.header}>
         <div>
           <p className={styles.kicker}>
-            {INVESTOR_MODE ? 'Atlas · Investor preview' : 'Atlas · Catalog intelligence'}
+            {INVESTOR_MODE ? 'DecorFlavor · Investor preview' : 'DecorFlavor · Catalog intelligence'}
           </p>
           <h1>{INVESTOR_MODE ? 'Catalog intelligence' : 'Product dashboard'}</h1>
           <p>
@@ -645,7 +653,10 @@ export default function CatalogDashboardPage() {
                       <small>{item.imageUrls?.length ?? 0} photos</small>
                     </div>
                     <div className={styles.previewBody}>
-                      <span className={styles.rowNumber}>#{row.rowNumber}</span>
+                      <div className={styles.cardMeta}>
+                        <span className={styles.rowNumber}>#{row.rowNumber}</span>
+                        {item.era ? <span className={styles.eraTag}>{item.era}</span> : null}
+                      </div>
                       <h3>{item?.title ?? row.payload.sourceUrl ?? 'Extraction failed'}</h3>
                       <strong className={styles.previewPrice}>
                         {item.priceMinor
@@ -786,6 +797,7 @@ export default function CatalogDashboardPage() {
                   <div className={styles.productBody}>
                     <div className={styles.productMeta}>
                       <span>{product.productType}</span>
+                      <span>{product.era ?? 'Era not set'}</span>
                       <span>{product.status}</span>
                     </div>
                     <h3>{product.title}</h3>

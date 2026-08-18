@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="DecorFlavor local-only marketplace prototype foundation. No real payments, deliveries, or personal data."
+    />
+    <title>DecorFlavor Prototype — Foundation</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to prototype workspace</a>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">DecorFlavor / Local walkthrough</p>
+        <h1>Marketplace Prototype</h1>
+      </div>
+      <div class="prototype-notice" role="note">
+        <strong>PROTOTYPE</strong>
+        <span>No real payment, delivery, or personal data</span>
+      </div>
+    </header>
+
+    <main id="main" class="workspace">
+      <section class="control-bar" aria-label="Prototype controls">
+        <label for="role-select">Walkthrough role</label>
+        <select id="role-select" name="role">
+          <option value="buyer-alex">Buyer — Alex</option>
+          <option value="buyer-jordan">Buyer — Jordan</option>
+          <option value="seller-established-lines">Seller — Established Lines</option>
+          <option value="dispatcher-sam">Dispatcher — Sam</option>
+          <option value="driver-lee">Driver — Lee</option>
+          <option value="admin-riley">Admin — Riley</option>
+        </select>
+        <button id="reset-button" class="button secondary" type="button">Reset walkthrough</button>
+      </section>
+
+      <p id="announcement" class="sr-only" aria-live="polite"></p>
+
+      <section class="intro-grid" aria-label="Prototype foundation status">
+        <article>
+          <p class="eyebrow">Current vertical slice</p>
+          <h2>Foundation</h2>
+          <p>
+            Local fixtures, role boundary, durable browser state, reset/recovery and immutable audit
+            events are live. Checkout, dispatch and driver proof come in later slices.
+          </p>
+        </article>
+        <article>
+          <p class="eyebrow">Run mode</p>
+          <h2>Offline by design</h2>
+          <p>All assets and fixture data are local. This page makes no API, payment, analytics or image requests.</p>
+        </article>
+      </section>
+
+      <section class="product-section" aria-labelledby="product-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Fixture product</p>
+            <h2 id="product-heading">Established Lines / EL-CH-001</h2>
+          </div>
+          <span id="availability-badge" class="badge">Loading</span>
+        </div>
+        <div id="product-card" class="product-card"></div>
+      </section>
+
+      <section class="two-column">
+        <article class="panel" aria-labelledby="permission-heading">
+          <p class="eyebrow">Role boundary</p>
+          <h2 id="permission-heading">Allowed now</h2>
+          <div id="permission-panel"></div>
+        </article>
+        <article class="panel" aria-labelledby="persistence-heading">
+          <p class="eyebrow">State integrity</p>
+          <h2 id="persistence-heading">Local scenario store</h2>
+          <div id="integrity-panel"></div>
+        </article>
+      </section>
+
+      <section class="audit-section" aria-labelledby="audit-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Immutable walkthrough history</p>
+            <h2 id="audit-heading">Audit timeline</h2>
+          </div>
+          <span id="event-count" class="muted"></span>
+        </div>
+        <ol id="audit-list" class="audit-list"></ol>
+      </section>
+    </main>
+
+    <noscript>This self-contained prototype foundation requires JavaScript to run the scenario state.</noscript>
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>

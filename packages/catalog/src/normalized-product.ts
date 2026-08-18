@@ -81,6 +81,7 @@ export interface NormalizedProductDraft {
   materials: string[];
   colors: string[];
   styles: string[];
+  era?: string;
   periods?: string[];
   maker?: string;
   designer?: string;

@@ -3,7 +3,7 @@ import { ProductCard } from '../../components/product-card';
 
 export const dynamic = 'force-dynamic';
 export const metadata = {
-  title: 'Catalog — Atlas Marketplace',
+  title: 'Catalog — DecorFlavor',
   description: 'Vintage, antique and contemporary furniture from professional sellers.',
 };
 
@@ -14,21 +14,34 @@ export default async function CatalogPage({
 }) {
   const params = await searchParams;
   const query = new URLSearchParams();
-  for (const key of ['q', 'category', 'condition', 'sort', 'style', 'material', 'color', 'page']) {
+  for (const key of [
+    'q',
+    'category',
+    'condition',
+    'sort',
+    'style',
+    'era',
+    'material',
+    'color',
+    'page',
+  ]) {
     const value = params[key];
     if (typeof value === 'string' && value) query.set(key, value);
   }
   let result: PaginatedProducts = { items: [], page: 1, pageSize: 24, total: 0, totalPages: 1 };
-  let facets: { materials: string[]; colors: string[]; styles: string[] } = {
+  let facets: { materials: string[]; colors: string[]; styles: string[]; eras: string[] } = {
     materials: [],
     colors: [],
     styles: [],
+    eras: [],
   };
   let error = false;
   try {
     [result, facets] = await Promise.all([
       api<PaginatedProducts>(`/catalog/products?${query}`),
-      api<{ materials: string[]; colors: string[]; styles: string[] }>('/catalog/facets'),
+      api<{ materials: string[]; colors: string[]; styles: string[]; eras: string[] }>(
+        '/catalog/facets',
+      ),
     ]);
   } catch {
     error = true;
@@ -61,6 +74,12 @@ export default async function CatalogPage({
         >
           <option value="">All materials</option>
           {facets.materials.map((value) => (
+            <option key={value}>{value}</option>
+          ))}
+        </select>
+        <select name="era" defaultValue={typeof params.era === 'string' ? params.era : ''}>
+          <option value="">All eras</option>
+          {facets.eras.map((value) => (
             <option key={value}>{value}</option>
           ))}
         </select>

@@ -26,7 +26,7 @@ export default function LoginPage() {
   }
   return (
     <main className="login">
-      <p className="eyebrow">Atlas Seller Portal</p>
+      <p className="eyebrow">DecorFlavor Seller Portal</p>
       <h1>Welcome back</h1>
       <form onSubmit={submit}>
         <label>

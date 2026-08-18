@@ -414,6 +414,7 @@ function canonicalProductData(input: {
     materials: cleanList(value.materials),
     colors: cleanList(value.colors),
     styles: cleanList(value.styles),
+    era: value.era?.slice(0, 40) ?? null,
     periods: cleanList(value.periods ?? []),
     maker: value.maker?.slice(0, 240) ?? null,
     designer: value.designer?.slice(0, 240) ?? null,
@@ -496,6 +497,7 @@ async function replaceAttributes(
     ...value.materials.map((facet) => ['material', facet] as const),
     ...value.colors.map((facet) => ['color', facet] as const),
     ...value.styles.map((facet) => ['style', facet] as const),
+    ...(value.era ? [['era', value.era] as const] : []),
     ...(value.periods ?? []).map((facet) => ['period', facet] as const),
     ...Object.entries(value.attributes ?? {}).flatMap(([name, facets]) =>
       facets.map((facet) => [name.slice(0, 100), facet.slice(0, 500)] as const),

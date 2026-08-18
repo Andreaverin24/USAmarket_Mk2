@@ -90,7 +90,8 @@ button {
   font-weight: 700;
 }
 .operations-form input,
-.operations-form textarea {
+.operations-form textarea,
+.operations-form select {
   min-height: 48px;
   padding: 10px 12px;
   border: 1px solid #9ba49d;
@@ -100,6 +101,42 @@ button {
 }
 .operations-form textarea {
   min-height: 140px;
+}
+.operations-form-actions {
+  display: flex;
+  align-items: flex-end;
+}
+.case-timeline {
+  display: grid;
+  gap: 6px;
+  margin: 18px 0;
+  padding-top: 14px;
+  border-top: 1px solid #b7bdb7;
+}
+.case-timeline p {
+  margin: 0;
+  font-size: 14px;
+}
+.support-resolution {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+.support-resolution label {
+  display: grid;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.support-resolution textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 10px;
+  border: 1px solid #9ba49d;
+  background: #fff;
+  color: #151b19;
+  font: inherit;
+  resize: vertical;
 }
 .operations-form .wide {
   grid-column: 1 / -1;
@@ -124,6 +161,46 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+.order-process-note {
+  max-width: 760px;
+  margin: 36px 0;
+  padding: 20px 22px;
+  border-left: 4px solid #607068;
+  background: #d9e0d8;
+}
+.invoice-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+.invoice-form label {
+  display: grid;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.invoice-form input {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid #9ba49d;
+  background: #fff;
+  color: #151b19;
+  font: inherit;
+}
+.invoice-form button {
+  grid-column: 1 / -1;
+}
+.outline-button {
+  background: transparent;
+  color: #151b19;
+}
+@media (max-width: 760px) {
+  .invoice-form {
+    grid-template-columns: 1fr;
+  }
 }
 .portal-page {
   background: #edf1e9;

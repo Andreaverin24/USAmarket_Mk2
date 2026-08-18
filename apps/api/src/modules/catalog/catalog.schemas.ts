@@ -33,6 +33,7 @@ export const productInputSchema = z.object({
   materials: stringList,
   colors: stringList,
   styles: stringList,
+  era: z.string().trim().max(40).optional(),
   periods: stringList,
   maker: z.string().trim().max(240).optional(),
   countryOfOrigin: z.string().trim().max(120).optional(),

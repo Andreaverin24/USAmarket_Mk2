@@ -19,7 +19,7 @@ export class SessionService {
     ip?: string;
     userAgent?: string;
   }) {
-    await this.throttle(input.email, input.ip ?? 'unknown');
+    await this.throttle('login', input.email, input.ip ?? 'unknown', 10);
     const user = await this.db.user.findUnique({ where: { email: input.email.toLowerCase() } });
     if (
       !user ||
@@ -62,6 +62,10 @@ export class SessionService {
       return created;
     });
     return { token, csrf, expiresAt, sessionId: session.id };
+  }
+
+  async throttleRegistration(email: string, ip?: string) {
+    await this.throttle('registration', email, ip ?? 'unknown', 5);
   }
 
   async authenticate(token: string) {
@@ -111,15 +115,20 @@ export class SessionService {
     return !!session && session.csrfHash === hashToken(value);
   }
 
-  private async throttle(email: string, ip: string) {
+  private async throttle(
+    scope: 'login' | 'registration',
+    email: string,
+    ip: string,
+    limit: number,
+  ) {
     const config = appConfig();
     const redis = new Redis(config.REDIS_URL, { lazyConnect: true, maxRetriesPerRequest: 0 });
     try {
       await redis.connect();
-      const key = `login:${hashToken(`${email.toLowerCase()}:${ip}`)}`;
+      const key = `auth:${scope}:${hashToken(`${email.toLowerCase()}:${ip}`)}`;
       const count = await redis.incr(key);
       if (count === 1) await redis.expire(key, 300);
-      if (count > 10) throw new UnauthorizedException('Too many login attempts');
+      if (count > limit) throw new UnauthorizedException('Too many authentication attempts');
     } catch (error) {
       if (error instanceof UnauthorizedException || config.NODE_ENV === 'production') throw error;
     } finally {

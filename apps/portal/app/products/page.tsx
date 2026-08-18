@@ -281,6 +281,8 @@ export default function ProductsPage() {
         </div>
         <div className="actions">
           <Link href="/catalog-dashboard">Catalog dashboard</Link>
+          <Link href="/orders">Orders</Link>
+          <Link href="/admin/orders">Payment confirmations</Link>
           <Link href="/dealer-onboarding">Dealer status</Link>
           <Link href="/notifications">Notifications</Link>
           <Link href="/login">Switch account</Link>

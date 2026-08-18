@@ -18,6 +18,7 @@
     "db:generate": "pnpm --filter @atlas/database db:generate",
     "db:migrate": "pnpm --filter @atlas/database db:migrate",
     "db:seed": "pnpm --filter @atlas/database db:seed",
+    "preflight:production": "node scripts/verify-production-config.mjs",
     "openapi:generate": "pnpm --filter @atlas/api openapi:generate"
   },
   "devDependencies": {

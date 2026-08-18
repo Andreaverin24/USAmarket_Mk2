@@ -17,6 +17,24 @@ describe('parseConfig', () => {
       'http://localhost:3000',
       'http://localhost:3001',
     ]);
+    expect(parseConfig(valid).TRUST_PROXY).toBe(false);
   });
   it('rejects an incomplete configuration', () => expect(() => parseConfig({})).toThrow());
+  it('rejects an origin with a path or credentials', () =>
+    expect(() =>
+      parseConfig({ ...valid, APP_ORIGINS: 'https://user:pass@example.com/app' }),
+    ).toThrow());
+  it('requires HTTPS origins and object storage in production', () =>
+    expect(() => parseConfig({ ...valid, NODE_ENV: 'production' })).toThrow());
+  it('accepts a hardened production configuration', () =>
+    expect(() =>
+      parseConfig({
+        ...valid,
+        NODE_ENV: 'production',
+        S3_ENDPOINT: 'https://storage.example.com',
+        APP_ORIGINS: 'https://decorflavor.com,https://portal.decorflavor.com',
+        PLATFORM_DOMAIN: 'decorflavor.com',
+        TRUST_PROXY: 'true',
+      }),
+    ).not.toThrow());
 });

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { api, type PublicProduct } from '../../../lib/api';
 import { productJsonLd } from '../../../lib/product-jsonld';
+import { ReserveItemButton } from '../../../components/reserve-item-button';
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
@@ -13,12 +14,12 @@ export async function generateMetadata({
   try {
     const product = await api<PublicProduct>(`/catalog/products/${slug}`);
     return {
-      title: `${product.title} — Atlas`,
+      title: `${product.title} — DecorFlavor`,
       description: product.shortDescription ?? product.description?.slice(0, 160),
       alternates: { canonical: `/products/${product.slug}` },
     };
   } catch {
-    return { title: 'Product — Atlas' };
+    return { title: 'Product — DecorFlavor' };
   }
 }
 
@@ -62,9 +63,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <p className="availability">
           {product.inventory?.status === 'AVAILABLE' ? 'Available' : 'Currently unavailable'}
         </p>
+        {product.inventory?.status === 'AVAILABLE' && product.inventory.quantityAvailable > 0 ? (
+          <ReserveItemButton productId={product.id} slug={product.slug} />
+        ) : null}
         <dl>
           <dt>Condition</dt>
           <dd>{product.condition}</dd>
+          <dt>Era</dt>
+          <dd>{product.era || 'Available on request'}</dd>
           <dt>Materials</dt>
           <dd>{product.materials.join(', ') || '—'}</dd>
           <dt>Dimensions</dt>

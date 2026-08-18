@@ -15,13 +15,13 @@ export class PostgresSearchProvider implements SearchProvider {
       FROM products
       WHERE status = 'PUBLISHED'::"ProductStatus"
         AND (
-          to_tsvector('english', coalesce(title, '') || ' ' || coalesce(description, '') || ' ' || coalesce(maker, ''))
+          to_tsvector('english', coalesce(title, '') || ' ' || coalesce(description, '') || ' ' || coalesce(maker, '') || ' ' || coalesce(era, ''))
             @@ websearch_to_tsquery('english', ${query})
           OR title % ${query}
         )
       ORDER BY
         ts_rank(
-          to_tsvector('english', coalesce(title, '') || ' ' || coalesce(description, '') || ' ' || coalesce(maker, '')),
+          to_tsvector('english', coalesce(title, '') || ' ' || coalesce(description, '') || ' ' || coalesce(maker, '') || ' ' || coalesce(era, '')),
           websearch_to_tsquery('english', ${query})
         ) DESC,
         similarity(title, ${query}) DESC

@@ -167,6 +167,40 @@ enum NotificationStatus {
   FAILED
 }
 
+// P0 manual-invoice order flow. These states deliberately model operations,
+// not money movement: no payment provider, card, bank, payout, or escrow data
+// is represented in this schema.
+enum OrderStatus {
+  AWAITING_SELLER_INVOICE
+  INVOICE_SENT
+  PAYMENT_VERIFICATION_PENDING
+  PAYMENT_CONFIRMED
+  READY_FOR_FULFILLMENT
+  CANCELLED
+}
+
+enum ManualInvoiceStatus {
+  ISSUED
+  BUYER_REPORTED
+  VERIFIED
+  REJECTED
+}
+
+// Support cases are operational communication records, not payment disputes,
+// refund claims, delivery evidence, or a store for payment documents.
+enum SupportCaseStatus {
+  OPEN
+  IN_REVIEW
+  RESOLVED
+}
+
+enum SupportCaseCategory {
+  ORDER_STATUS
+  EXTERNAL_INVOICE
+  FULFILLMENT
+  OTHER
+}
+
 model User {
   id                         String                     @id @default(uuid()) @db.Uuid
   email                      String                     @unique @db.VarChar(320)
@@ -185,6 +219,11 @@ model User {
   productModerationReviews   ProductModerationReview[]  @relation("ProductModerator")
   productModerationComments  ProductModerationComment[] @relation("ProductModerationCommentAuthor")
   notifications              Notification[]
+  buyerOrders                Order[]                    @relation("OrderBuyer")
+  manualInvoiceVerifications ManualInvoice[]            @relation("ManualInvoiceVerifier")
+  orderEvents                OrderEvent[]               @relation("OrderEventActor")
+  supportCases               SupportCase[]              @relation("SupportCaseBuyer")
+  supportCaseEvents          SupportCaseEvent[]         @relation("SupportCaseEventActor")
 
   @@map("users")
 }
@@ -240,6 +279,7 @@ model Organization {
   productModerationReviews  ProductModerationReview[]
   productModerationComments ProductModerationComment[]
   notifications             Notification[]
+  sellerOrders              Order[]
 
   @@map("organizations")
 }
@@ -548,6 +588,7 @@ model Product {
   materials            String[]                  @default([])
   colors               String[]                  @default([])
   styles               String[]                  @default([])
+  era                  String?                   @db.VarChar(40)
   periods              String[]                  @default([])
   maker                String?                   @db.VarChar(240)
   designer             String?                   @db.VarChar(240)
@@ -588,6 +629,7 @@ model Product {
   moderationReviews    ProductModerationReview[]
   externalListings     ExternalListing[]
   fieldEvidence        ProductFieldEvidence[]
+  orders               Order[]
 
   @@unique([organizationId, slug])
   @@unique([organizationId, inventorySku])
@@ -957,4 +999,113 @@ model Notification {
   @@index([recipientUserId, channel, status, createdAt])
   @@index([organizationId, createdAt])
   @@map("notifications")
+}
+
+// A P0 order reserves exactly one unique published product. Amounts are frozen
+// snapshots expressed in the smallest currency unit; the platform does not
+// charge, hold, transmit, or settle any funds.
+model Order {
+  id                   String         @id @default(uuid()) @db.Uuid
+  buyerUserId          String         @map("buyer_user_id") @db.Uuid
+  sellerOrganizationId String         @map("seller_organization_id") @db.Uuid
+  productId            String         @map("product_id") @db.Uuid
+  productTitleSnapshot String         @map("product_title_snapshot") @db.VarChar(240)
+  productPriceMinor    BigInt         @map("product_price_minor")
+  shippingMinor        BigInt         @default(0) @map("shipping_minor")
+  totalMinor           BigInt         @map("total_minor")
+  currency             String         @db.Char(3)
+  status               OrderStatus    @default(AWAITING_SELLER_INVOICE)
+  version              Int            @default(1)
+  cancelledAt          DateTime?      @map("cancelled_at") @db.Timestamptz
+  cancellationReason   String?        @map("cancellation_reason") @db.VarChar(2000)
+  createdAt            DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt            DateTime       @updatedAt @map("updated_at") @db.Timestamptz
+  buyer                User           @relation("OrderBuyer", fields: [buyerUserId], references: [id], onDelete: Restrict)
+  seller               Organization   @relation(fields: [sellerOrganizationId], references: [id], onDelete: Restrict)
+  product              Product        @relation(fields: [productId], references: [id], onDelete: Restrict)
+  manualInvoice        ManualInvoice?
+  events               OrderEvent[]
+  supportCases         SupportCase[]
+
+  @@index([buyerUserId, createdAt])
+  @@index([sellerOrganizationId, status, createdAt])
+  @@index([status, createdAt])
+  @@map("orders")
+}
+
+// The reference is supplied by the seller for an invoice issued outside of
+// DecorFlavor. It intentionally contains no payment link, account, card,
+// statement, or document payload.
+model ManualInvoice {
+  id                String              @id @default(uuid()) @db.Uuid
+  orderId           String              @unique @map("order_id") @db.Uuid
+  externalReference String              @map("external_reference") @db.VarChar(120)
+  amountMinor       BigInt              @map("amount_minor")
+  currency          String              @db.Char(3)
+  dueAt             DateTime            @map("due_at") @db.Timestamptz
+  status            ManualInvoiceStatus @default(ISSUED)
+  issuedAt          DateTime            @default(now()) @map("issued_at") @db.Timestamptz
+  buyerReportedAt   DateTime?           @map("buyer_reported_at") @db.Timestamptz
+  verifiedAt        DateTime?           @map("verified_at") @db.Timestamptz
+  verifiedByUserId  String?             @map("verified_by_user_id") @db.Uuid
+  createdAt         DateTime            @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime            @updatedAt @map("updated_at") @db.Timestamptz
+  order             Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  verifiedBy        User?               @relation("ManualInvoiceVerifier", fields: [verifiedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([status, dueAt])
+  @@map("manual_invoices")
+}
+
+model OrderEvent {
+  id          String       @id @default(uuid()) @db.Uuid
+  orderId     String       @map("order_id") @db.Uuid
+  actorUserId String?      @map("actor_user_id") @db.Uuid
+  action      String       @db.VarChar(80)
+  fromStatus  OrderStatus? @map("from_status")
+  toStatus    OrderStatus  @map("to_status")
+  note        String?      @db.VarChar(2000)
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamptz
+  order       Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  actor       User?        @relation("OrderEventActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([orderId, createdAt])
+  @@map("order_events")
+}
+
+model SupportCase {
+  id          String              @id @default(uuid()) @db.Uuid
+  orderId     String              @map("order_id") @db.Uuid
+  buyerUserId String              @map("buyer_user_id") @db.Uuid
+  category    SupportCaseCategory
+  subject     String              @db.VarChar(160)
+  status      SupportCaseStatus   @default(OPEN)
+  version     Int                 @default(1)
+  resolvedAt  DateTime?           @map("resolved_at") @db.Timestamptz
+  createdAt   DateTime            @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime            @updatedAt @map("updated_at") @db.Timestamptz
+  order       Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  buyer       User                @relation("SupportCaseBuyer", fields: [buyerUserId], references: [id], onDelete: Restrict)
+  events      SupportCaseEvent[]
+
+  @@index([buyerUserId, status, updatedAt])
+  @@index([status, updatedAt])
+  @@index([orderId, createdAt])
+  @@map("support_cases")
+}
+
+model SupportCaseEvent {
+  id            String            @id @default(uuid()) @db.Uuid
+  supportCaseId String            @map("support_case_id") @db.Uuid
+  actorUserId   String?           @map("actor_user_id") @db.Uuid
+  action        String            @db.VarChar(80)
+  fromStatus    SupportCaseStatus? @map("from_status")
+  toStatus      SupportCaseStatus @map("to_status")
+  note          String?           @db.VarChar(2000)
+  createdAt     DateTime          @default(now()) @map("created_at") @db.Timestamptz
+  supportCase   SupportCase       @relation(fields: [supportCaseId], references: [id], onDelete: Cascade)
+  actor         User?             @relation("SupportCaseEventActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([supportCaseId, createdAt])
+  @@map("support_case_events")
 }

@@ -1,6 +1,4 @@
 import { createHash } from 'node:crypto';
-import { lookup } from 'node:dns/promises';
-import { isIP } from 'node:net';
 import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { Queue, Worker } from 'bullmq';
 import { Redis } from 'ioredis';
@@ -17,6 +15,7 @@ import {
   sniffImageMime,
 } from '@atlas/catalog';
 import { createWebCaptureSession } from './web-browser.js';
+import { assertPublicHostname } from './network-safety.js';
 
 const logger = createLogger('outbox-worker');
 
@@ -281,7 +280,8 @@ export async function importMedia(db: PrismaClient, config: AppConfig, mediaId: 
   if (!media?.sourceUrl) throw new Error('Media source URL missing');
   if (media.processingStatus === 'READY' && media.storageKey && media.checksum) return;
   const url = new URL(media.sourceUrl);
-  await assertPublicHost(url.hostname);
+  if (url.protocol !== 'https:') throw new Error('Media source URL must use HTTPS');
+  await assertPublicHostname(url.hostname);
   const response = await fetch(url, { redirect: 'error', signal: AbortSignal.timeout(10_000) });
   if (!response.ok || !response.body) throw new Error(`Media download failed: ${response.status}`);
   const mimeType = response.headers.get('content-type')?.split(';')[0] ?? '';
@@ -501,18 +501,3 @@ const s3 = (config: AppConfig) =>
     forcePathStyle: true,
     credentials: { accessKeyId: config.S3_ACCESS_KEY, secretAccessKey: config.S3_SECRET_KEY },
   });
-
-async function assertPublicHost(hostname: string) {
-  if (hostname === 'localhost' || isIP(hostname)) throw new Error('Media host is not public');
-  const addresses = await lookup(hostname, { all: true });
-  for (const { address } of addresses)
-    if (
-      /^(10\.|127\.|169\.254\.|192\.168\.|0\.)/.test(address) ||
-      /^172\.(1[6-9]|2\d|3[01])\./.test(address) ||
-      address === '::1' ||
-      address.startsWith('fc') ||
-      address.startsWith('fd') ||
-      address.startsWith('fe80:')
-    )
-      throw new Error('Media host resolves to a private address');
-}

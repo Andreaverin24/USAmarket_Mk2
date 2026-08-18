@@ -10,12 +10,17 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { createLogger } from '@atlas/observability';
 import { AppModule } from './app.module.js';
 import { appConfig } from './config.js';
+import { apiSecurityHeaders } from './common/security-headers.js';
 
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 export async function createApp() {
   const config = appConfig();
-  const adapter = new FastifyAdapter({ logger: false, trustProxy: true });
+  const adapter = new FastifyAdapter({
+    bodyLimit: 2_500_000,
+    logger: false,
+    trustProxy: config.TRUST_PROXY,
+  });
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, adapter, {
     logger: ['error', 'warn'],
   });
@@ -33,6 +38,10 @@ export async function createApp() {
   });
   instance.addHook('onSend', async (request: any, reply: any, payload: unknown) => {
     reply.header('x-correlation-id', request.correlationId);
+    for (const [name, value] of Object.entries(
+      apiSecurityHeaders(config.NODE_ENV === 'production'),
+    ))
+      reply.header(name, value);
     return payload;
   });
   const document = SwaggerModule.createDocument(

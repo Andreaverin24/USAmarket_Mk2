@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Body,
+  ConflictException,
   Controller,
   Get,
   Headers,
@@ -17,8 +18,15 @@ import { SessionGuard } from '../../common/session.guard.js';
 import { appConfig } from '../../config.js';
 import { DatabaseService } from '../../common/database.service.js';
 import { SessionService } from './session.service.js';
+import { hashPassword } from '@atlas/auth';
 
 const loginSchema = z.object({
+  email: z.string().email().max(320),
+  password: z.string().min(10).max(200),
+});
+
+const registrationSchema = z.object({
+  displayName: z.string().trim().min(2).max(160),
   email: z.string().email().max(320),
   password: z.string().min(10).max(200),
 });
@@ -57,22 +65,74 @@ export class AuthController {
       ip: request.ip,
       ...(userAgent ? { userAgent } : {}),
     });
-    const secure = appConfig().NODE_ENV === 'production';
-    reply.setCookie(appConfig().SESSION_COOKIE_NAME, result.token, {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure,
-      path: '/',
-      expires: result.expiresAt,
-    });
-    reply.setCookie('atlas_csrf', result.csrf, {
-      httpOnly: false,
-      sameSite: 'lax',
-      secure,
-      path: '/',
-      expires: result.expiresAt,
-    });
+    this.setSessionCookies(reply, result);
     return { authenticated: true, csrfToken: result.csrf };
+  }
+  @Post('register')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['displayName', 'email', 'password'],
+      properties: {
+        displayName: { type: 'string', minLength: 2, maxLength: 160 },
+        email: { type: 'string', format: 'email' },
+        password: { type: 'string', format: 'password', minLength: 10 },
+      },
+    },
+  })
+  async register(
+    @Body() body: unknown,
+    @Req() request: AuthenticatedRequest,
+    @Res({ passthrough: true }) reply: FastifyReply,
+  ) {
+    this.assertOrigin(request);
+    const parsed = registrationSchema.safeParse(body);
+    if (!parsed.success) throw new BadRequestException('Invalid registration payload');
+    const email = parsed.data.email.toLowerCase();
+    await this.sessions.throttleRegistration(email, request.ip);
+    try {
+      const user = await this.db.$transaction(async (tx) => {
+        const created = await tx.user.create({
+          data: {
+            email,
+            displayName: parsed.data.displayName,
+            passwordHash: await hashPassword(parsed.data.password),
+          },
+        });
+        await tx.auditLog.create({
+          data: {
+            actorUserId: created.id,
+            action: 'identity.user.registered',
+            resourceType: 'User',
+            resourceId: created.id,
+            correlationId: request.correlationId,
+          },
+        });
+        await tx.outboxEvent.create({
+          data: {
+            aggregateType: 'User',
+            aggregateId: created.id,
+            eventType: 'identity.user.registered',
+            payload: { userId: created.id },
+          },
+        });
+        return created;
+      });
+      const userAgent = request.headers['user-agent'];
+      const result = await this.sessions.login({
+        email: user.email,
+        password: parsed.data.password,
+        correlationId: request.correlationId,
+        ip: request.ip,
+        ...(userAgent ? { userAgent } : {}),
+      });
+      this.setSessionCookies(reply, result);
+      return { authenticated: true, csrfToken: result.csrf };
+    } catch (error) {
+      if (this.isUniqueViolation(error))
+        throw new ConflictException('Unable to create an account with these credentials');
+      throw error;
+    }
   }
   @Post('logout')
   @UseGuards(SessionGuard)
@@ -123,5 +183,28 @@ export class AuthController {
     const origin = request.headers.origin;
     if (origin && !appConfig().APP_ORIGINS.includes(origin))
       throw new BadRequestException('Untrusted origin');
+  }
+  private setSessionCookies(
+    reply: FastifyReply,
+    result: { token: string; csrf: string; expiresAt: Date },
+  ) {
+    const secure = appConfig().NODE_ENV === 'production';
+    reply.setCookie(appConfig().SESSION_COOKIE_NAME, result.token, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure,
+      path: '/',
+      expires: result.expiresAt,
+    });
+    reply.setCookie('atlas_csrf', result.csrf, {
+      httpOnly: false,
+      sameSite: 'lax',
+      secure,
+      path: '/',
+      expires: result.expiresAt,
+    });
+  }
+  private isUniqueViolation(error: unknown) {
+    return typeof error === 'object' && error !== null && 'code' in error && error.code === 'P2002';
   }
 }

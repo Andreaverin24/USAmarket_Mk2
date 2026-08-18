@@ -21,6 +21,10 @@ import { DealerController } from './modules/dealers/dealer.controller.js';
 import { DealerService } from './modules/dealers/dealer.service.js';
 import { NotificationController } from './modules/notifications/notification.controller.js';
 import { NotificationService } from './modules/notifications/notification.service.js';
+import { OrderController } from './modules/orders/order.controller.js';
+import { OrderService } from './modules/orders/order.service.js';
+import { SupportController } from './modules/support/support.controller.js';
+import { SupportService } from './modules/support/support.service.js';
 
 @Module({
   controllers: [
@@ -33,6 +37,8 @@ import { NotificationService } from './modules/notifications/notification.servic
     StorefrontController,
     DealerController,
     NotificationController,
+    OrderController,
+    SupportController,
   ],
   providers: [
     DatabaseService,
@@ -48,6 +54,8 @@ import { NotificationService } from './modules/notifications/notification.servic
     StorefrontService,
     DealerService,
     NotificationService,
+    OrderService,
+    SupportService,
   ],
 })
 export class AppModule {}

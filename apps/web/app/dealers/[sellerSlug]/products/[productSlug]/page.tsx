@@ -79,6 +79,8 @@ export default async function StorefrontProduct({
           <dl>
             <dt>Condition</dt>
             <dd>{product.condition}</dd>
+            <dt>Era</dt>
+            <dd>{product.era || 'Available on request'}</dd>
             <dt>Materials</dt>
             <dd>{product.materials.join(', ')}</dd>
             <dt>Origin</dt>

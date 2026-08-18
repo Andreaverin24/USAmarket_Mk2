@@ -1,0 +1,73 @@
+.supportPage {
+  display: grid;
+  gap: 28px;
+}
+
+.supportPage h1,
+.supportPage h2 {
+  max-width: none;
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+  max-width: 720px;
+  padding: 24px;
+  border: 1px solid #d8cfc4;
+  background: #fffdfa;
+}
+
+.form label {
+  display: grid;
+  gap: 8px;
+  color: #4b4640;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.form input,
+.form select,
+.form textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #c9c0b6;
+  background: #fff;
+  color: #231f1a;
+  font: inherit;
+}
+
+.form textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.caseList {
+  display: grid;
+  gap: 16px;
+}
+
+.case {
+  padding: 22px;
+  border: 1px solid #d8cfc4;
+  background: #fffdfa;
+}
+
+.case h2 {
+  margin: 4px 0 10px;
+  font-size: 25px;
+}
+
+.timeline {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #e8e0d8;
+}
+
+.timeline p {
+  margin: 0;
+  color: #4b4640;
+  font-size: 14px;
+}

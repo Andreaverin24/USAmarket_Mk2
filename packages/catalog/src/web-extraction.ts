@@ -42,6 +42,7 @@ export interface WebProductCandidate {
   materials: string[];
   colors: string[];
   styles: string[];
+  era?: string;
   maker?: string;
   designer?: string;
   manufacturer?: string;
@@ -94,6 +95,12 @@ export function normalizeWebUrl(input: string, expectedOrigin?: string) {
       url.searchParams.delete(key);
   url.searchParams.sort();
   return url.toString();
+}
+
+export function extractEra(value?: string) {
+  if (!value) return undefined;
+  const match = cleanText(value).match(/\b((?:18|19|20)\d0)\s*(?:['\u2019]\s*)?s\b/i);
+  return match?.[1] ? match[1] + 's' : undefined;
 }
 
 export function parseWebImportConfig(value: unknown): WebImportConfig {
@@ -190,6 +197,28 @@ export function extractProductFromHtml(html: string, sourceUrl: string): WebProd
       source: product?.description ? 'jsonld.description' : 'meta.description',
       confidence: product?.description ? 0.95 : 0.7,
     };
+  }
+
+  const eraCandidates = [
+    {
+      value: firstText(
+        pairs.get('era'),
+        pairs.get('decade'),
+        pairs.get('period'),
+        pairs.get('date'),
+      ),
+      source: 'html.attributes',
+      confidence: 0.92,
+    },
+    { value: candidate.title, source: 'title.decade', confidence: 0.9 },
+    { value: candidate.description, source: 'description.decade', confidence: 0.86 },
+  ];
+  for (const eraCandidate of eraCandidates) {
+    const era = extractEra(eraCandidate.value);
+    if (!era) continue;
+    candidate.era = era;
+    provenance.era = { source: eraCandidate.source, confidence: eraCandidate.confidence };
+    break;
   }
 
   const price = firstText(

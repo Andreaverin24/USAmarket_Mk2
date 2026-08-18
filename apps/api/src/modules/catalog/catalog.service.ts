@@ -75,6 +75,7 @@ export class CatalogService {
         materials: true,
         colors: true,
         styles: true,
+        era: true,
         condition: true,
         location: { select: { city: true } },
       },
@@ -84,11 +85,37 @@ export class CatalogService {
       materials: unique(products.flatMap((product) => product.materials)),
       colors: unique(products.flatMap((product) => product.colors)),
       styles: unique(products.flatMap((product) => product.styles)),
+      eras: unique(products.flatMap((product) => (product.era ? [product.era] : []))),
       conditions: unique(products.map((product) => product.condition)),
       locations: unique(
         products.flatMap((product) => (product.location ? [product.location.city] : [])),
       ),
     };
+  }
+
+  async spotlightProducts(limit = 24) {
+    const safeLimit = Number.isFinite(limit) ? Math.min(Math.max(Math.floor(limit), 1), 48) : 24;
+    const rows = await this.db.$queryRaw<Array<{ id: string }>>`
+      SELECT product.id
+      FROM products AS product
+      INNER JOIN organizations AS organization ON organization.id = product.organization_id
+      INNER JOIN dealer_profiles AS dealer ON dealer.organization_id = organization.id
+      WHERE product.status = 'PUBLISHED'::"ProductStatus"
+        AND organization.status = 'ACTIVE'::"OrganizationStatus"
+        AND dealer.status = 'APPROVED'::"DealerStatus"
+      ORDER BY random()
+      LIMIT ${safeLimit}
+    `;
+    if (!rows.length) return [];
+    const products = await this.db.product.findMany({
+      where: { id: { in: rows.map((row) => row.id) } },
+      include,
+    });
+    const byId = new Map(products.map((product) => [product.id, product]));
+    return rows.flatMap((row) => {
+      const product = byId.get(row.id);
+      return product ? [presentProduct(product)] : [];
+    });
   }
 
   async sitemap() {
@@ -126,6 +153,7 @@ export class CatalogService {
     maxPrice?: string;
     sort?: string;
     style?: string;
+    era?: string;
     material?: string;
     color?: string;
     minWidth?: string;
@@ -147,6 +175,7 @@ export class CatalogService {
       ...(filters.category ? { category: { slug: filters.category } } : {}),
       ...(filters.condition ? { condition: filters.condition as ProductCondition } : {}),
       ...(filters.style ? { styles: { has: filters.style } } : {}),
+      ...(filters.era ? { era: filters.era } : {}),
       ...(filters.material ? { materials: { has: filters.material } } : {}),
       ...(filters.color ? { colors: { has: filters.color } } : {}),
       ...(filters.minWidth || filters.maxWidth

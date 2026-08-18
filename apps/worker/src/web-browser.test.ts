@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isPrivateOrReservedAddress } from './web-browser.js';
+import { assertPublicHostname, isPrivateOrReservedAddress } from './network-safety.js';
 
 describe('web extraction browser safety', () => {
   it.each([
@@ -27,4 +27,15 @@ describe('web extraction browser safety', () => {
       expect(isPrivateOrReservedAddress(address)).toBe(false);
     },
   );
+
+  it.each([
+    'localhost',
+    'catalog.localhost',
+    'host.local',
+    'service.internal',
+    'router.home.arpa',
+    '127.0.0.1',
+  ])('rejects a non-public hostname before any remote request: %s', async (hostname) => {
+    await expect(assertPublicHostname(hostname)).rejects.toThrow();
+  });
 });

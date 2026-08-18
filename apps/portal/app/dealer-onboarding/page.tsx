@@ -114,7 +114,7 @@ export default function DealerOnboardingPage() {
     <main className="portal-page">
       <header>
         <div>
-          <p className="eyebrow">THE GUILD · Dealer onboarding</p>
+          <p className="eyebrow">DecorFlavor · Dealer onboarding</p>
           <h1>Professional dealer application</h1>
         </div>
         <Link href="/products">Seller catalog</Link>

@@ -42,7 +42,7 @@ export default function ProductModerationPage() {
     <main className="portal-page">
       <header>
         <div>
-          <p className="eyebrow">THE GUILD · Admin operations</p>
+          <p className="eyebrow">DecorFlavor · Admin operations</p>
           <h1>Product moderation</h1>
         </div>
         <Link href="/admin/dealers">Dealer applications</Link>

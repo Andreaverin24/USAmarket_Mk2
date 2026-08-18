@@ -19,12 +19,12 @@ export async function generateMetadata({
   try {
     const category = await api<Category>(`/catalog/categories/${slug}`);
     return {
-      title: `${category.name} — Atlas Marketplace`,
+      title: `${category.name} — DecorFlavor`,
       description: category.description ?? `Shop curated ${category.name.toLowerCase()}.`,
       alternates: { canonical: `/categories/${category.slug}` },
     };
   } catch {
-    return { title: 'Category — Atlas Marketplace' };
+    return { title: 'Category — DecorFlavor' };
   }
 }
 

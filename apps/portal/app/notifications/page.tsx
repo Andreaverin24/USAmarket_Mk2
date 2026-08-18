@@ -34,7 +34,7 @@ export default function NotificationsPage() {
     <main className="portal-page">
       <header>
         <div>
-          <p className="eyebrow">THE GUILD</p>
+          <p className="eyebrow">DecorFlavor</p>
           <h1>Notifications</h1>
         </div>
         <Link href="/products">Seller catalog</Link>

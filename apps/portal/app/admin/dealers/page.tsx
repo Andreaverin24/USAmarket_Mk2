@@ -45,7 +45,7 @@ export default function DealerReviewPage() {
     <main className="portal-page">
       <header>
         <div>
-          <p className="eyebrow">THE GUILD · Admin operations</p>
+          <p className="eyebrow">DecorFlavor · Admin operations</p>
           <h1>Dealer review queue</h1>
         </div>
         <Link href="/admin/moderation">Product moderation</Link>

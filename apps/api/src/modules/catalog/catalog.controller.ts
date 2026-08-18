@@ -37,6 +37,9 @@ export class CatalogController {
   @Get('catalog/facets') facets() {
     return this.catalog.facets();
   }
+  @Get('catalog/spotlight') spotlight(@Query('limit') limit?: string) {
+    return this.catalog.spotlightProducts(limit ? Number(limit) : undefined);
+  }
   @Get('catalog/sitemap') sitemap() {
     return this.catalog.sitemap();
   }
@@ -50,6 +53,7 @@ export class CatalogController {
       ...(query.maxPrice ? { maxPrice: query.maxPrice } : {}),
       ...(query.sort ? { sort: query.sort } : {}),
       ...(query.style ? { style: query.style } : {}),
+      ...(query.era ? { era: query.era } : {}),
       ...(query.material ? { material: query.material } : {}),
       ...(query.color ? { color: query.color } : {}),
       ...(query.minWidth ? { minWidth: query.minWidth } : {}),

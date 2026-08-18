@@ -33,6 +33,7 @@ interface ExtractedProduct {
   materials?: string[];
   colors?: string[];
   styles?: string[];
+  era?: string;
   periods?: string[];
   maker?: string;
   designer?: string;
@@ -217,6 +218,7 @@ export default function CatalogProductDetailPage() {
     ['Materials', list(product.materials)],
     ['Colors', list(product.colors)],
     ['Styles', list(product.styles)],
+    ['Era', product.era],
     ['Periods', list(product.periods)],
     ['Maker', product.maker],
     ['Designer', product.designer],

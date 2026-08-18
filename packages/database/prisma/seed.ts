@@ -8,6 +8,7 @@ async function main() {
     admin: process.env.SEED_ADMIN_PASSWORD ?? 'AtlasAdmin123!',
     seller: process.env.SEED_SELLER_PASSWORD ?? 'AtlasSeller123!',
     driver: process.env.SEED_DRIVER_PASSWORD ?? 'AtlasDriver123!',
+    buyer: process.env.SEED_BUYER_PASSWORD ?? 'DecorFlavorBuyer123!',
   };
   const permissions = [
     ['platform:admin', 'Full platform administration'],
@@ -24,6 +25,11 @@ async function main() {
     ['dealer:read', 'Read dealer profiles and applications for platform operations'],
     ['dealer:review', 'Review and decide dealer applications'],
     ['notifications:read', 'Read personal notifications'],
+    ['orders:read', 'Read orders for an authorized seller or platform queue'],
+    ['orders:write', 'Issue external invoices and move seller orders to fulfillment'],
+    ['orders:verify', 'Read the platform payment-verification queue'],
+    ['support:read', 'Read platform support cases'],
+    ['support:manage', 'Move platform support cases through their operational states'],
   ] as const;
   for (const [code, description] of permissions) {
     await db.permission.upsert({
@@ -100,6 +106,8 @@ async function main() {
               'dealer:application:read',
               'dealer:application:write',
               'notifications:read',
+              'orders:read',
+              'orders:write',
             ].includes(p.code),
         )
         .map((p) => p.id),
@@ -119,6 +127,8 @@ async function main() {
               'dealer:application:read',
               'dealer:application:write',
               'notifications:read',
+              'orders:read',
+              'orders:write',
             ].includes(p.code),
         )
         .map((p) => p.id),
@@ -146,7 +156,7 @@ async function main() {
       code: 'PLATFORM_OPERATOR',
       name: 'PLATFORM_OPERATOR',
       organizationId: platform.id,
-      permissions: ['dealer:read', 'dealer:review', 'notifications:read'],
+      permissions: ['dealer:read', 'dealer:review', 'notifications:read', 'orders:verify'],
     },
     {
       code: 'PLATFORM_MODERATOR',
@@ -158,7 +168,13 @@ async function main() {
       code: 'PLATFORM_SUPPORT',
       name: 'PLATFORM_SUPPORT',
       organizationId: platform.id,
-      permissions: ['dealer:read', 'catalog:read', 'notifications:read'],
+      permissions: [
+        'dealer:read',
+        'catalog:read',
+        'notifications:read',
+        'support:read',
+        'support:manage',
+      ],
     },
     ...[seller, other].flatMap((organization) =>
       [
@@ -174,15 +190,20 @@ async function main() {
             'catalog:submit',
             'storefront:write',
             'notifications:read',
+            'orders:read',
+            'orders:write',
           ],
         ],
         [
           'CATALOG_MANAGER',
           ['catalog:read', 'catalog:write', 'catalog:submit', 'notifications:read'],
         ],
-        ['SALES_MANAGER', ['catalog:read', 'notifications:read']],
-        ['FULFILLMENT_MANAGER', ['catalog:read', 'notifications:read']],
-        ['VIEWER', ['catalog:read', 'notifications:read']],
+        ['SALES_MANAGER', ['catalog:read', 'notifications:read', 'orders:read', 'orders:write']],
+        [
+          'FULFILLMENT_MANAGER',
+          ['catalog:read', 'notifications:read', 'orders:read', 'orders:write'],
+        ],
+        ['VIEWER', ['catalog:read', 'notifications:read', 'orders:read']],
       ].map(([name, rolePermissions]) => ({
         code: `${organization.slug}:${name as string}`,
         name: name as string,
@@ -263,6 +284,15 @@ async function main() {
         email: 'applicant@atlas.local',
         displayName: 'Prospective Dealer',
         passwordHash: await hashPassword(passwords.seller),
+      },
+    }),
+    db.user.upsert({
+      where: { email: 'buyer@decorflavor.local' },
+      update: {},
+      create: {
+        email: 'buyer@decorflavor.local',
+        displayName: 'DecorFlavor Buyer',
+        passwordHash: await hashPassword(passwords.buyer),
       },
     }),
   ]);
@@ -365,7 +395,7 @@ async function main() {
       targetPath: '/dealers/established-lines/products/italian-travertine-console',
     },
   });
-  await db.category.upsert({
+  const furnitureCategory = await db.category.upsert({
     where: { slug: 'furniture' },
     update: {},
     create: {
@@ -374,7 +404,7 @@ async function main() {
       description: 'Collectible furniture and design.',
     },
   });
-  await db.location.upsert({
+  const galleryLocation = await db.location.upsert({
     where: {
       organizationId_name: { organizationId: seller.id, name: 'Established Lines Gallery' },
     },
@@ -406,6 +436,111 @@ async function main() {
         approvedAt: new Date(),
       },
     });
+  const sampleProducts = [
+    {
+      organization: seller,
+      slug: 'italian-travertine-console',
+      title: 'Italian Travertine Console',
+      productType: 'Console',
+      condition: 'EXCELLENT' as const,
+      priceMinor: 485_000n,
+      inventorySku: 'EL-CONSOLE-001',
+      maker: 'Italian, 1970s',
+      materials: ['Travertine'],
+      colors: ['Ivory'],
+      styles: ['Italian modern'],
+      era: '1970s',
+    },
+    {
+      organization: seller,
+      slug: 'walnut-sculptural-lounge-chair',
+      title: 'Walnut Sculptural Lounge Chair',
+      productType: 'Lounge chair',
+      condition: 'RESTORED' as const,
+      priceMinor: 365_000n,
+      inventorySku: 'EL-CHAIR-001',
+      maker: 'American, 1960s',
+      materials: ['Walnut', 'Bouclé'],
+      colors: ['Walnut', 'Cream'],
+      styles: ['Mid-century modern'],
+      era: '1960s',
+    },
+    {
+      organization: seller,
+      slug: 'pair-of-brass-sconces',
+      title: 'Pair of Brass Sconces',
+      productType: 'Lighting',
+      condition: 'GOOD' as const,
+      priceMinor: 128_000n,
+      inventorySku: 'EL-SCONCE-001',
+      maker: 'French, 1950s',
+      materials: ['Brass'],
+      colors: ['Gold'],
+      styles: ['French modern'],
+      era: '1950s',
+    },
+    {
+      organization: other,
+      slug: 'oak-burl-cabinet',
+      title: 'Oak Burl Cabinet',
+      productType: 'Cabinet',
+      condition: 'EXCELLENT' as const,
+      priceMinor: 720_000n,
+      inventorySku: 'SS-CABINET-001',
+      maker: 'European, 1980s',
+      materials: ['Oak burl'],
+      colors: ['Honey'],
+      styles: ['Postmodern'],
+      era: '1980s',
+    },
+  ];
+  for (const sample of sampleProducts) {
+    const product = await db.product.upsert({
+      where: { organizationId_slug: { organizationId: sample.organization.id, slug: sample.slug } },
+      update: {
+        title: sample.title,
+        productType: sample.productType,
+        condition: sample.condition,
+        priceMinor: sample.priceMinor,
+        maker: sample.maker,
+        materials: sample.materials,
+        colors: sample.colors,
+        styles: sample.styles,
+        era: sample.era,
+      },
+      create: {
+        organizationId: sample.organization.id,
+        categoryId: furnitureCategory.id,
+        ...(sample.organization.id === seller.id ? { locationId: galleryLocation.id } : {}),
+        title: sample.title,
+        slug: sample.slug,
+        shortDescription: `One unique ${sample.productType.toLowerCase()} from ${sample.maker}.`,
+        description: `A singular ${sample.title} offered by an approved DecorFlavor seller.`,
+        productType: sample.productType,
+        condition: sample.condition,
+        priceMinor: sample.priceMinor,
+        status: 'PUBLISHED',
+        publishedAt: new Date(),
+        inventorySku: sample.inventorySku,
+        maker: sample.maker,
+        materials: sample.materials,
+        colors: sample.colors,
+        styles: sample.styles,
+        era: sample.era,
+      },
+    });
+    await db.inventoryItem.upsert({
+      where: { productId: product.id },
+      update: {},
+      create: {
+        organizationId: sample.organization.id,
+        productId: product.id,
+        quantityOnHand: 1,
+        quantityAvailable: 1,
+        status: 'AVAILABLE',
+      },
+    });
+  }
   console.log(
     JSON.stringify({
       seeded: true,
