@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "."
+  },
+  "include": ["src/established-lines-local-fixture.ts", "scripts/import-established-lines-local.ts"]
+}

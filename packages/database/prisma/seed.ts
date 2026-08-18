@@ -436,6 +436,17 @@ async function main() {
         approvedAt: new Date(),
       },
     });
+  await db.dealerProfile.update({
+    where: { organizationId: seller.id },
+    data: {
+      publicDealerName: 'Established Lines',
+      website: 'https://www.establishedlines.com/',
+      description: 'Established Lines catalog is loaded from the local owner-authorized fixture.',
+      specialties: ['Vintage furniture', 'Decor', 'Fine art'],
+    },
+  });
+  // The former hard-coded fixtures are retained only for an explicit local legacy test run.
+  // A normal seed is followed by the validated Established Lines local catalog import below.
   const sampleProducts = [
     {
       organization: seller,
@@ -493,7 +504,7 @@ async function main() {
       styles: ['Postmodern'],
       era: '1980s',
     },
-  ];
+  ].filter(() => process.env.SEED_LEGACY_DEMO_PRODUCTS === 'true');
   for (const sample of sampleProducts) {
     const product = await db.product.upsert({
       where: { organizationId_slug: { organizationId: sample.organization.id, slug: sample.slug } },
