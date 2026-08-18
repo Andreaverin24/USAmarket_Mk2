@@ -25,3 +25,10 @@ browser icon. Both files are committed locally so the interface has no external 
   the localhost value from `.env.example`.
 - Domain/DNS, Vercel configuration and publication are operational changes and are not performed
   by this repository change.
+
+## Related design research
+
+The researched visual direction, UX principles, competitive analysis and implementation boundaries
+for the premium marketplace are documented in
+[`DECORFLAVOR_PREMIUM_EXPERIENCE_RESEARCH_RU.md`](./DECORFLAVOR_PREMIUM_EXPERIENCE_RESEARCH_RU.md).
+Its recommendations become implementation authority only after owner acceptance.
