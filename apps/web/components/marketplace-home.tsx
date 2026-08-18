@@ -373,7 +373,6 @@ export function MarketplaceHome({
 
         <section aria-live="polite" className="search-first-results">
           <div className="search-first-results-bar">
-            <span>{visibleProducts.length} pieces in this selection</span>
             <label>
               Sort by:
               <select onChange={(event) => setSort(event.target.value as Sort)} value={sort}>
@@ -385,15 +384,7 @@ export function MarketplaceHome({
             </label>
           </div>
 
-          {catalogMode === 'snapshot' ? (
-            <p className="search-first-snapshot-note">
-              Showing the prepared Established Lines catalogue while the live service starts. Opening
-              a piece takes you to its verified source listing.
-            </p>
-          ) : null}
-
           <div className="search-first-mobile-results">
-            <span>{visibleProducts.length} results</span>
             <button onClick={() => setFiltersOpen(true)} type="button">
               <FilterIcon />
               Filter & sort
@@ -431,23 +422,15 @@ export function MarketplaceHome({
                     </div>
                   </>
                 );
-                const label = `${product.title}, ${currency(product)}`;
-                return product.sourceListingUrl ? (
-                  <a
-                    aria-label={`${label}. Open verified source listing`}
-                    className="search-first-card"
-                    href={product.sourceListingUrl}
-                    key={product.id}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    {content}
-                  </a>
-                ) : (
+                return (
                   <Link
-                    aria-label={label}
+                    aria-label={`${product.title}, ${currency(product)}`}
                     className="search-first-card"
-                    href={`/products/${product.slug}`}
+                    href={
+                      catalogMode === 'snapshot'
+                        ? `/dealers/established-lines/products/${product.slug}`
+                        : `/products/${product.slug}`
+                    }
                     key={product.id}
                   >
                     {content}

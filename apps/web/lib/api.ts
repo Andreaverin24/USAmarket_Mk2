@@ -44,15 +44,7 @@ export interface PublicProduct {
   }>;
 }
 
-/**
- * A product rendered on the discovery page may come from the checked-in
- * Established Lines snapshot while the local API is starting.  Live API
- * responses do not set this field; snapshot cards link to the verified
- * canonical source instead of pretending that a local order can be placed.
- */
-export type DiscoveryProduct = PublicProduct & {
-  sourceListingUrl?: string;
-};
+export type DiscoveryProduct = PublicProduct;
 
 export interface PaginatedProducts {
   items: PublicProduct[];

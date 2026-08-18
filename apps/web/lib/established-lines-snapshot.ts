@@ -1,6 +1,8 @@
 import establishedLinesFixture from '../../portal/public/pilots/established-lines-30.json';
 import type { DiscoveryProduct } from './api';
 
+export const ESTABLISHED_LINES_SLUG = 'established-lines';
+
 type FixtureCandidate = {
   title: string;
   slug: string;
@@ -51,6 +53,24 @@ function categoryFor(title: string) {
   return categories.furniture;
 }
 
+const colourRules: Array<[string, RegExp]> = [
+  ['White', /\bwhite\b/],
+  ['Blue', /\bblue\b/],
+  ['Olive', /\bolive\b/],
+  ['Honey', /\bhoney\b/],
+  ['Blond', /\bblond\b/],
+  ['Gold', /\bgilt\b|\bgold\b/],
+  ['Brown', /\bwalnut\b|\bmahogany\b|\bteak\b|\bburl\b|\bwood\b/],
+];
+
+function coloursFor(title: string, provided: string[] | undefined) {
+  const known = values(provided);
+  const titleColours = colourRules
+    .filter(([, expression]) => expression.test(title.toLowerCase()))
+    .map(([colour]) => colour);
+  return Array.from(new Set([...known, ...titleColours]));
+}
+
 function values(items: string[] | undefined) {
   return items?.filter((value) => Boolean(value.trim())) ?? [];
 }
@@ -89,7 +109,7 @@ export function establishedLinesSnapshot(): DiscoveryProduct[] {
         currency: item.currency,
         condition: item.condition,
         materials: values(item.materials),
-        colors: values(item.colors),
+        colors: coloursFor(item.title, item.colors),
         styles: values(item.styles),
         era: item.era ?? null,
         maker: null,
@@ -99,7 +119,7 @@ export function establishedLinesSnapshot(): DiscoveryProduct[] {
         height: item.height ?? null,
         depth: item.depth ?? null,
         category: categoryFor(item.title),
-        organization: { name: 'Established Lines', slug: 'established-lines' },
+        organization: { name: 'Established Lines', slug: ESTABLISHED_LINES_SLUG },
         inventory: {
           quantityAvailable: item.listing.availability === 'AVAILABLE' ? 1 : 0,
           status: item.listing.availability,
@@ -112,10 +132,17 @@ export function establishedLinesSnapshot(): DiscoveryProduct[] {
           processingStatus: 'READY',
           mediaVariants: [],
         })),
-        sourceListingUrl: item.listing.canonicalUrl,
       },
     ];
   });
+}
+
+export function establishedLinesSnapshotProduct(slug: string) {
+  return establishedLinesSnapshot().find((product) => product.slug === slug) ?? null;
+}
+
+export function isEstablishedLinesStorefront(sellerSlug: string) {
+  return sellerSlug === ESTABLISHED_LINES_SLUG;
 }
 
 export function snapshotFacets(products: DiscoveryProduct[]) {

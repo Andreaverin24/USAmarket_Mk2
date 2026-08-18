@@ -3,6 +3,11 @@ import Link from 'next/link';
 import { api, type PublicProduct } from '../../../../../lib/api';
 import { ProductCard } from '../../../../../components/product-card';
 import { productJsonLd } from '../../../../../lib/product-jsonld';
+import {
+  establishedLinesSnapshot,
+  establishedLinesSnapshotProduct,
+  isEstablishedLinesStorefront,
+} from '../../../../../lib/established-lines-snapshot';
 export const dynamic = 'force-dynamic';
 export async function generateMetadata({
   params,
@@ -18,6 +23,16 @@ export async function generateMetadata({
       alternates: { canonical: `/dealers/${sellerSlug}/products/${productSlug}` },
     };
   } catch {
+    const fallback = isEstablishedLinesStorefront(sellerSlug)
+      ? establishedLinesSnapshotProduct(productSlug)
+      : null;
+    if (fallback) {
+      return {
+        title: `${fallback.title} — Established Lines | DecorFlavor`,
+        description: fallback.shortDescription ?? undefined,
+        alternates: { canonical: `/dealers/${sellerSlug}/products/${productSlug}` },
+      };
+    }
     return { title: 'Product' };
   }
 }
@@ -37,7 +52,12 @@ export default async function StorefrontProduct({
     product = item;
     related = home.products.filter((candidate) => candidate.id !== item.id).slice(0, 3);
   } catch {
-    return <main className="state">Product not found.</main>;
+    const fallback = isEstablishedLinesStorefront(sellerSlug)
+      ? establishedLinesSnapshotProduct(productSlug)
+      : null;
+    if (!fallback) return <main className="state">Product not found.</main>;
+    product = fallback;
+    related = establishedLinesSnapshot().filter((candidate) => candidate.id !== fallback.id).slice(0, 3);
   }
   const canonical = `/dealers/${sellerSlug}/products/${productSlug}`;
   return (

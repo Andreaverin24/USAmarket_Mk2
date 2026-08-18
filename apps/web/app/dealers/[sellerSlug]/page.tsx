@@ -2,6 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { api, type PublicProduct } from '../../../lib/api';
 import { ProductCard } from '../../../components/product-card';
+import {
+  ESTABLISHED_LINES_SLUG,
+  establishedLinesSnapshot,
+  isEstablishedLinesStorefront,
+} from '../../../lib/established-lines-snapshot';
 export const dynamic = 'force-dynamic';
 interface StorefrontHome {
   storefront: {
@@ -20,6 +25,30 @@ interface StorefrontHome {
   products: PublicProduct[];
   collections: Array<{ id: string; title: string; slug: string; products: PublicProduct[] }>;
 }
+
+function establishedLinesStorefront(): StorefrontHome {
+  return {
+    storefront: {
+      slug: ESTABLISHED_LINES_SLUG,
+      organization: { name: 'Established Lines' },
+      theme: {
+        heroTitle: 'Established Lines',
+        heroSubtitle: 'Vintage furniture, lighting, art and objects — curated within DecorFlavor.',
+        about:
+          'Established Lines brings together considered vintage and antique pieces with clear condition details and delivery coordination through DecorFlavor.',
+        seoTitle: 'Established Lines | DecorFlavor',
+        seoDescription: 'The Established Lines collection within DecorFlavor.',
+        contactEmail: 'design@establishedlines.local',
+        navigation: [
+          { label: 'New arrivals', href: '#new-arrivals' },
+          { label: 'About', href: '#about' },
+        ],
+      },
+    },
+    products: establishedLinesSnapshot(),
+    collections: [],
+  };
+}
 export async function generateMetadata({
   params,
 }: {
@@ -34,6 +63,13 @@ export async function generateMetadata({
       alternates: { canonical: `/dealers/${sellerSlug}` },
     };
   } catch {
+    if (isEstablishedLinesStorefront(sellerSlug)) {
+      return {
+        title: 'Established Lines | DecorFlavor',
+        description: 'The Established Lines collection within DecorFlavor.',
+        alternates: { canonical: `/dealers/${ESTABLISHED_LINES_SLUG}` },
+      };
+    }
     return { title: 'Seller storefront' };
   }
 }
@@ -47,7 +83,10 @@ export default async function StorefrontPage({
   try {
     data = await api<StorefrontHome>(`/storefronts/${sellerSlug}`);
   } catch {
-    return <main className="state">Storefront not found.</main>;
+    if (!isEstablishedLinesStorefront(sellerSlug)) {
+      return <main className="state">Storefront not found.</main>;
+    }
+    data = establishedLinesStorefront();
   }
   const theme = data.storefront.theme;
   return (

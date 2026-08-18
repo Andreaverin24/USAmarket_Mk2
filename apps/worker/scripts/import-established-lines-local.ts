@@ -97,15 +97,46 @@ try {
     const result = await db.$transaction(async (tx) => {
       const products = await tx.product.findMany({
         where: { id: { in: productIds }, organizationId: organization.id },
-        select: { id: true, version: true, status: true },
+        select: { id: true, version: true, status: true, colors: true },
       });
       if (products.length !== fixture.rows.length)
         throw new Error('Established Lines catalog contains fewer products than the fixture');
 
       let published = 0;
+      let coloursReconciled = 0;
+      const coloursByProductId = new Map(
+        completedJob.rows.flatMap((row) => {
+          const fixtureRow = fixture.rows[row.rowNumber - 1];
+          return row.productId && fixtureRow
+            ? [[row.productId, fixtureRow.normalizedPayload.colors] as const]
+            : [];
+        }),
+      );
       for (const product of products) {
+        const expectedColours = coloursByProductId.get(product.id);
+        if (!expectedColours) throw new Error('Established Lines fixture row is missing colours');
+        let currentVersion = product.version;
+        if (!sameValues(product.colors, expectedColours)) {
+          await tx.product.update({
+            where: { id: product.id },
+            data: { colors: expectedColours, version: { increment: 1 } },
+          });
+          currentVersion += 1;
+          coloursReconciled += 1;
+          await tx.auditLog.create({
+            data: {
+              organizationId: organization.id,
+              actorUserId: seller.id,
+              action: 'catalog.product.colours.reconciled',
+              resourceType: 'Product',
+              resourceId: product.id,
+              correlationId: completedJob.correlationId ?? randomUUID(),
+              metadata: { importJobId: completedJob.id, colours: expectedColours },
+            },
+          });
+        }
         if (product.status === 'PUBLISHED') continue;
-        const publishedVersion = product.version + 1;
+        const publishedVersion = currentVersion + 1;
         await tx.product.update({
           where: { id: product.id },
           data: {
@@ -140,7 +171,7 @@ try {
         where: { organizationId: organization.id, inventorySku: { in: legacySampleSkus } },
         data: { status: 'ARCHIVED', publishedAt: null, version: { increment: 1 } },
       });
-      return { published, archivedLegacySamples: archivedLegacySamples.count };
+      return { published, coloursReconciled, archivedLegacySamples: archivedLegacySamples.count };
     });
 
     const [publishedProducts, externalListings, sourceMedia] = await Promise.all([
@@ -158,6 +189,7 @@ try {
             importedRows: completedJob.importedRows,
           },
           publishedThisRun: result.published,
+          coloursReconciled: result.coloursReconciled,
           archivedLegacySamples: result.archivedLegacySamples,
           totals: { publishedProducts, externalListings, sourceMedia },
         },
@@ -168,4 +200,8 @@ try {
   }
 } finally {
   await db.$disconnect();
+}
+
+function sameValues(left: string[], right: string[]) {
+  return left.length === right.length && left.every((value, index) => value === right[index]);
 }

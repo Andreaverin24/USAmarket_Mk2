@@ -17,5 +17,8 @@ describe('Established Lines local fixture', () => {
       for (const imageUrl of row.normalizedPayload.imageUrls ?? [])
         expect(imageUrl).toMatch(/^https:\/\/www\.establishedlines\.com\//);
     }
+    expect(fixture.rows.flatMap((row) => row.normalizedPayload.colors)).toEqual(
+      expect.arrayContaining(['Blue', 'White', 'Gold']),
+    );
   });
 });

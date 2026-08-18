@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { establishedLinesSnapshot, snapshotFacets } from './established-lines-snapshot';
+import {
+  establishedLinesSnapshot,
+  establishedLinesSnapshotProduct,
+  snapshotFacets,
+} from './established-lines-snapshot';
 
 describe('Established Lines discovery snapshot', () => {
   it('provides all 30 approved source records with usable discovery categories', () => {
@@ -8,11 +12,6 @@ describe('Established Lines discovery snapshot', () => {
     expect(products).toHaveLength(30);
     expect(new Set(products.map((product) => product.category.slug)).size).toBeGreaterThan(3);
     expect(products.every((product) => product.organization.slug === 'established-lines')).toBe(true);
-    expect(
-      products.every((product) =>
-        product.sourceListingUrl?.startsWith('https://www.establishedlines.com/products/'),
-      ),
-    ).toBe(true);
     expect(
       products.every((product) =>
         product.media[0]?.sourceUrl?.startsWith('https://www.establishedlines.com/'),
@@ -24,5 +23,13 @@ describe('Established Lines discovery snapshot', () => {
     const facets = snapshotFacets(establishedLinesSnapshot());
 
     expect(facets.eras).toContain('1950s');
+    expect(facets.colors).toEqual(expect.arrayContaining(['Blue', 'White', 'Gold']));
+  });
+
+  it('resolves an internal product route from a snapshot slug', () => {
+    const product = establishedLinesSnapshot()[0];
+
+    expect(product).toBeDefined();
+    expect(establishedLinesSnapshotProduct(product!.slug)?.id).toBe(product!.id);
   });
 });

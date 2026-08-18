@@ -43,6 +43,15 @@ const saleTypes = new Set<NormalizedExternalListing['saleType']>([
   'AUCTION',
   'UNKNOWN',
 ]);
+const colourRules: Array<[string, RegExp]> = [
+  ['White', /\bwhite\b/],
+  ['Blue', /\bblue\b/],
+  ['Olive', /\bolive\b/],
+  ['Honey', /\bhoney\b/],
+  ['Blond', /\bblond\b/],
+  ['Gold', /\bgilt\b|\bgold\b/],
+  ['Brown', /\bwalnut\b|\bmahogany\b|\bteak\b|\bburl\b|\bwood\b/],
+];
 
 export interface EstablishedLinesFixtureRow {
   rowNumber: number;
@@ -108,6 +117,7 @@ function normalizeCandidate(
   const imageUrls = texts(candidate.imageUrls, `${prefix}.imageUrls`).map((url, index) =>
     establishedLinesUrl(url, `${prefix}.imageUrls[${index}]`),
   );
+  const title = text(candidate.title, `${prefix}.title`);
   if (!conditions.has(condition)) throw new Error(`${prefix}.condition is invalid`);
   if (!/^\d+$/.test(priceMinor)) throw new Error(`${prefix}.priceMinor must be an integer string`);
   if (!imageUrls.length) throw new Error(`${prefix}.imageUrls must not be empty`);
@@ -139,7 +149,7 @@ function normalizeCandidate(
     externalSource: text(candidate.externalSource, `${prefix}.externalSource`),
     externalId: text(candidate.externalId, `${prefix}.externalId`),
     sourceUrl: establishedLinesUrl(candidate.sourceUrl, `${prefix}.sourceUrl`),
-    title: text(candidate.title, `${prefix}.title`),
+    title,
     slug: text(candidate.slug, `${prefix}.slug`),
     description: text(candidate.description, `${prefix}.description`),
     productType: text(candidate.productType, `${prefix}.productType`),
@@ -148,7 +158,7 @@ function normalizeCandidate(
     currency: currency(candidate.currency, `${prefix}.currency`),
     condition,
     materials: texts(candidate.materials, `${prefix}.materials`),
-    colors: texts(candidate.colors, `${prefix}.colors`),
+    colors: derivedColours(title, texts(candidate.colors, `${prefix}.colors`)),
     styles: texts(candidate.styles, `${prefix}.styles`),
     imageUrls,
     attributes: textListRecord(candidate.attributes, `${prefix}.attributes`),
@@ -157,6 +167,13 @@ function normalizeCandidate(
     ...(pieceCount === undefined ? {} : { pieceCount }),
     ...optional,
   };
+}
+
+function derivedColours(title: string, provided: string[]) {
+  const fromTitle = colourRules
+    .filter(([, expression]) => expression.test(title.toLowerCase()))
+    .map(([colour]) => colour);
+  return [...new Set([...provided, ...fromTitle])];
 }
 
 function normalizeSource(
