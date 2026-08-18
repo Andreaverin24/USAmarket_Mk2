@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { api, type PublicProduct } from '../../../lib/api';
+import { MarketplaceFooter, MarketplaceHeader } from '../../../components/marketplace-chrome';
 import { ProductCard } from '../../../components/product-card';
+import { api, type PublicProduct } from '../../../lib/api';
 export const dynamic = 'force-dynamic';
 interface StorefrontHome {
   storefront: {
@@ -14,7 +15,6 @@ interface StorefrontHome {
       seoTitle: string | null;
       seoDescription: string | null;
       contactEmail: string | null;
-      navigation: Array<{ label: string; href: string }> | null;
     } | null;
   };
   products: PublicProduct[];
@@ -34,7 +34,7 @@ export async function generateMetadata({
       alternates: { canonical: `/dealers/${sellerSlug}` },
     };
   } catch {
-    return { title: 'Seller storefront' };
+    return { title: 'Seller storefront | DecorFlavor' };
   }
 }
 export default async function StorefrontPage({
@@ -43,100 +43,83 @@ export default async function StorefrontPage({
   params: Promise<{ sellerSlug: string }>;
 }) {
   const { sellerSlug } = await params;
-  let data: StorefrontHome;
   try {
-    data = await api<StorefrontHome>(`/storefronts/${sellerSlug}`);
-  } catch {
-    return <main className="state">Storefront not found.</main>;
-  }
-  const theme = data.storefront.theme;
-  return (
-    <main className="storefront">
-      <nav>
-        <strong>{data.storefront.organization.name}</strong>
-        {(theme?.navigation ?? []).map((item) => (
-          <a key={item.href} href={item.href}>
-            {item.label}
-          </a>
-        ))}
-        <a href={`mailto:${theme?.contactEmail ?? 'design@establishedlines.local'}`}>Design help</a>
-      </nav>
-      <section className="storefront-hero">
-        <p className="eyebrow">Established Lines · New York</p>
-        <h1>{theme?.heroTitle ?? data.storefront.organization.name}</h1>
-        <p>{theme?.heroSubtitle}</p>
-      </section>
-      <section id="new-arrivals" className="storefront-section">
-        <header>
-          <p className="eyebrow">Recently added</p>
-          <h2>New Arrivals</h2>
-        </header>
-        {data.products.length ? (
-          <div className="product-grid">
-            {data.products.map((product) => (
-              <ProductCard key={product.id} product={product} storefront={sellerSlug} />
-            ))}
-          </div>
-        ) : (
-          <p className="state">New arrivals are being prepared.</p>
-        )}
-      </section>
-      <section className="collection-index" aria-label="Established Lines collections">
-        {['Vintage', 'Antique', 'Contemporary', 'Established Lines Originals'].map((title) => {
-          const collection = data.collections.find((item) => item.title === title);
-          return (
+    const data = await api<StorefrontHome>(`/storefronts/${sellerSlug}`);
+    const theme = data.storefront.theme;
+    return (
+      <div className="df-page-shell">
+        <MarketplaceHeader active="designers" />
+        <main className="df-storefront">
+          <header className="df-storefront-hero">
+            <p className="df-kicker">
+              Dealer presentation <span>·</span> DecorFlavor
+            </p>
+            <h1>{theme?.heroTitle ?? data.storefront.organization.name}</h1>
+            <p>
+              {theme?.heroSubtitle ??
+                'A considered selection of objects with provenance and presence.'}
+            </p>
             <a
-              key={title}
-              id={title.toLowerCase().replace(/\s+/g, '-')}
-              href={collection ? `#collection-${collection.slug}` : '#new-arrivals'}
+              className="df-button"
+              href={`mailto:${theme?.contactEmail ?? 'design@decorflavor.com'}`}
             >
-              <span>Explore</span>
-              <strong>{title}</strong>
+              Speak to the gallery
             </a>
-          );
-        })}
-      </section>
-      {data.collections
-        .filter((collection) => collection.products.length)
-        .map((collection) => (
-          <section
-            key={collection.id}
-            id={`collection-${collection.slug}`}
-            className="storefront-section"
-          >
-            <header>
-              <p className="eyebrow">Curated edit</p>
-              <h2>{collection.title}</h2>
-            </header>
-            <div className="product-grid">
-              {collection.products.map((product) => (
-                <ProductCard key={product.id} product={product} storefront={sellerSlug} />
-              ))}
+          </header>
+          <section className="df-storefront-section">
+            <div className="df-section-heading">
+              <div>
+                <p className="df-kicker">Available now</p>
+                <h2>New arrivals</h2>
+              </div>
+              <span>{data.products.length} objects</span>
             </div>
+            {data.products.length ? (
+              <div className="df-product-grid">
+                {data.products.map((product) => (
+                  <ProductCard key={product.id} product={product} storefront={sellerSlug} />
+                ))}
+              </div>
+            ) : (
+              <p className="df-state">New arrivals are being prepared.</p>
+            )}
           </section>
-        ))}
-      <section className="trust-blocks">
-        <article>
-          <p className="eyebrow">Considered condition</p>
-          <h2>Every detail, disclosed.</h2>
-          <p>Condition, restoration and provenance are presented before purchase.</p>
-        </article>
-        <article>
-          <p className="eyebrow">Delivery coordination</p>
-          <h2>Handled with care.</h2>
-          <p>Request an estimate and timing for white-glove delivery or arrange gallery pickup.</p>
-        </article>
-      </section>
-      <section id="about" className="story">
-        <p className="eyebrow">Our point of view</p>
-        <h2>Pieces with presence and a history worth telling.</h2>
-        <p>{theme?.about}</p>
-      </section>
-      <footer className="storefront-footer">
-        <Link href={`/dealers/${sellerSlug}/policies/shipping`}>Delivery & Pickup</Link>
-        <Link href={`/dealers/${sellerSlug}/policies/returns`}>Returns</Link>
-        <Link href={`/dealers/${sellerSlug}/policies/privacy`}>Privacy</Link>
-      </footer>
-    </main>
-  );
+          {data.collections
+            .filter((collection) => collection.products.length)
+            .map((collection) => (
+              <section className="df-storefront-section" key={collection.id}>
+                <div className="df-section-heading">
+                  <div>
+                    <p className="df-kicker">Curated edit</p>
+                    <h2>{collection.title}</h2>
+                  </div>
+                  <Link href="#top">Back to top</Link>
+                </div>
+                <div className="df-product-grid">
+                  {collection.products.map((product) => (
+                    <ProductCard key={product.id} product={product} storefront={sellerSlug} />
+                  ))}
+                </div>
+              </section>
+            ))}
+          <section className="df-storefront-note">
+            <p className="df-kicker">A considered service</p>
+            <h2>Every detail, disclosed.</h2>
+            <p>
+              {theme?.about ??
+                'Condition, restoration and provenance are presented before you enquire. Delivery and collection are coordinated with the gallery.'}
+            </p>
+          </section>
+          <nav className="df-storefront-policies" aria-label="Storefront policies">
+            <Link href={`/dealers/${sellerSlug}/policies/shipping`}>Delivery & pickup</Link>
+            <Link href={`/dealers/${sellerSlug}/policies/returns`}>Returns</Link>
+            <Link href={`/dealers/${sellerSlug}/policies/privacy`}>Privacy</Link>
+          </nav>
+        </main>
+        <MarketplaceFooter />
+      </div>
+    );
+  } catch {
+    return <main className="df-state">Storefront not found.</main>;
+  }
 }
