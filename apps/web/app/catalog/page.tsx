@@ -1,10 +1,11 @@
-import { api, type PaginatedProducts } from '../../lib/api';
+import { MarketplaceFooter, MarketplaceHeader } from '../../components/marketplace-chrome';
 import { ProductCard } from '../../components/product-card';
+import { api, type PaginatedProducts } from '../../lib/api';
 
 export const dynamic = 'force-dynamic';
 export const metadata = {
   title: 'Catalog — DecorFlavor',
-  description: 'Vintage, antique and contemporary furniture from professional sellers.',
+  description: 'Curated furniture, lighting and objects from professional sellers.',
 };
 
 export default async function CatalogPage({
@@ -14,17 +15,7 @@ export default async function CatalogPage({
 }) {
   const params = await searchParams;
   const query = new URLSearchParams();
-  for (const key of [
-    'q',
-    'category',
-    'condition',
-    'sort',
-    'style',
-    'era',
-    'material',
-    'color',
-    'page',
-  ]) {
+  for (const key of ['q', 'category', 'condition', 'sort', 'style', 'material', 'color', 'page']) {
     const value = params[key];
     if (typeof value === 'string' && value) query.set(key, value);
   }
@@ -47,99 +38,144 @@ export default async function CatalogPage({
     error = true;
   }
   return (
-    <main className="catalog-page">
-      <header className="page-header">
-        <p className="eyebrow">Marketplace</p>
-        <h1>Curated catalog</h1>
-      </header>
-      <form className="filters">
-        <input
-          name="q"
-          defaultValue={typeof params.q === 'string' ? params.q : ''}
-          placeholder="Search maker, material, object…"
-        />
-        <select
-          name="condition"
-          defaultValue={typeof params.condition === 'string' ? params.condition : ''}
-        >
-          <option value="">All conditions</option>
-          <option>EXCELLENT</option>
-          <option>GOOD</option>
-          <option>RESTORED</option>
-          <option>NEW</option>
-        </select>
-        <select
-          name="material"
-          defaultValue={typeof params.material === 'string' ? params.material : ''}
-        >
-          <option value="">All materials</option>
-          {facets.materials.map((value) => (
-            <option key={value}>{value}</option>
-          ))}
-        </select>
-        <select name="era" defaultValue={typeof params.era === 'string' ? params.era : ''}>
-          <option value="">All eras</option>
-          {facets.eras.map((value) => (
-            <option key={value}>{value}</option>
-          ))}
-        </select>
-        <select name="style" defaultValue={typeof params.style === 'string' ? params.style : ''}>
-          <option value="">All styles</option>
-          {facets.styles.map((value) => (
-            <option key={value}>{value}</option>
-          ))}
-        </select>
-        <select name="color" defaultValue={typeof params.color === 'string' ? params.color : ''}>
-          <option value="">All colors</option>
-          {facets.colors.map((value) => (
-            <option key={value}>{value}</option>
-          ))}
-        </select>
-        <select name="sort" defaultValue={typeof params.sort === 'string' ? params.sort : 'newest'}>
-          <option value="newest">Newest</option>
-          <option value="price_asc">Price low to high</option>
-          <option value="price_desc">Price high to low</option>
-          <option value="featured">Featured</option>
-        </select>
-        <button>Apply</button>
-      </form>
-      {error ? (
-        <p className="state">Catalog is temporarily unavailable.</p>
-      ) : result.items.length ? (
-        <>
-          <p className="count">{result.total} objects</p>
-          <section className="product-grid">
-            {result.items.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </section>
-          <nav className="pagination" aria-label="Catalog pages">
-            {result.page > 1 ? (
-              <a
-                href={`?${new URLSearchParams({ ...Object.fromEntries(query), page: String(result.page - 1) })}`}
-              >
-                Previous
-              </a>
-            ) : (
-              <span />
-            )}
-            <span>
-              Page {result.page} of {result.totalPages}
-            </span>
-            {result.page < result.totalPages ? (
-              <a
-                href={`?${new URLSearchParams({ ...Object.fromEntries(query), page: String(result.page + 1) })}`}
-              >
-                Next
-              </a>
-            ) : (
-              <span />
-            )}
-          </nav>
-        </>
-      ) : (
-        <p className="state">No objects match these filters.</p>
-      )}
-    </main>
+    <div className="df-page-shell">
+      <MarketplaceHeader active="catalog" />
+      <main className="df-catalog-page">
+        <header className="df-page-hero">
+          <p className="df-kicker">The collection</p>
+          <h1>Objects with a point of view.</h1>
+          <p>
+            Discover furniture, lighting and objects selected for material, proportion and lasting
+            presence.
+          </p>
+        </header>
+        <form className="df-catalog-toolbar">
+          <label>
+            <span>Search the collection</span>
+            <input
+              name="q"
+              defaultValue={typeof params.q === 'string' ? params.q : ''}
+              placeholder="Maker, material, object or era"
+            />
+          </label>
+          <label>
+            <span>Material</span>
+            <select
+              name="material"
+              defaultValue={typeof params.material === 'string' ? params.material : ''}
+            >
+              <option value="">All materials</option>
+              {facets.materials.map((value) => (
+                <option key={value}>{value}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span>Era</span>
+            <select name="era" defaultValue={typeof params.era === 'string' ? params.era : ''}>
+              <option value="">All eras</option>
+              {facets.eras.map((value) => (
+                <option key={value}>{value}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span>Style</span>
+            <select
+              name="style"
+              defaultValue={typeof params.style === 'string' ? params.style : ''}
+            >
+              <option value="">All styles</option>
+              {facets.styles.map((value) => (
+                <option key={value}>{value}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span>Colour</span>
+            <select
+              name="color"
+              defaultValue={typeof params.color === 'string' ? params.color : ''}
+            >
+              <option value="">All colours</option>
+              {facets.colors.map((value) => (
+                <option key={value}>{value}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span>Condition</span>
+            <select
+              name="condition"
+              defaultValue={typeof params.condition === 'string' ? params.condition : ''}
+            >
+              <option value="">All conditions</option>
+              <option value="EXCELLENT">Excellent</option>
+              <option value="GOOD">Good</option>
+              <option value="RESTORED">Restored</option>
+              <option value="NEW">New</option>
+            </select>
+          </label>
+          <label>
+            <span>Sort</span>
+            <select
+              name="sort"
+              defaultValue={typeof params.sort === 'string' ? params.sort : 'newest'}
+            >
+              <option value="newest">New arrivals</option>
+              <option value="price_asc">Price: low to high</option>
+              <option value="price_desc">Price: high to low</option>
+              <option value="featured">Curated edit</option>
+            </select>
+          </label>
+          <button className="df-button">Refine</button>
+        </form>
+        {error ? (
+          <p className="df-state">
+            The collection is temporarily unavailable. Please try again shortly.
+          </p>
+        ) : result.items.length ? (
+          <>
+            <div className="df-results-meta">
+              <span>{result.total} curated objects</span>
+              <span>Selected from professional sellers</span>
+            </div>
+            <section className="df-product-grid">
+              {result.items.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </section>
+            <nav className="df-pagination" aria-label="Catalog pages">
+              {result.page > 1 ? (
+                <a
+                  href={`?${new URLSearchParams({ ...Object.fromEntries(query), page: String(result.page - 1) })}`}
+                >
+                  Previous
+                </a>
+              ) : (
+                <span />
+              )}
+              {result.totalPages > 1 ? (
+                <span>
+                  Page {result.page} of {result.totalPages}
+                </span>
+              ) : null}
+              {result.page < result.totalPages ? (
+                <a
+                  href={`?${new URLSearchParams({ ...Object.fromEntries(query), page: String(result.page + 1) })}`}
+                >
+                  Next
+                </a>
+              ) : (
+                <span />
+              )}
+            </nav>
+          </>
+        ) : (
+          <p className="df-state">No objects match these filters. Try a broader search.</p>
+        )}
+      </main>
+      <MarketplaceFooter />
+    </div>
   );
 }

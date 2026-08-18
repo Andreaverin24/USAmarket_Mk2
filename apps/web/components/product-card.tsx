@@ -12,26 +12,36 @@ export function ProductCard({
     ? `/dealers/${storefront}/products/${product.slug}`
     : `/products/${product.slug}`;
   const image = product.media[0]?.sourceUrl;
+
   return (
-    <article className="product-card">
-      <Link href={href} className="product-image">
+    <article className="df-product-card">
+      <Link href={href} className="df-product-card-image">
         {image ? (
           <img src={image} alt={product.media[0]?.altText ?? product.title} />
         ) : (
-          <span>{product.category.name}</span>
+          <span className="df-image-placeholder">{product.category.name}</span>
         )}
+        <span className="df-product-card-status">
+          {product.inventory?.status === 'AVAILABLE' ? 'Available' : 'View details'}
+        </span>
       </Link>
-      <p className="product-meta">
-        {product.maker ?? product.organization.name} · {product.condition.replaceAll('_', ' ')}
-      </p>
-      <h2>
-        <Link href={href}>{product.title}</Link>
-      </h2>
-      <p className="price">
-        {new Intl.NumberFormat('en-US', { style: 'currency', currency: product.currency }).format(
-          Number(product.priceMinor) / 100,
-        )}
-      </p>
+      <div className="df-product-card-copy">
+        <p>
+          {product.maker ?? product.organization.name} <span>·</span> {product.category.name}
+        </p>
+        <h2>
+          <Link href={href}>{product.title}</Link>
+        </h2>
+        <div>
+          <strong>
+            {new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: product.currency,
+            }).format(Number(product.priceMinor) / 100)}
+          </strong>
+          <span>{product.condition.replaceAll('_', ' ')}</span>
+        </div>
+      </div>
     </article>
   );
 }

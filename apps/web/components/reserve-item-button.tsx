@@ -31,15 +31,19 @@ export function ReserveItemButton({ productId, slug }: { productId: string; slug
   }
 
   return (
-    <div className="order-cta">
+    <div className="df-order-cta">
       <button type="button" onClick={() => void reserve()} disabled={state === 'working'}>
         {state === 'working' ? 'Reserving…' : 'Reserve & await seller invoice'}
       </button>
       <p>
-        DecorFlavor does not take payment. The seller will send an invoice outside the platform;
-        you can then report payment here for manual admin confirmation.
+        DecorFlavor does not take payment. The seller will send an invoice outside the platform; you
+        can then report payment here for manual admin confirmation.
       </p>
-      {error ? <p className="order-error" role="alert">{error}</p> : null}
+      {error ? (
+        <p className="order-error" role="alert">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
