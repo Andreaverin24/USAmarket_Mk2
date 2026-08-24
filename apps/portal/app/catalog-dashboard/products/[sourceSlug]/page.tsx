@@ -128,7 +128,7 @@ export default function CatalogProductDetailPage() {
     void (async () => {
       try {
         const [pilotResponse, mirrorResponse] = await Promise.all([
-          fetch('/pilots/established-lines-30.json'),
+          fetch('/pilots/established-lines-catalog.json'),
           fetch('/pilots/established-lines-media-status.json'),
         ]);
         if (!pilotResponse.ok) throw new Error('Pilot catalog is unavailable');
@@ -194,7 +194,7 @@ export default function CatalogProductDetailPage() {
     return (
       <main className={styles.state}>
         <h1>Product not found</h1>
-        <p>The requested product is not part of the 30-card pilot snapshot.</p>
+        <p>The requested product is not part of the current catalog snapshot.</p>
         <Link href="/catalog-dashboard">Back to dashboard</Link>
       </main>
     );

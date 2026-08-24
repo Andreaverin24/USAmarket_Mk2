@@ -185,7 +185,7 @@ export default function CatalogDashboardPage() {
     void (async () => {
       if (INVESTOR_MODE) {
         try {
-          const response = await fetch('/pilots/established-lines-30.json');
+          const response = await fetch('/pilots/established-lines-catalog.json');
           if (!response.ok) throw new Error('Investor catalog snapshot is unavailable');
           const localPilot = (await response.json()) as ImportJob;
           setPreview(localPilot);
@@ -210,7 +210,7 @@ export default function CatalogDashboardPage() {
         setNotice('');
       } catch (error) {
         try {
-          const response = await fetch('/pilots/established-lines-30.json');
+          const response = await fetch('/pilots/established-lines-catalog.json');
           if (!response.ok) throw new Error('Local pilot preview is unavailable');
           const localPilot = (await response.json()) as ImportJob;
           setPreview(localPilot);
@@ -421,7 +421,9 @@ export default function CatalogDashboardPage() {
       <header className={styles.header}>
         <div>
           <p className={styles.kicker}>
-            {INVESTOR_MODE ? 'DecorFlavor · Investor preview' : 'DecorFlavor · Catalog intelligence'}
+            {INVESTOR_MODE
+              ? 'DecorFlavor · Investor preview'
+              : 'DecorFlavor · Catalog intelligence'}
           </p>
           <h1>{INVESTOR_MODE ? 'Catalog intelligence' : 'Product dashboard'}</h1>
           <p>

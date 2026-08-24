@@ -99,7 +99,9 @@ export function normalizeWebUrl(input: string, expectedOrigin?: string) {
 
 export function extractEra(value?: string) {
   if (!value) return undefined;
-  const match = cleanText(value).match(/\b((?:18|19|20)\d0)\s*(?:['\u2019]\s*)?s\b/i);
+  const match = cleanText(value).match(
+    /(?:\b(?:circa|c)\.?\s*|\b)((?:18|19|20)\d0)\s*(?:['\u2019]\s*)?s\b/i,
+  );
   return match?.[1] ? match[1] + 's' : undefined;
 }
 

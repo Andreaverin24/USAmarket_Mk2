@@ -15,7 +15,8 @@
     "lint": "eslint src",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --passWithNoTests --pool=threads && node scripts/verify-web-browser.mjs",
-    "test:browser": "node scripts/verify-web-browser.mjs"
+    "test:browser": "node scripts/verify-web-browser.mjs",
+    "benchmark:established-lines": "pnpm --filter @atlas/catalog build && tsx scripts/benchmark-established-lines.ts"
   },
   "dependencies": {
     "@atlas/catalog": "workspace:*",

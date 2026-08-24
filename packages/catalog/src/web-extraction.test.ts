@@ -12,6 +12,8 @@ describe('public web product extraction', () => {
   it('normalizes explicit decade expressions without guessing from exact years', () => {
     expect(extractEra('Circa 1950s')).toBe('1950s');
     expect(extractEra("Made in the 1950's")).toBe('1950s');
+    expect(extractEra('c1960s')).toBe('1960s');
+    expect(extractEra('c. 1920s')).toBe('1920s');
     expect(extractEra('Made in 1954')).toBeUndefined();
   });
 
