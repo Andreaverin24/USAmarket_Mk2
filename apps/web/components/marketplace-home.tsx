@@ -72,6 +72,8 @@ export function MarketplaceHome({
   const [era, setEra] = useState('');
   const [condition, setCondition] = useState('');
   const [sort, setSort] = useState<Sort>('newest');
+  const [activePartnerIndex, setActivePartnerIndex] = useState(0);
+  const [partnerRotationPaused, setPartnerRotationPaused] = useState(false);
 
   const categories = useMemo(
     () =>
@@ -113,21 +115,39 @@ export function MarketplaceHome({
       return { ...categoryOptions[index]!, distance: Math.abs(offset), offset };
     });
   }, [category, categoryOptions]);
-  const heroProducts = useMemo(
-    () =>
-      [
-        products[0],
-        products[Math.floor(products.length / 3)],
-        products[Math.floor(products.length * 0.7)],
-      ].filter((product): product is DiscoveryProduct => Boolean(product)),
-    [products],
-  );
+  const partnerStores = useMemo(() => {
+    const stores = new Map<string, { slug: string; name: string; products: DiscoveryProduct[] }>();
+    products.forEach((product) => {
+      const existing = stores.get(product.organization.slug);
+      if (existing) existing.products.push(product);
+      else {
+        stores.set(product.organization.slug, {
+          slug: product.organization.slug,
+          name: product.organization.name,
+          products: [product],
+        });
+      }
+    });
+    return Array.from(stores.values());
+  }, [products]);
+  const activePartner = partnerStores[activePartnerIndex] ?? partnerStores[0] ?? null;
+  const heroProducts = useMemo(() => {
+    const source = experience === 'home' && activePartner ? activePartner.products : products;
+    return [
+      source[0],
+      source[Math.floor(source.length / 3)],
+      source[Math.floor(source.length * 0.7)],
+    ].filter((product): product is DiscoveryProduct => Boolean(product));
+  }, [activePartner, experience, products]);
   const hero =
     experience === 'storefront'
       ? {
           eyebrow: 'DecorFlavor partner store',
-          title: 'Established Lines',
-          copy: 'A distinctive New York collection of vintage furniture, lighting, art and objects - presented inside DecorFlavor with structured details and complete galleries.',
+          title: activePartner?.name ?? 'Partner store',
+          copy:
+            activePartner?.slug === 'established-lines'
+              ? 'A distinctive New York collection of vintage furniture, lighting, art and objects - presented inside DecorFlavor with structured details and complete galleries.'
+              : 'A distinctive professional collection presented inside DecorFlavor with structured details and complete galleries.',
           primary: 'Explore the store',
         }
       : experience === 'catalog'
@@ -140,7 +160,7 @@ export function MarketplaceHome({
         : {
             eyebrow: 'The marketplace for collectible interiors',
             title: 'Objects with history. Rooms with character.',
-            copy: 'Discover furniture, lighting, art and decor from professional sellers, starting with the complete Established Lines collection.',
+            copy: 'Discover furniture, lighting, art and decor from professional sellers and distinctive partner collections.',
             primary: 'Discover the collection',
           };
 
@@ -211,6 +231,26 @@ export function MarketplaceHome({
     window.addEventListener('keydown', closeOnEscape);
     return () => window.removeEventListener('keydown', closeOnEscape);
   }, []);
+
+  useEffect(() => {
+    if (activePartnerIndex < partnerStores.length) return;
+    setActivePartnerIndex(0);
+  }, [activePartnerIndex, partnerStores.length]);
+
+  useEffect(() => {
+    if (
+      experience !== 'home' ||
+      partnerStores.length < 2 ||
+      partnerRotationPaused ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return;
+    }
+    const timer = window.setInterval(() => {
+      setActivePartnerIndex((current) => (current + 1) % partnerStores.length);
+    }, 8000);
+    return () => window.clearInterval(timer);
+  }, [experience, partnerRotationPaused, partnerStores.length]);
 
   const openCatalog = () => {
     if (catalogMode === 'snapshot') return;
@@ -390,7 +430,9 @@ export function MarketplaceHome({
             {experience === 'storefront' ? (
               <Link href="/catalog">Explore all DecorFlavor</Link>
             ) : (
-              <Link href="/dealers/established-lines">Visit Established Lines</Link>
+              <Link href={`/dealers/${activePartner?.slug ?? 'established-lines'}`}>
+                Visit {activePartner?.name ?? 'Established Lines'}
+              </Link>
             )}
           </div>
           <dl>
@@ -407,8 +449,46 @@ export function MarketplaceHome({
               <dd>{products.filter((product) => product.era).length}</dd>
             </div>
           </dl>
+          {experience === 'home' && partnerStores.length > 1 ? (
+            <div className="search-first-partner-rotation" aria-label="Featured partner controls">
+              <span>
+                {activePartnerIndex + 1} / {partnerStores.length} · {activePartner?.name}
+              </span>
+              <div>
+                <button
+                  aria-label="Previous partner store"
+                  onClick={() =>
+                    setActivePartnerIndex(
+                      (current) => (current - 1 + partnerStores.length) % partnerStores.length,
+                    )
+                  }
+                  type="button"
+                >
+                  ‹
+                </button>
+                <button
+                  onClick={() => setPartnerRotationPaused((current) => !current)}
+                  type="button"
+                >
+                  {partnerRotationPaused ? 'Play' : 'Pause'}
+                </button>
+                <button
+                  aria-label="Next partner store"
+                  onClick={() =>
+                    setActivePartnerIndex((current) => (current + 1) % partnerStores.length)
+                  }
+                  type="button"
+                >
+                  ›
+                </button>
+              </div>
+            </div>
+          ) : null}
         </div>
-        <div className="search-first-intro-images" aria-label="Featured collection">
+        <div
+          className="search-first-intro-images"
+          aria-label={`Featured collection${activePartner ? ` from ${activePartner.name}` : ''}`}
+        >
           {heroProducts.map((product, index) => {
             const image = productImage(product);
             return (
