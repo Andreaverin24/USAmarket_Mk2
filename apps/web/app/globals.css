@@ -1684,6 +1684,35 @@ button {
     width: 78px;
     height: 92px;
   }
+  .df-product-experience .df-product-summary {
+    top: 96px;
+  }
+  .df-product-experience .df-product-summary h1 {
+    margin: 13px 0 10px;
+    font-size: clamp(40px, 3.25vw, 58px);
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+  .df-product-experience .df-product-summary h1.is-long {
+    font-size: clamp(37px, 2.8vw, 51px);
+    line-height: 1;
+  }
+  .df-product-experience .df-product-summary h1.is-very-long {
+    font-size: clamp(34px, 2.5vw, 46px);
+    line-height: 1.02;
+  }
+  .df-product-experience .df-product-byline {
+    margin-bottom: 18px;
+  }
+  .df-product-experience .df-product-commerce {
+    padding-block: 16px;
+  }
+  .df-product-experience .df-product-dimensions {
+    margin-top: 12px;
+  }
+  .df-product-experience .df-product-actions {
+    margin-block: 18px;
+  }
 }
 
 @media (max-width: 1050px) {

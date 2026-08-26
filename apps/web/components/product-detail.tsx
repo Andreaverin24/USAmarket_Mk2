@@ -51,6 +51,8 @@ export function ProductDetail({
     ['Condition', product.condition.replaceAll('_', ' ')],
     ['Reference', product.sku],
   ].filter((row): row is [string, string] => Boolean(row[1]));
+  const titleDensityClass =
+    product.title.length > 110 ? 'is-very-long' : product.title.length > 72 ? 'is-long' : undefined;
 
   return (
     <div className="df-page-shell df-product-experience">
@@ -71,7 +73,7 @@ export function ProductDetail({
               <p className="df-kicker">{product.era ?? 'Collectible design'}</p>
               <span>{images.length} photos</span>
             </div>
-            <h1>{product.title}</h1>
+            <h1 className={titleDensityClass}>{product.title}</h1>
             <p className="df-product-byline">
               Presented by{' '}
               <Link href={`/dealers/${product.organization.slug}`}>
