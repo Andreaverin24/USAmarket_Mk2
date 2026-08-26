@@ -2215,6 +2215,27 @@ button {
 }
 
 /* Search-first marketplace home */
+.public-marketplace-chrome {
+  --sf-paper: #fdf8f8;
+  --sf-ink: #1c1b1b;
+  --sf-muted: #5e5f5c;
+  --sf-line: rgba(116, 120, 120, 0.15);
+  height: 96px;
+  color: var(--sf-ink);
+  font-family: Arial, Helvetica, sans-serif;
+}
+.public-marketplace-chrome *,
+.public-marketplace-chrome *::before,
+.public-marketplace-chrome *::after {
+  box-sizing: border-box;
+}
+.public-marketplace-chrome button,
+.public-marketplace-chrome input {
+  font: inherit;
+}
+.search-first-home > .public-marketplace-chrome {
+  height: 0;
+}
 .search-first-home {
   --sf-paper: #fdf8f8;
   --sf-ink: #1c1b1b;
@@ -2782,6 +2803,12 @@ button {
 }
 
 @media (max-width: 800px) {
+  .public-marketplace-chrome {
+    height: 70px;
+  }
+  .search-first-home > .public-marketplace-chrome {
+    height: 0;
+  }
   .search-first-header {
     grid-template-columns: 42px 1fr 42px;
     height: 70px;

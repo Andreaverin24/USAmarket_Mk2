@@ -7,7 +7,12 @@ export const metadata = {
   description: 'Curated furniture, lighting, art and objects from professional sellers.',
 };
 
-export default async function CatalogPage() {
+export default async function CatalogPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
   const catalog = await loadMarketplaceCatalog();
   return (
     <MarketplaceHome
@@ -15,6 +20,7 @@ export default async function CatalogPage() {
       catalogMode={catalog.mode}
       experience="catalog"
       facets={catalog.facets}
+      initialQuery={q ?? ''}
       products={catalog.products}
     />
   );

@@ -1,35 +1,9 @@
-import Image from 'next/image';
 import Link from 'next/link';
+import { PublicMarketplaceHeader } from './public-marketplace-header';
 
-export function MarketplaceHeader({ active }: { active?: 'catalog' | 'storefront' }) {
-  return (
-    <header className="df-site-header">
-      <Link className="df-brand" href="/" aria-label="DecorFlavor home">
-        <Image
-          alt="DecorFlavor"
-          height={724}
-          priority
-          src="/brand/decorflavor-logo-horizontal.svg"
-          width={2172}
-        />
-      </Link>
-      <nav aria-label="Marketplace navigation" className="df-site-nav">
-        <Link className={active === 'catalog' ? 'is-active' : ''} href="/catalog">
-          Shop
-        </Link>
-        <Link href="/catalog?sort=newest">New arrivals</Link>
-        <Link
-          className={active === 'storefront' ? 'is-active' : ''}
-          href="/dealers/established-lines"
-        >
-          Established Lines
-        </Link>
-      </nav>
-      <Link className="df-header-action" href="/catalog">
-        Search collection
-      </Link>
-    </header>
-  );
+export function MarketplaceHeader(props: { active?: 'catalog' | 'storefront' }) {
+  void props.active;
+  return <PublicMarketplaceHeader />;
 }
 
 export function MarketplaceFooter() {
