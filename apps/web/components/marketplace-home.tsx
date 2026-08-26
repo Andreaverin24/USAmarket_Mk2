@@ -27,6 +27,12 @@ const FilterIcon = () => (
   </svg>
 );
 
+const CarouselChevron = () => (
+  <svg aria-hidden="true" viewBox="0 0 24 24">
+    <path d="m14.5 6.5-5.5 5.5 5.5 5.5" />
+  </svg>
+);
+
 function currency(product: DiscoveryProduct) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -232,11 +238,11 @@ export function MarketplaceHome({
     <div aria-label="Browse by category" className="search-first-category-carousel" role="group">
       <button
         aria-label="Previous category"
-        className="search-first-category-arrow"
+        className="search-first-category-arrow is-previous"
         onClick={() => cycleCategory(-1)}
         type="button"
       >
-        ←
+        <CarouselChevron />
       </button>
       <div className="search-first-category-track">
         {carouselCategories.map((option) => (
@@ -253,11 +259,11 @@ export function MarketplaceHome({
       </div>
       <button
         aria-label="Next category"
-        className="search-first-category-arrow"
+        className="search-first-category-arrow is-next"
         onClick={() => cycleCategory(1)}
         type="button"
       >
-        →
+        <CarouselChevron />
       </button>
     </div>
   );

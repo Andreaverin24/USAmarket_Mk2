@@ -1234,7 +1234,7 @@ button {
   inset: 57% 42% -10% 31%;
 }
 .search-first-home > .search-first-layout {
-  padding-top: 32px;
+  padding-top: 0;
 }
 .search-first-card-era {
   position: absolute;
@@ -1639,7 +1639,7 @@ button {
     top: 70px;
   }
   .search-first-home > .search-first-layout {
-    padding-top: 14px;
+    padding-top: 0;
   }
   .search-first-card-era {
     inset: 8px 8px auto auto;
@@ -2550,7 +2550,7 @@ button {
 }
 .search-first-results {
   position: relative;
-  padding: 44px 0 70px;
+  padding: 0 0 70px;
 }
 .search-first-results-bar {
   position: sticky;
@@ -2560,9 +2560,9 @@ button {
   grid-template-columns: minmax(125px, 0.8fr) minmax(390px, 1.8fr) minmax(210px, 1fr);
   gap: 18px;
   align-items: center;
-  min-height: 72px;
+  min-height: 76px;
   margin-bottom: 24px;
-  padding: 12px 0;
+  padding: 14px;
   border-bottom: 1px solid var(--sf-line);
   background: rgba(253, 248, 248, 0.91);
   box-shadow: 0 10px 24px rgba(33, 27, 24, 0.025);
@@ -2591,7 +2591,7 @@ button {
 .search-first-category-carousel {
   display: grid;
   min-width: 0;
-  grid-template-columns: 28px minmax(0, 1fr) 28px;
+  grid-template-columns: 30px minmax(0, 1fr) 30px;
   align-items: center;
   justify-self: stretch;
 }
@@ -2662,19 +2662,35 @@ button {
 }
 .search-first-category-arrow {
   display: grid;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
   place-items: center;
   border: 1px solid rgba(28, 27, 27, 0.13);
   border-radius: 50%;
-  font-size: 13px;
+  background: rgba(255, 255, 255, 0.48);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.38);
   transition:
     border-color 180ms ease,
-    background 180ms ease;
+    background 180ms ease,
+    transform 180ms ease;
+}
+.search-first-category-arrow svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+.search-first-category-arrow.is-next svg {
+  transform: rotate(180deg);
 }
 .search-first-category-arrow:hover {
   border-color: var(--sf-ink);
   background: #fff;
+  transform: scale(1.06);
 }
 .search-first-grid {
   display: grid;
@@ -3002,7 +3018,10 @@ button {
   .search-first-mobile-results .search-first-category-arrow {
     width: 24px;
     height: 24px;
-    font-size: 11px;
+  }
+  .search-first-mobile-results .search-first-category-arrow svg {
+    width: 13px;
+    height: 13px;
   }
   .search-first-mobile-results .search-first-category-option {
     flex-basis: 80px;
