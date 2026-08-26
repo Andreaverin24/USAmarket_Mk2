@@ -12,4 +12,6 @@ artifacts/
 *.tsbuildinfo
 packages/database/prisma/dev.db
 .env
+.env.local
+.vercel/
 .clickup-state.json
