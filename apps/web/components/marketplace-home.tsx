@@ -93,6 +93,20 @@ export function MarketplaceHome({
       ).slice(0, 6),
     [facets.eras, products],
   );
+  const categoryOptions = useMemo(
+    () => [{ slug: '', name: 'All' }, ...categories.map(([slug, name]) => ({ slug, name }))],
+    [categories],
+  );
+  const carouselCategories = useMemo(() => {
+    const activeIndex = Math.max(
+      0,
+      categoryOptions.findIndex((option) => option.slug === category),
+    );
+    return [-3, -2, -1, 0, 1, 2, 3].map((offset) => {
+      const index = (activeIndex + offset + categoryOptions.length * 2) % categoryOptions.length;
+      return { ...categoryOptions[index]!, distance: Math.abs(offset), offset };
+    });
+  }, [category, categoryOptions]);
   const heroProducts = useMemo(
     () =>
       [
@@ -175,6 +189,15 @@ export function MarketplaceHome({
     setSort('newest');
   };
 
+  const cycleCategory = (direction: -1 | 1) => {
+    const activeIndex = Math.max(
+      0,
+      categoryOptions.findIndex((option) => option.slug === category),
+    );
+    const nextIndex = (activeIndex + direction + categoryOptions.length) % categoryOptions.length;
+    setCategory(categoryOptions[nextIndex]?.slug ?? '');
+  };
+
   useEffect(() => {
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setFiltersOpen(false);
@@ -204,6 +227,40 @@ export function MarketplaceHome({
     if (catalogMode === 'snapshot') return;
     openCatalog();
   };
+
+  const renderCategoryCarousel = () => (
+    <div aria-label="Browse by category" className="search-first-category-carousel" role="group">
+      <button
+        aria-label="Previous category"
+        className="search-first-category-arrow"
+        onClick={() => cycleCategory(-1)}
+        type="button"
+      >
+        ←
+      </button>
+      <div className="search-first-category-track">
+        {carouselCategories.map((option) => (
+          <button
+            aria-pressed={option.offset === 0}
+            className={`search-first-category-option distance-${option.distance}`}
+            key={`${option.slug || 'all'}-${option.offset}`}
+            onClick={() => setCategory(option.slug)}
+            type="button"
+          >
+            {option.name}
+          </button>
+        ))}
+      </div>
+      <button
+        aria-label="Next category"
+        className="search-first-category-arrow"
+        onClick={() => cycleCategory(1)}
+        type="button"
+      >
+        →
+      </button>
+    </div>
+  );
 
   const renderFilterContents = () => (
     <div className="search-first-filter-content">
@@ -395,10 +452,11 @@ export function MarketplaceHome({
 
         <section aria-live="polite" className="search-first-results">
           <div className="search-first-results-bar">
-            <span>
+            <span className="search-first-results-count">
               {visibleProducts.length} of {products.length} objects
             </span>
-            <label>
+            {renderCategoryCarousel()}
+            <label className="search-first-sort-control">
               Sort by:
               <select onChange={(event) => setSort(event.target.value as Sort)} value={sort}>
                 <option value="newest">Random discovery</option>
@@ -410,11 +468,14 @@ export function MarketplaceHome({
           </div>
 
           <div className="search-first-mobile-results">
-            <span>{visibleProducts.length} objects</span>
-            <button onClick={() => setFiltersOpen(true)} type="button">
-              <FilterIcon />
-              Filter & sort
-            </button>
+            <div className="search-first-mobile-results-heading">
+              <span>{visibleProducts.length} objects</span>
+              <button onClick={() => setFiltersOpen(true)} type="button">
+                <FilterIcon />
+                Filter & sort
+              </button>
+            </div>
+            {renderCategoryCarousel()}
           </div>
 
           {!catalogAvailable ? (
