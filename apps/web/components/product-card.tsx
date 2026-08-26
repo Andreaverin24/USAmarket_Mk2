@@ -12,6 +12,7 @@ export function ProductCard({
     ? `/dealers/${storefront}/products/${product.slug}`
     : `/products/${product.slug}`;
   const image = product.media[0]?.sourceUrl;
+  const dimensions = [product.width, product.height, product.depth].filter(Boolean).join(' × ');
 
   return (
     <article className="df-product-card">
@@ -24,6 +25,7 @@ export function ProductCard({
         <span className="df-product-card-status">
           {product.inventory?.status === 'AVAILABLE' ? 'Available' : 'View details'}
         </span>
+        {product.era ? <span className="df-product-card-era">{product.era}</span> : null}
       </Link>
       <div className="df-product-card-copy">
         <p>
@@ -41,6 +43,11 @@ export function ProductCard({
           </strong>
           <span>{product.condition.replaceAll('_', ' ')}</span>
         </div>
+        {dimensions ? (
+          <small>
+            {dimensions} {product.dimensionUnit ?? 'in'}
+          </small>
+        ) : null}
       </div>
     </article>
   );

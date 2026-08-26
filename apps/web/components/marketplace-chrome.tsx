@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export function MarketplaceHeader({ active }: { active?: 'catalog' | 'designers' }) {
+export function MarketplaceHeader({ active }: { active?: 'catalog' | 'storefront' }) {
   return (
     <header className="df-site-header">
       <Link className="df-brand" href="/" aria-label="DecorFlavor home">
@@ -19,10 +19,10 @@ export function MarketplaceHeader({ active }: { active?: 'catalog' | 'designers'
         </Link>
         <Link href="/catalog?sort=newest">New arrivals</Link>
         <Link
-          className={active === 'designers' ? 'is-active' : ''}
-          href="/catalog?style=Contemporary"
+          className={active === 'storefront' ? 'is-active' : ''}
+          href="/dealers/established-lines"
         >
-          For designers
+          Established Lines
         </Link>
       </nav>
       <Link className="df-header-action" href="/catalog">
@@ -44,7 +44,7 @@ export function MarketplaceFooter() {
       <nav aria-label="Footer navigation">
         <Link href="/catalog">Explore collection</Link>
         <Link href="/catalog?sort=newest">New arrivals</Link>
-        <Link href="/catalog?style=Contemporary">For designers</Link>
+        <Link href="/dealers/established-lines">Established Lines</Link>
       </nav>
     </footer>
   );

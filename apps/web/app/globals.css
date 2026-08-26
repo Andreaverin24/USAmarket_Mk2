@@ -503,7 +503,7 @@ button {
 .df-site-footer nav {
   display: flex;
   flex-wrap: wrap;
-  align-content: start;
+  align-content: flex-start;
   justify-content: flex-end;
   gap: 18px 30px;
 }
@@ -884,7 +884,7 @@ button {
 }
 .df-section-heading {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 20px;
   margin-bottom: 28px;
@@ -1061,6 +1061,642 @@ button {
 @media (max-width: 520px) {
   .product-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Marketplace experience refresh: home, catalog and first internal storefront */
+.search-first-intro {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.84fr) minmax(480px, 1.16fr);
+  gap: clamp(36px, 6vw, 100px);
+  min-height: 610px;
+  margin-top: 96px;
+  padding: clamp(54px, 8vw, 112px) clamp(28px, 5vw, 80px);
+  overflow: hidden;
+  background: #ebe4de;
+}
+.search-first-intro.is-storefront {
+  background: #19372d;
+  color: #f8f3ed;
+}
+.search-first-intro.is-catalog {
+  min-height: 500px;
+  padding-block: 46px;
+}
+.search-first-intro.is-catalog .search-first-intro-copy h1 {
+  max-width: 12ch;
+  font-size: clamp(48px, 5.3vw, 78px);
+  line-height: 0.93;
+}
+.search-first-intro.is-catalog .search-first-intro-copy > p:nth-of-type(2) {
+  margin-top: 20px;
+}
+.search-first-intro.is-catalog .search-first-intro-actions {
+  margin-top: 24px;
+}
+.search-first-intro.is-catalog .search-first-intro-copy dl {
+  margin-top: 28px;
+}
+.search-first-intro.is-catalog .search-first-intro-images {
+  min-height: 360px;
+}
+.search-first-intro-copy {
+  align-self: center;
+  max-width: 760px;
+}
+.search-first-intro-copy > p:first-child {
+  margin: 0 0 20px;
+  color: #7e3c2a;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.search-first-intro.is-storefront .search-first-intro-copy > p:first-child {
+  color: #d4a873;
+}
+.search-first-intro-copy h1 {
+  max-width: 10ch;
+  margin: 0;
+  font:
+    500 clamp(52px, 6.8vw, 112px) / 0.89 Georgia,
+    'Times New Roman',
+    serif;
+  letter-spacing: -0.065em;
+}
+.search-first-intro-copy > p:nth-of-type(2) {
+  max-width: 52ch;
+  margin: 28px 0 0;
+  color: #5f5b57;
+  font-size: 16px;
+  line-height: 1.65;
+}
+.search-first-intro.is-storefront .search-first-intro-copy > p:nth-of-type(2) {
+  color: #cfdbd5;
+}
+.search-first-intro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+.search-first-intro-actions a {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 19px;
+  border: 1px solid currentColor;
+  color: inherit;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.search-first-intro-actions a:first-child {
+  border-color: #1c1b1b;
+  background: #1c1b1b;
+  color: #fff;
+}
+.search-first-intro.is-storefront .search-first-intro-actions a:first-child {
+  border-color: #f8f3ed;
+  background: #f8f3ed;
+  color: #19372d;
+}
+.search-first-intro-copy dl {
+  display: flex;
+  gap: clamp(28px, 4vw, 62px);
+  margin: 42px 0 0;
+}
+.search-first-intro-copy dl div {
+  display: grid;
+  gap: 5px;
+}
+.search-first-intro-copy dt {
+  color: #77736e;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.search-first-intro-copy dd {
+  margin: 0;
+  font:
+    500 26px/1 Georgia,
+    serif;
+}
+.search-first-intro.is-storefront .search-first-intro-copy dt {
+  color: #a8b9b1;
+}
+.search-first-intro-images {
+  position: relative;
+  align-self: stretch;
+  min-height: 430px;
+}
+.search-first-intro-image {
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  background: #d2cbc4;
+  color: white !important;
+  box-shadow: 0 24px 70px rgba(25, 20, 17, 0.16);
+  text-decoration: none;
+}
+.search-first-intro-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms ease;
+}
+.search-first-intro-image span {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 40px 14px 14px;
+  overflow: hidden;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.search-first-intro-image:hover img {
+  transform: scale(1.04);
+}
+.search-first-intro-image.image-1 {
+  inset: 0 35% 12% 0;
+}
+.search-first-intro-image.image-2 {
+  inset: 15% 0 0 69%;
+}
+.search-first-intro-image.image-3 {
+  inset: 57% 42% -10% 31%;
+}
+.search-first-home > .search-first-layout {
+  padding-top: 32px;
+}
+.search-first-home .search-first-results-bar {
+  justify-content: space-between;
+}
+.search-first-card-era {
+  position: absolute;
+  inset: 14px 14px auto auto;
+  padding: 7px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 3px;
+  background: rgba(18, 18, 18, 0.42);
+  color: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(14px);
+}
+
+/* Product card refinements shared by category and seller result pages */
+.df-product-card-era {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px 8px;
+  background: rgba(23, 63, 49, 0.82);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+.df-product-card-copy > small {
+  display: block;
+  margin-top: 8px;
+  color: var(--df-muted);
+  font-size: 11px;
+}
+
+/* Competitor-grade product presentation */
+.df-product-experience {
+  --df-paper: #fdf8f8;
+  --df-surface: #fffdfb;
+}
+.df-product-experience .df-site-header {
+  background: rgba(253, 248, 248, 0.88);
+}
+.df-product-experience .df-product-page {
+  max-width: 1780px;
+  padding-top: 24px;
+}
+.df-product-breadcrumb {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  margin-bottom: 24px;
+  color: var(--df-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.df-product-breadcrumb a {
+  text-decoration: none;
+}
+.df-product-breadcrumb a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.df-product-experience .df-product-layout {
+  grid-template-columns: minmax(0, 1.38fr) minmax(390px, 0.62fr);
+  gap: clamp(34px, 5vw, 86px);
+}
+.df-gallery-experience {
+  min-width: 0;
+}
+.df-gallery-stage {
+  position: relative;
+  aspect-ratio: 1 / 1.04;
+  overflow: hidden;
+  background: #ebe7e2;
+}
+.df-gallery-zoom {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.df-gallery-stage img,
+.df-gallery-lightbox > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.df-gallery-arrow,
+.df-gallery-close {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(25, 25, 25, 0.14);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.86);
+  color: #171717;
+  cursor: pointer;
+  font-size: 18px;
+  backdrop-filter: blur(15px);
+}
+.df-gallery-arrow:disabled {
+  display: none;
+}
+.df-gallery-stage .df-gallery-arrow {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.df-gallery-arrow.is-previous {
+  left: 16px;
+}
+.df-gallery-arrow.is-next {
+  right: 16px;
+}
+.df-gallery-count {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: rgba(24, 24, 24, 0.72);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.df-gallery-thumbnails {
+  display: flex;
+  gap: 9px;
+  padding-top: 10px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.df-gallery-thumbnails button {
+  width: 88px;
+  height: 104px;
+  flex: none;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid transparent;
+  background: #ebe7e2;
+  cursor: pointer;
+}
+.df-gallery-thumbnails button[aria-pressed='true'] {
+  border-color: #1c1b1b;
+}
+.df-gallery-thumbnails img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.df-gallery-lightbox {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 40px 80px;
+  background: rgba(11, 12, 11, 0.94);
+}
+.df-gallery-lightbox > img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.df-gallery-lightbox .df-gallery-close {
+  top: 22px;
+  right: 22px;
+  font-size: 26px;
+}
+.df-gallery-lightbox .df-gallery-arrow {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.df-product-experience .df-product-summary {
+  top: 108px;
+}
+.df-product-eyebrow-row,
+.df-product-commerce {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.df-product-eyebrow-row > span {
+  color: var(--df-muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.df-product-experience .df-product-summary h1 {
+  margin: 18px 0 13px;
+  font-size: clamp(42px, 4.4vw, 76px);
+  line-height: 0.96;
+}
+.df-product-byline {
+  margin: 0 0 28px;
+  color: var(--df-muted);
+  font-size: 13px;
+}
+.df-product-byline a {
+  color: var(--df-forest);
+  font-weight: 700;
+  text-underline-offset: 4px;
+}
+.df-product-commerce {
+  padding: 22px 0;
+  border-block: 1px solid var(--df-line);
+}
+.df-product-experience .df-product-price {
+  margin: 0;
+  font:
+    600 25px/1 Arial,
+    sans-serif;
+}
+.df-product-dimensions {
+  margin: 16px 0 0;
+  color: var(--df-muted);
+  font-size: 13px;
+}
+.df-product-service-points {
+  display: grid;
+  gap: 0;
+  margin: 28px 0;
+  border-block: 1px solid var(--df-line);
+}
+.df-product-service-points > div {
+  display: grid;
+  gap: 3px;
+  padding: 14px 0 14px 28px;
+  border-bottom: 1px solid var(--df-line);
+  background: radial-gradient(circle at 6px 20px, #275d48 0 3px, transparent 4px);
+}
+.df-product-service-points > div:last-child {
+  border-bottom: 0;
+}
+.df-product-service-points strong {
+  font-size: 12px;
+}
+.df-product-service-points span {
+  color: var(--df-muted);
+  font-size: 11px;
+}
+.df-product-summary details {
+  border-bottom: 1px solid var(--df-line);
+}
+.df-product-summary summary {
+  padding: 17px 0;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.df-product-summary details > p {
+  margin: 0 0 18px;
+  color: var(--df-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.df-product-experience .df-product-specs {
+  margin: 0 0 18px;
+  border-top: 0;
+}
+.df-product-experience .df-product-specs > div {
+  display: contents;
+}
+.df-product-editorial {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+  gap: clamp(50px, 9vw, 150px);
+  margin-top: clamp(70px, 9vw, 130px);
+  padding: clamp(48px, 6vw, 88px);
+  background: #ece6df;
+}
+.df-product-editorial h2,
+.df-dealer-panel h2 {
+  max-width: 12ch;
+  margin: 16px 0 24px;
+  font:
+    500 clamp(36px, 5vw, 70px) / 0.94 Georgia,
+    serif;
+  letter-spacing: -0.055em;
+}
+.df-product-editorial article > p:last-child {
+  max-width: 68ch;
+  color: #4f504d;
+  font-size: 17px;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+.df-product-editorial aside {
+  align-self: end;
+  padding-top: 24px;
+  border-top: 1px solid #cfc7bd;
+}
+.df-product-editorial aside > p:not(.df-kicker) {
+  color: #5d5c58;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.df-dealer-panel {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 50px;
+  align-items: end;
+  margin-top: 26px;
+  padding: clamp(40px, 6vw, 76px);
+  background: #19372d;
+  color: #f8f3ed;
+}
+.df-dealer-panel .df-kicker {
+  color: #d4a873;
+}
+.df-dealer-panel h2 {
+  margin-bottom: 18px;
+}
+.df-dealer-panel p:last-child {
+  max-width: 58ch;
+  color: #cbd8d2;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.df-dealer-panel > div:last-child {
+  display: grid;
+  min-width: 220px;
+  gap: 12px;
+}
+.df-dealer-panel .df-button {
+  border-color: #f8f3ed;
+  background: #f8f3ed;
+  color: #19372d !important;
+}
+.df-dealer-panel .df-text-action {
+  margin: 0;
+  color: #f8f3ed;
+  text-align: center;
+}
+
+@media (max-width: 1050px) {
+  .search-first-intro {
+    grid-template-columns: 1fr 1fr;
+    min-height: 560px;
+  }
+  .search-first-intro-image.image-3 {
+    display: none;
+  }
+  .search-first-intro-image.image-1 {
+    inset: 0 28% 9% 0;
+  }
+  .search-first-intro-image.image-2 {
+    inset: 25% 0 0 60%;
+  }
+  .df-product-experience .df-product-layout {
+    grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .search-first-intro {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    margin-top: 70px;
+    padding: 54px 20px 28px;
+  }
+  .search-first-intro-copy h1 {
+    font-size: clamp(52px, 15vw, 78px);
+  }
+  .search-first-intro-copy > p:nth-of-type(2) {
+    margin-top: 22px;
+    font-size: 14px;
+  }
+  .search-first-intro-copy dl {
+    margin-top: 30px;
+  }
+  .search-first-intro-images {
+    min-height: 330px;
+    margin-top: 8px;
+  }
+  .search-first-intro.is-catalog {
+    padding-block: 36px 26px;
+  }
+  .search-first-intro.is-catalog .search-first-intro-copy h1 {
+    font-size: clamp(46px, 13vw, 64px);
+  }
+  .search-first-intro.is-catalog .search-first-intro-images {
+    display: none;
+  }
+  .search-first-mobile-search {
+    top: 70px;
+  }
+  .search-first-home > .search-first-layout {
+    padding-top: 14px;
+  }
+  .search-first-card-era {
+    inset: 8px 8px auto auto;
+    padding: 5px 6px;
+    font-size: 6px;
+  }
+  .df-product-experience .df-product-layout,
+  .df-product-editorial,
+  .df-dealer-panel {
+    grid-template-columns: 1fr;
+  }
+  .df-product-experience .df-product-summary {
+    position: static;
+    padding-top: 18px;
+  }
+  .df-product-editorial {
+    padding: 36px 24px;
+  }
+  .df-dealer-panel {
+    align-items: start;
+    padding: 36px 24px;
+  }
+  .df-gallery-lightbox {
+    padding: 65px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-first-intro-actions {
+    display: grid;
+  }
+  .search-first-intro-copy dl {
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .search-first-intro-copy dd {
+    font-size: 21px;
+  }
+  .search-first-intro-images {
+    min-height: 275px;
+  }
+  .df-gallery-stage {
+    aspect-ratio: 4 / 5;
+  }
+  .df-gallery-thumbnails button {
+    width: 68px;
+    height: 82px;
+  }
+  .df-product-experience .df-product-summary h1 {
+    font-size: 42px;
+  }
+  .df-product-commerce {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 

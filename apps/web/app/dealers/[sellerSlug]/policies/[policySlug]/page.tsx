@@ -35,7 +35,7 @@ export default async function PolicyPage({
     const policy = await api<Policy>(`/storefronts/${sellerSlug}/policies/${policySlug}`);
     return (
       <div className="df-page-shell">
-        <MarketplaceHeader active="designers" />
+        <MarketplaceHeader active="storefront" />
         <main className="df-policy-page">
           <Link className="df-back-link" href={`/dealers/${sellerSlug}`}>
             ← {policy.storefront.organization.name}

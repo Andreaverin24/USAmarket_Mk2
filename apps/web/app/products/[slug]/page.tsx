@@ -3,6 +3,7 @@ import { ProductDetail } from '../../../components/product-detail';
 import { api, type PublicProduct } from '../../../lib/api';
 import { productJsonLd } from '../../../lib/product-jsonld';
 import { ReserveItemButton } from '../../../components/reserve-item-button';
+import { establishedLinesSnapshotProduct } from '../../../lib/established-lines-snapshot';
 export const dynamic = 'force-dynamic';
 export async function generateMetadata({
   params,
@@ -18,7 +19,14 @@ export async function generateMetadata({
       alternates: { canonical: `/products/${product.slug}` },
     };
   } catch {
-    return { title: 'Product — DecorFlavor' };
+    const fallback = establishedLinesSnapshotProduct(slug);
+    return fallback
+      ? {
+          title: `${fallback.title} - DecorFlavor`,
+          description: fallback.shortDescription ?? undefined,
+          alternates: { canonical: `/products/${fallback.slug}` },
+        }
+      : { title: 'Product - DecorFlavor' };
   }
 }
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -49,6 +57,21 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </>
     );
   } catch {
-    return <main className="df-state">This object is no longer available.</main>;
+    const product = establishedLinesSnapshotProduct(slug);
+    if (!product) return <main className="df-state">This object is no longer available.</main>;
+    return (
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(productJsonLd(product, `/products/${product.slug}`)).replace(
+              /</g,
+              '\\u003c',
+            ),
+          }}
+        />
+        <ProductDetail product={product} backHref="/catalog" backLabel="The collection" />
+      </>
+    );
   }
 }

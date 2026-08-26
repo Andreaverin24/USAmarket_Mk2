@@ -24,7 +24,7 @@ export default async function SellerPage({ params }: { params: Promise<{ sellerS
     const sellerName = products.items[0]?.organization.name ?? sellerSlug.replace(/-/g, ' ');
     return (
       <div className="df-page-shell">
-        <MarketplaceHeader active="designers" />
+        <MarketplaceHeader active="storefront" />
         <main className="df-catalog-page">
           <header className="df-page-hero df-category-hero">
             <p className="df-kicker">

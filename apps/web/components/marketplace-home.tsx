@@ -13,6 +13,7 @@ type HomeFacets = {
 };
 
 type Sort = 'newest' | 'price_asc' | 'price_desc' | 'featured';
+type Experience = 'home' | 'catalog' | 'storefront';
 
 const SearchIcon = () => (
   <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -50,11 +51,15 @@ export function MarketplaceHome({
   facets,
   catalogAvailable,
   catalogMode,
+  experience = 'home',
+  storefrontSlug = 'established-lines',
 }: {
   products: DiscoveryProduct[];
   facets: HomeFacets;
   catalogAvailable: boolean;
   catalogMode: 'live' | 'snapshot';
+  experience?: Experience;
+  storefrontSlug?: string;
 }) {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -94,6 +99,36 @@ export function MarketplaceHome({
       ).slice(0, 6),
     [facets.eras, products],
   );
+  const heroProducts = useMemo(
+    () =>
+      [
+        products[0],
+        products[Math.floor(products.length / 3)],
+        products[Math.floor(products.length * 0.7)],
+      ].filter((product): product is DiscoveryProduct => Boolean(product)),
+    [products],
+  );
+  const hero =
+    experience === 'storefront'
+      ? {
+          eyebrow: 'DecorFlavor partner store',
+          title: 'Established Lines',
+          copy: 'A distinctive New York collection of vintage furniture, lighting, art and objects - presented inside DecorFlavor with structured details and complete galleries.',
+          primary: 'Explore the store',
+        }
+      : experience === 'catalog'
+        ? {
+            eyebrow: 'The DecorFlavor collection',
+            title: 'Collectible design, clearly considered.',
+            copy: 'Search a growing collection by object, era, colour and condition. Every piece stays connected to its professional seller and source evidence.',
+            primary: 'Browse all objects',
+          }
+        : {
+            eyebrow: 'The marketplace for collectible interiors',
+            title: 'Objects with history. Rooms with character.',
+            copy: 'Discover furniture, lighting, art and decor from professional sellers, starting with the complete Established Lines collection.',
+            primary: 'Discover the collection',
+          };
 
   const visibleProducts = useMemo(() => {
     const lowerQuery = query.trim().toLowerCase();
@@ -317,20 +352,9 @@ export function MarketplaceHome({
           />
         </form>
         <div className="search-first-actions">
-          {catalogMode === 'snapshot' ? (
-            <button
-              aria-label="Show all prepared catalogue pieces"
-              className="search-first-catalog-link"
-              onClick={clearFilters}
-              type="button"
-            >
-              View all
-            </button>
-          ) : (
-            <Link aria-label="Open catalogue" className="search-first-catalog-link" href="/catalog">
-              View all
-            </Link>
-          )}
+          <Link aria-label="Open catalogue" className="search-first-catalog-link" href="/catalog">
+            View all
+          </Link>
           <button
             aria-controls="decorflavor-navigation-menu"
             aria-expanded={menuOpen}
@@ -343,6 +367,55 @@ export function MarketplaceHome({
           </button>
         </div>
       </header>
+
+      <section className={`search-first-intro is-${experience}`}>
+        <div className="search-first-intro-copy">
+          <p>{hero.eyebrow}</p>
+          <h1>{hero.title}</h1>
+          <p>{hero.copy}</p>
+          <div className="search-first-intro-actions">
+            <a href="#collection">{hero.primary}</a>
+            {experience === 'storefront' ? (
+              <Link href="/catalog">Explore all DecorFlavor</Link>
+            ) : (
+              <Link href="/dealers/established-lines">Visit Established Lines</Link>
+            )}
+          </div>
+          <dl>
+            <div>
+              <dt>Objects</dt>
+              <dd>{products.length}</dd>
+            </div>
+            <div>
+              <dt>Categories</dt>
+              <dd>{categories.length}</dd>
+            </div>
+            <div>
+              <dt>Dated pieces</dt>
+              <dd>{products.filter((product) => product.era).length}</dd>
+            </div>
+          </dl>
+        </div>
+        <div className="search-first-intro-images" aria-label="Featured collection">
+          {heroProducts.map((product, index) => {
+            const image = productImage(product);
+            return (
+              <Link
+                className={`search-first-intro-image image-${index + 1}`}
+                href={
+                  experience === 'storefront'
+                    ? `/dealers/${storefrontSlug}/products/${product.slug}`
+                    : `/products/${product.slug}`
+                }
+                key={product.id}
+              >
+                {image ? <img alt={product.title} src={image} /> : null}
+                <span>{product.title}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
 
       <div className="search-first-mobile-search">
         <form className="search-first-search" onSubmit={submitSearch} role="search">
@@ -357,7 +430,7 @@ export function MarketplaceHome({
         </form>
       </div>
 
-      <div className="search-first-layout">
+      <div className="search-first-layout" id="collection">
         <aside className="search-first-sidebar">
           <div className="search-first-filter-heading">
             <div>
@@ -373,6 +446,9 @@ export function MarketplaceHome({
 
         <section aria-live="polite" className="search-first-results">
           <div className="search-first-results-bar">
+            <span>
+              {visibleProducts.length} of {products.length} objects
+            </span>
             <label>
               Sort by:
               <select onChange={(event) => setSort(event.target.value as Sort)} value={sort}>
@@ -385,6 +461,7 @@ export function MarketplaceHome({
           </div>
 
           <div className="search-first-mobile-results">
+            <span>{visibleProducts.length} objects</span>
             <button onClick={() => setFiltersOpen(true)} type="button">
               <FilterIcon />
               Filter & sort
@@ -415,6 +492,9 @@ export function MarketplaceHome({
                     )}
                     <span className="search-first-card-shade" />
                     <em>{product.organization.name}</em>
+                    <span className="search-first-card-era">
+                      {product.era ?? product.category.name}
+                    </span>
                     <div>
                       <p>{product.maker ?? product.category.name}</p>
                       <h2>{product.title}</h2>
@@ -427,8 +507,8 @@ export function MarketplaceHome({
                     aria-label={`${product.title}, ${currency(product)}`}
                     className="search-first-card"
                     href={
-                      catalogMode === 'snapshot'
-                        ? `/dealers/established-lines/products/${product.slug}`
+                      experience === 'storefront'
+                        ? `/dealers/${storefrontSlug}/products/${product.slug}`
                         : `/products/${product.slug}`
                     }
                     key={product.id}
@@ -498,21 +578,12 @@ export function MarketplaceHome({
             <Link href="/" onClick={() => setMenuOpen(false)}>
               Discover
             </Link>
-            {catalogMode === 'snapshot' ? (
-              <button
-                onClick={() => {
-                  clearFilters();
-                  setMenuOpen(false);
-                }}
-                type="button"
-              >
-                All pieces
-              </button>
-            ) : (
-              <Link href="/catalog" onClick={() => setMenuOpen(false)}>
-                All pieces
-              </Link>
-            )}
+            <Link href="/catalog" onClick={() => setMenuOpen(false)}>
+              All pieces
+            </Link>
+            <Link href="/dealers/established-lines" onClick={() => setMenuOpen(false)}>
+              Established Lines
+            </Link>
             <Link href="/account/orders" onClick={() => setMenuOpen(false)}>
               My orders
             </Link>

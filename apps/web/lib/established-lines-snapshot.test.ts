@@ -6,12 +6,14 @@ import {
 } from './established-lines-snapshot';
 
 describe('Established Lines discovery snapshot', () => {
-  it('provides all 30 approved source records with usable discovery categories', () => {
+  it('provides all 130 approved source records with usable discovery categories', () => {
     const products = establishedLinesSnapshot();
 
-    expect(products).toHaveLength(30);
+    expect(products).toHaveLength(130);
     expect(new Set(products.map((product) => product.category.slug)).size).toBeGreaterThan(3);
-    expect(products.every((product) => product.organization.slug === 'established-lines')).toBe(true);
+    expect(products.every((product) => product.organization.slug === 'established-lines')).toBe(
+      true,
+    );
     expect(
       products.every((product) =>
         product.media[0]?.sourceUrl?.startsWith('https://www.establishedlines.com/'),
@@ -31,5 +33,6 @@ describe('Established Lines discovery snapshot', () => {
 
     expect(product).toBeDefined();
     expect(establishedLinesSnapshotProduct(product!.slug)?.id).toBe(product!.id);
+    expect(establishedLinesSnapshotProduct(product!.slug)!.media.length).toBeGreaterThan(1);
   });
 });

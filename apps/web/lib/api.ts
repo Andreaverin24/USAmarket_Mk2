@@ -22,6 +22,13 @@ export interface PublicProduct {
   maker: string | null;
   provenance: string | null;
   restorationNotes: string | null;
+  sku?: string | null;
+  productType?: string | null;
+  sourceUrl?: string | null;
+  conditionDescription?: string | null;
+  dimensionUnit?: string | null;
+  diameter?: string | null;
+  seatHeight?: string | null;
   width: string | null;
   height: string | null;
   depth: string | null;

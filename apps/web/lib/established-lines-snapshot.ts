@@ -1,4 +1,4 @@
-import establishedLinesFixture from '../../portal/public/pilots/established-lines-30.json';
+import establishedLinesFixture from '../../portal/public/pilots/established-lines-catalog.json';
 import type { DiscoveryProduct } from './api';
 
 export const ESTABLISHED_LINES_SLUG = 'established-lines';
@@ -10,6 +10,13 @@ type FixtureCandidate = {
   priceMinor: string;
   currency: string;
   condition: string;
+  conditionDescription?: string;
+  productType?: string;
+  sku?: string;
+  sourceUrl?: string;
+  dimensionUnit?: string;
+  diameter?: string;
+  seatHeight?: string;
   materials?: string[];
   colors?: string[];
   styles?: string[];
@@ -18,9 +25,11 @@ type FixtureCandidate = {
   height?: string;
   depth?: string;
   imageUrls?: string[];
+  attributes?: Record<string, unknown>;
   listing: {
     availability: string;
     canonicalUrl: string;
+    sourceSku?: string;
   };
 };
 
@@ -84,9 +93,68 @@ function isEstablishedLinesUrl(value: string) {
   }
 }
 
-const rows = (establishedLinesFixture.rows as FixtureRow[]).filter(
-  (row) => row.status === 'VALID',
-);
+const rows = (establishedLinesFixture.rows as FixtureRow[]).filter((row) => row.status === 'VALID');
+
+function mappedAttributes(attributes: Record<string, unknown> | undefined) {
+  return Object.entries(attributes ?? {}).flatMap(([name, value]) => {
+    if (typeof value === 'string' && value.trim()) return [{ name, value }];
+    if (typeof value === 'number') return [{ name, value: String(value) }];
+    if (Array.isArray(value)) {
+      const joined = value.filter((item): item is string => typeof item === 'string').join(', ');
+      return joined ? [{ name, value: joined }] : [];
+    }
+    return [];
+  });
+}
+
+function mapRow(row: FixtureRow, detailed: boolean): DiscoveryProduct | null {
+  const item = row.normalizedPayload;
+  if (!isEstablishedLinesUrl(item.listing.canonicalUrl)) return null;
+
+  const imageUrls = (item.imageUrls ?? []).filter(isEstablishedLinesUrl);
+  const mediaUrls = detailed ? imageUrls : imageUrls.slice(0, 1);
+  return {
+    id: `established-lines-snapshot-${row.id}`,
+    title: item.title,
+    slug: item.slug,
+    shortDescription: item.description?.slice(0, 220) ?? null,
+    description: detailed ? (item.description ?? null) : null,
+    priceMinor: item.priceMinor,
+    currency: item.currency,
+    condition: item.condition,
+    conditionDescription: item.conditionDescription ?? null,
+    productType: item.productType ?? null,
+    sku: item.sku ?? item.listing.sourceSku ?? null,
+    sourceUrl: item.sourceUrl ?? item.listing.canonicalUrl,
+    dimensionUnit: item.dimensionUnit ?? 'in',
+    diameter: item.diameter ?? null,
+    seatHeight: item.seatHeight ?? null,
+    materials: values(item.materials),
+    colors: coloursFor(item.title, item.colors),
+    styles: values(item.styles),
+    era: item.era ?? null,
+    maker: null,
+    provenance: null,
+    restorationNotes: null,
+    width: item.width ?? null,
+    height: item.height ?? null,
+    depth: item.depth ?? null,
+    category: categoryFor(item.title),
+    organization: { name: 'Established Lines', slug: ESTABLISHED_LINES_SLUG },
+    inventory: {
+      quantityAvailable: item.listing.availability === 'AVAILABLE' ? 1 : 0,
+      status: item.listing.availability,
+    },
+    attributes: mappedAttributes(item.attributes),
+    media: mediaUrls.map((sourceUrl) => ({
+      sourceUrl,
+      storageKey: null,
+      altText: item.title,
+      processingStatus: 'READY',
+      mediaVariants: [],
+    })),
+  };
+}
 
 /**
  * Read-only discovery fallback. It intentionally has no local product route
@@ -94,51 +162,14 @@ const rows = (establishedLinesFixture.rows as FixtureRow[]).filter(
  */
 export function establishedLinesSnapshot(): DiscoveryProduct[] {
   return rows.flatMap((row) => {
-    const item = row.normalizedPayload;
-    if (!isEstablishedLinesUrl(item.listing.canonicalUrl)) return [];
-
-    const imageUrls = (item.imageUrls ?? []).filter(isEstablishedLinesUrl);
-    return [
-      {
-        id: `established-lines-snapshot-${row.id}`,
-        title: item.title,
-        slug: item.slug,
-        shortDescription: item.description ?? null,
-        description: item.description ?? null,
-        priceMinor: item.priceMinor,
-        currency: item.currency,
-        condition: item.condition,
-        materials: values(item.materials),
-        colors: coloursFor(item.title, item.colors),
-        styles: values(item.styles),
-        era: item.era ?? null,
-        maker: null,
-        provenance: null,
-        restorationNotes: null,
-        width: item.width ?? null,
-        height: item.height ?? null,
-        depth: item.depth ?? null,
-        category: categoryFor(item.title),
-        organization: { name: 'Established Lines', slug: ESTABLISHED_LINES_SLUG },
-        inventory: {
-          quantityAvailable: item.listing.availability === 'AVAILABLE' ? 1 : 0,
-          status: item.listing.availability,
-        },
-        attributes: [],
-        media: imageUrls.map((sourceUrl) => ({
-          sourceUrl,
-          storageKey: null,
-          altText: item.title,
-          processingStatus: 'READY',
-          mediaVariants: [],
-        })),
-      },
-    ];
+    const product = mapRow(row, false);
+    return product ? [product] : [];
   });
 }
 
 export function establishedLinesSnapshotProduct(slug: string) {
-  return establishedLinesSnapshot().find((product) => product.slug === slug) ?? null;
+  const row = rows.find((candidate) => candidate.normalizedPayload.slug === slug);
+  return row ? mapRow(row, true) : null;
 }
 
 export function isEstablishedLinesStorefront(sellerSlug: string) {
