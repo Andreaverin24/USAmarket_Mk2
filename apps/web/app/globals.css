@@ -1638,13 +1638,13 @@ button {
   .search-first-intro.is-home .search-first-intro-copy > p:nth-of-type(2),
   .search-first-intro.is-storefront .search-first-intro-copy > p:nth-of-type(2) {
     max-width: 48ch;
-    margin-top: 14px;
+    margin-top: 12px;
     font-size: 14px;
     line-height: 1.48;
   }
   .search-first-intro.is-home .search-first-intro-actions,
   .search-first-intro.is-storefront .search-first-intro-actions {
-    margin-top: 18px;
+    margin-top: 16px;
   }
   .search-first-intro.is-home .search-first-intro-actions a,
   .search-first-intro.is-storefront .search-first-intro-actions a {
@@ -1654,7 +1654,7 @@ button {
   .search-first-intro.is-home .search-first-intro-copy dl,
   .search-first-intro.is-storefront .search-first-intro-copy dl {
     gap: clamp(24px, 3vw, 44px);
-    margin-top: 20px;
+    margin-top: 10px;
   }
   .search-first-intro.is-home .search-first-intro-copy dd,
   .search-first-intro.is-storefront .search-first-intro-copy dd {
